@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-&at+71kz98!h_r5ruqygpx(9b%#e5&8w4#@#-pebh)n3%!!&dv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['arma72.com','www.arma72.com']
-# ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['37.140.192.188']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,11 +79,8 @@ WSGI_APPLICATION = 'arma.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'u1991692_default',
-        'USER': 'u1991692_default',
-        'PASSWORD': 'C64fu7JQ1oQoQvJ0',
-        'HOST': 'localhost'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -123,8 +120,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = 'static/'
+STATIC_ROOT = BASE_DIR/ 'staticfiles'
 
+STATICFILES_DIRS = [
+    BASE_DIR,"main/static","shop/static","arma/static"
+]
 
 MEDIA_ROOT = BASE_DIR / 'media/'
 MEDIA_URL = "/media/"
