@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css_link %} 
+<link rel="stylesheet" href="{% static 'main/css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="contacts">
+    <div class="wrapper">
+        <div class="content-section">
+            <div class="contacts-section">
+                <div class="contact-side">
+                    <div class="contact-title">Контакты</div>
+                    <div class="contact-list">
+                        <div class="contact-item">
+                            <svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.9875 2.5C8.0875 2.5 2.5 8.1 2.5 15C2.5 21.9 8.0875 27.5 14.9875 27.5C21.9 27.5 27.5 21.9 27.5 15C27.5 8.1 21.9 2.5 14.9875 2.5ZM15 25C9.475 25 5 20.525 5 15C5 9.475 9.475 5 15 5C20.525 5 25 9.475 25 15C25 20.525 20.525 25 15 25ZM15.625 8.75H13.75V16.25L20.3125 20.1875L21.25 18.65L15.625 15.3125V8.75Z" />
+                            </svg>
+                            <div class="contact-text">
+                                Работаем с 8-00 до 22-00 по Московскому времени
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <svg viewBox="0 0 30 30"  xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 2.5C10.1625 2.5 6.25 6.4125 6.25 11.25C6.25 17.8125 15 27.5 15 27.5C15 27.5 23.75 17.8125 23.75 11.25C23.75 6.4125 19.8375 2.5 15 2.5ZM8.75 11.25C8.75 7.8 11.55 5 15 5C18.45 5 21.25 7.8 21.25 11.25C21.25 14.85 17.65 20.2375 15 23.6C12.4 20.2625 8.75 14.8125 8.75 11.25Z" />
+                                <path d="M15 14.375C16.7259 14.375 18.125 12.9759 18.125 11.25C18.125 9.52411 16.7259 8.125 15 8.125C13.2741 8.125 11.875 9.52411 11.875 11.25C11.875 12.9759 13.2741 14.375 15 14.375Z" />
+                            </svg>   
+                            <div class="contact-text">
+                                г.Москва ул.Краснобогатырская 2с4
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <svg viewBox="0 0 30 30"  xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.175 6.25C8.25 7.3625 8.4375 8.45 8.7375 9.4875L7.2375 10.9875C6.725 9.4875 6.4 7.9 6.2875 6.25H8.175ZM20.5 21.275C21.5625 21.575 22.65 21.7625 23.75 21.8375V23.7C22.1 23.5875 20.5125 23.2625 19 22.7625L20.5 21.275ZM9.375 3.75H5C4.3125 3.75 3.75 4.3125 3.75 5C3.75 16.7375 13.2625 26.25 25 26.25C25.6875 26.25 26.25 25.6875 26.25 25V20.6375C26.25 19.95 25.6875 19.3875 25 19.3875C23.45 19.3875 21.9375 19.1375 20.5375 18.675C20.4125 18.625 20.275 18.6125 20.15 18.6125C19.825 18.6125 19.5125 18.7375 19.2625 18.975L16.5125 21.725C12.975 19.9125 10.075 17.025 8.275 13.4875L11.025 10.7375C11.375 10.3875 11.475 9.9 11.3375 9.4625C10.875 8.0625 10.625 6.5625 10.625 5C10.625 4.3125 10.0625 3.75 9.375 3.75Z" />
+                            </svg>
+                            <div class="contact-text">
+                                +79999 - 623 - 469
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A07be676f86947d7a35c7e1197a3ee18014d8890275acda858f0131876d0ec51c&amp;source=constructor" frameborder="0"></iframe>
+            </div>
+            <div class="form-section">
+                <form class="form" action="{% url 'question' %}" method="post">
+                    {% csrf_token %}
+                    <div class="title">
+                        <div>Оставьте заявку и мы с Вами свяжемся</div>
+                    </div>
+                    <label>Ваше ФИО или название организации</label>
+                    <input name="name" type="text">
+                    <label>Ваши контакты (укажите любые, удобные для вас)</label>
+                    <input name="contacts" type="text">
+                    <label>Напишите что бы Вы хотели узнать или уточнить?</label>
+                    <textarea name="text" name="" id="" cols="30" rows="10"></textarea>
+                    <div class="button-div">
+                        <button type="submit">Отправить заявку</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

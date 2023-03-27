@@ -1,0 +1,19 @@
+
+html {
+    --white: #f1f1f1;
+    --black: #232323;
+    --red: #CC0000;
+    --light-red: #ff3b3b;
+    --green: #465f30;
+    --trans-green: #465f305f;
+    --yellow: #fff389;
+}
+body {
+    background-color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    margin: 0;
+}
+
+
+
