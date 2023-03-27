@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css_link %} 
+<link rel="stylesheet" href="{% static 'main/css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="about">
+    <div class="wrapper">
+        <div class="content-section">
+            <div class="company-des">
+                <div class="company-des-text">
+                    <div class="company-des-title">Производственная компания «Арма-72»</div>
+                    <div>
+                        Современное модернизированное предприятие, производственные линии которого оснащены новейшим высокотехнологичным оборудованием, с грамотно подобранным коллективом профессиональных и амбициозных специалистов высокого класса: дизайнеров, маркетологов, конструкторов, закройщиков и швей.
+<br><br>
+А удобное расположение производства в Москве, на пересечении множества магистралей и транспортных путей, позволяет найти логистические решения для быстрой доставки изделий практически в любую точку России и стран СНГ.
+<br><br>
+Поможем Вам закрыть любой тендер или закупку по пошиву одежды, спальных мешков и других товаров в данной тематикеРасположены на территории бывшего, знаменитого завода "Красный Богатырь", выпускавшего резиновую и резино-такстильную обувь (сапоги, боты), формовые и неформовые изделия
+                    </div>
+                </div>
+                <div class="company-des-images">
+                    <img src="{% static 'main/media/image 7.png' %}" alt="">
+                    <img src="{% static 'main/media/image 9.png' %}" alt="">
+                    <img src="{% static 'main/media/image 8.png' %}" alt="">
+                </div>
+            </div>
+            <div class="video">
+                <div class="video-title">Посмотрите на один из наших цехов</div>
+                <iframe src="https://www.youtube-nocookie.com/embed/MAYOw2T8ADQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="members">
+                <div class="members-title">
+                    Наша команда
+                </div>
+                <div class="members-list">
+                    {% for member in members %}
+                    <div class="member-item">
+                        <div class="member-text">
+                            <div class="job">
+                                {{ member.job }}
+                            </div>
+                            <div class="name">
+                                {{ member.name }}
+                            </div>
+                            <div class="des">
+                                {{ member.des }}
+                            </div>
+                        </div>
+                        <div class="member-photo">
+                            <img src="{{ member.img.url }}" alt="">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
