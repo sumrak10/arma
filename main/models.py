@@ -4,9 +4,9 @@ from django.db import models
 
 class Member(models.Model):
 
-    job = models.CharField(max_length=255, verbose_name="Должность")
-    name = models.CharField(max_length=255, verbose_name="Имя и Фамилия")
-    des = models.CharField(max_length=511, verbose_name="Описание")
+    job = models.CharField(max_length=255, verbose_name="Должность 255зн.")
+    name = models.CharField(max_length=255, verbose_name="Имя и Фамилия 255зн.")
+    des = models.CharField(max_length=511, verbose_name="Описание 511зн.")
     img = models.ImageField(upload_to='members/',default='placeholders/placeholder.jpg',blank=True,null=True, verbose_name="Фотография (исключительно квадратные)")
     
     def __str__(self):

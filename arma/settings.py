@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-&at+71kz98!h_r5ruqygpx(9b%#e5&8w4#@#-pebh)n3%!!&dv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['arma72.com','www.arma72.com']
+ALLOWED_HOSTS = ['arma72.com','www.arma72.com','arma72.ru','www.arma72.ru']
 # ALLOWED_HOSTS = ['*']
 
 
@@ -126,8 +126,8 @@ STATIC_URL = 'static/'
 STATIC_ROOT = 'static/'
 
 
-MEDIA_ROOT = BASE_DIR / 'media/'
-MEDIA_URL = "/media/"
+MEDIA_ROOT = 'media/'
+MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

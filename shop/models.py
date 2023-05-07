@@ -2,7 +2,7 @@ from django.db import models
 
 class Category(models.Model):
 
-    name = models.CharField(max_length=50, verbose_name='Наименование')
+    name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
     
     img = models.ImageField(upload_to='categories/',default='placeholders/categories.jpg',blank=True,null=True, verbose_name="Фотография 1:1 с прозрачным фоном")
 
@@ -16,15 +16,15 @@ class Category(models.Model):
 
 class Product(models.Model):
 
-    name = models.CharField(max_length=50, verbose_name='Наименование')
+    name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
     wholesale_price = models.IntegerField(verbose_name='Оптовая цена')
     retail_price = models.IntegerField(verbose_name='Розничная цена')
     old_price = models.IntegerField(verbose_name='Старая цена', default=0)
-    des = models.CharField(max_length=512, verbose_name='Описание')
+    des = models.TextField(verbose_name='Описание')
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.PROTECT)
     buy_count = models.IntegerField(verbose_name='Сколько раз приобретали', default=0)
     img = models.ImageField(upload_to='products/',default='placeholders/product.jpg',blank=True,null=True, verbose_name="Фотография 1:1 с прозрачным фоном")
-    video = models.CharField(max_length=1024, verbose_name='Ссылка на видео в youtube', default='')
+    video = models.CharField(max_length=1024, verbose_name='Ссылка на видео в youtube 1024зн.', default='', null=True, blank=True)
 
     def __str__(self):
         return self.name
