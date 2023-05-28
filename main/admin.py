@@ -1,15 +1,15 @@
 from django.contrib import admin
 
-from .models import Member, News, Partners
+from .models import Member, Partners, Slide
 
 
 @admin.register(Member)
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ["name", "job", "des"]
+    list_display = ["name", "job"]
 
-@admin.register(News)
-class NewsAdmin(admin.ModelAdmin):
-    list_display = ["id", "img"]
+@admin.register(Slide)
+class SlideAdmin(admin.ModelAdmin):
+    list_display = ["id"]
 
 @admin.register(Partners)
 class PartnersAdmin(admin.ModelAdmin):

@@ -1,0 +1,93 @@
+.wrapper-contact-us {
+    background: scroll #465F30 url("../../media/contact_us/contact_us_bg.png") center center no-repeat;
+} 
+.section-contact-us {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 34px 0;
+    gap: 32px;
+}
+.contact-us-img {
+    width: 50%;
+}
+.contact-us-img img {
+    width: 80%;
+}
+.contact-us-form {
+    margin: 32px 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+    color: white;
+    width: 40%;
+}
+.contact-us-form h3 {
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+}
+.contact-us-form input {
+    font-family: 'Montserrat', sans-serif;
+    padding: 16px 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.2);;
+    width: 100%;
+    border: 0;
+    font-size: 14px;
+    color: white;
+}
+.contact-us-form input::placeholder {
+    color: rgba(255, 255, 255, 0.34);
+}
+.contact-us-form textarea {
+    font-family: 'Montserrat', sans-serif;
+    padding: 16px 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.2);;
+    width: 100%;
+    border: none;
+    font-size: 14px;
+    color: white;
+    resize: none;
+}
+
+.contact-us-form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.34);
+}
+
+.contact-us-form button {
+    font-family: 'Montserrat', sans-serif;
+    display: block;
+    width: 100%;
+    padding: 14px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #465F30;
+    border: none;
+    cursor: pointer;
+}
+.contact-us-form button:hover {
+    background-color: #85AB3A;
+    color: white;
+}
+@media (max-width: 1100px) {
+    .contact-us-img {
+        display: none;
+    }
+    .section-contact-us {
+        justify-content: center;
+    }
+    .contact-us-form {
+        width: 60%;
+    }
+}
+@media (max-width: 900px) {
+    .contact-us-form {
+        width: 100%;
+        margin: 0;
+    }
+}

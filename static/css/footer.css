@@ -14,7 +14,17 @@ a {
     justify-content: center;
     flex-direction: column;
 }
-.footer-columns {
+.footer-sides {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.footer-side-contacts {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}
+.footer-side-columns {
     width: 80%;
     padding: 80px 0;
     display: flex;

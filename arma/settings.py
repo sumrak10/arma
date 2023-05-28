@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
+from config import DEBUG, SECRET_KEY, DB_NAME, DB_USER, DB_PASS, DB_HOST
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&at+71kz98!h_r5ruqygpx(9b%#e5&8w4#@#-pebh)n3%!!&dv'
+# SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = DEBUG
 
-ALLOWED_HOSTS = ['arma72.com','www.arma72.com','arma72.ru','www.arma72.ru']
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = ['arma72.com','www.arma72.com','arma72.ru','www.arma72.ru']
 # ALLOWED_HOSTS = ['*']
 
 
@@ -42,7 +47,7 @@ INSTALLED_APPS = [
     'shop',
     'CRM',
 ]
-
+ 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -67,6 +72,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'filters': 'arma.templatetags.filters',
+            }
         },
     },
 ]
@@ -77,15 +85,23 @@ WSGI_APPLICATION = 'arma.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'u1991692_default',
-        'USER': 'u1991692_default',
-        'PASSWORD': 'C64fu7JQ1oQoQvJ0',
-        'HOST': 'localhost'
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': DB_NAME,
+            'USER': DB_USER,
+            'PASSWORD': DB_PASS,
+            'HOST': DB_HOST
+        }
+    }
 
 
 # Password validation
@@ -112,7 +128,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-RU'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 

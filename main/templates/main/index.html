@@ -2,232 +2,160 @@
 
 {% load static %}
 {% block css_link %} 
+<link rel="stylesheet" href="{% static 'main/css/sections/numbers.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/sections/hits.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/sections/contact_us.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="{% static 'main/css/styles.css' %}">
-{% endblock %}
+{% endblock %} 
 
 {% block content %}
-    <div class="hello-container">
-        <div class="hello-section">
-            <div class="hello-text-side">
-                <div class="text-title">
-                    Интернет-магазин для оптовой закупки военной атрибутики
+<div class="wrapper wrapper-hello">
+    <div class="section section-hello">
+        <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+              <!-- Slides -->
+              {% for slide in slides %}
+              <div class="swiper-slide hello-slider">
+                <img class="hello-slider-image-desktop " src="{{ slide.desktop_img.url }}" alt="">
+                <img class="hello-slider-image-mobile hello-slider-image-inactive" src="{{ slide.mobile_img.url }}" alt="">
+                <div class="hello-slider-buttons">
+                    {% if slide.button1 %}
+                    <a class="hello-slider-button" href="{{ slide.button1_url }}">{{ slide.button1_text }}</a>
+                    {% endif %}
+                    {% if slide.button2 %}
+                    <a class="hello-slider-button" href="{{ slide.button2_url }}">{{ slide.button2_text }}</a>
+                    {% endif %}
                 </div>
-                <div class="text-des">
-                    Поможем Вам закрыть любой тендер или закупку по пошиву одежды, спальных мешков и других товаров в данной тематике.
-                </div>
-                <div class="button">
-                    <div class="shopping-cart-svg">
-                        <svg viewBox="0 0 31 30" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21.4329 16.2083C22.3704 16.2083 23.1954 15.7129 23.6204 14.9637L28.0954 7.12166C28.5579 6.32416 27.9579 5.33332 27.0079 5.33332H8.50786L7.33286 2.91666H3.24536V5.33332H5.74536L10.2454 14.5046L8.55786 17.4529C7.64536 19.0721 8.84536 21.0417 10.7454 21.0417H25.7454V18.625H10.7454L12.1204 16.2083H21.4329ZM9.69536 7.74999H24.8829L21.4329 13.7917H12.6579L9.69536 7.74999ZM10.7454 22.25C9.37036 22.25 8.25786 23.3375 8.25786 24.6667C8.25786 25.9958 9.37036 27.0833 10.7454 27.0833C12.1204 27.0833 13.2454 25.9958 13.2454 24.6667C13.2454 23.3375 12.1204 22.25 10.7454 22.25ZM23.2454 22.25C21.8704 22.25 20.7579 23.3375 20.7579 24.6667C20.7579 25.9958 21.8704 27.0833 23.2454 27.0833C24.6204 27.0833 25.7454 25.9958 25.7454 24.6667C25.7454 23.3375 24.6204 22.25 23.2454 22.25Z" />
-                        </svg>
-                    </div>
-                    <a href="/shop" class="button-text">
-                        Посмотреть товары
-                    </a>
-                </div>
+              </div>
+              {% endfor %}
+              <div class="swiper-slide">sdf</div>
             </div>
-            <div class="hello-logo-side">
-                <img src="media/logowithtext.png" alt="AРМА-72">
-            </div>
-        </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+          
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          
+            <!-- If we need scrollbar -->
+            <div class="swiper-scrollbar"></div>
+          </div>
     </div>
-    
-    <div class="wrapper">
-        <div class="content-section">
-            {% if news %}
-            <div class="news-slider">
-                <div class="news-images">
-                    {% for new in news %}
-                        <img class="news-image hidden-news" id="news-image-{{new.id}}" src="{{ new.img.url }}" alt="">
-                    {% endfor %}
-                </div>
-                <div class="slider-controls">
-                    {% for new in news %}
-                        <div class="slider-control" id="slider-control-{{ new.id }}"></div>
-                    {% endfor %}
-                </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function(){
-                        var slides = document.getElementsByClassName("news-images")[0].querySelectorAll('img');
-                        var controls = document.getElementsByClassName("slider-controls")[0].querySelectorAll('div');
-                        slides[0].classList.remove("hidden-news")
-                        controls[0].classList.add("active-slider-control")
-                        var slides_count = slides.length
-                        var active_slide = 1
-                        setInterval(function() {
-                            slides[active_slide].classList.remove("hidden-news")
-                            controls[active_slide].classList.add("active-slider-control")
-                            if (active_slide == 0) {
-                                slides[slides_count-1].classList.add("hidden-news")
-                                controls[slides_count-1].classList.remove("active-slider-control")
-                            } else {
-                                slides[active_slide-1].classList.add("hidden-news")
-                                controls[active_slide-1].classList.remove("active-slider-control")
-                            }
-                            if (active_slide == slides_count-1){
-                                active_slide = 0
-                            } else {
-                                active_slide += 1
-                            }
-                        }, 2000);
-                    })
-                </script>
-            </div>
-            {% endif %}
-            <div class="whywe-section">
-                <div class="card">
-                    <div>
-                        <div class="whywe-q">
-                            Почему именно мы?
-                        </div>
-                        <div class="whywe-title">
-                            Арма-72
-                        </div>
-                        <div class="whywe-des">
-                            Это современное модернизированное предприятие, которое
-                            оснащено новейшим высокотехнологичным оборудованием, с
-                            тщательно отобранным коллективом профессиональных специалистов
-                            высокого класса: дизайнеров, маркетологов, конструкторов,
-                            закройщиков и швей.
-                        </div>
-                        <div class="button-b">
-                            <div class="button-inner"">
-                                <a href="/about" class="button-text">
-                                    Подробнее о нас
-                                </a>
-                                <svg class="button-svg" viewBox="0 0 13 18" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2.83333 -2.38419e-07L12 -2.38419e-07L12 9.16667H9.25V4.79417L2.85167 11L1 9.13917L7.27917 2.75L2.83333 2.75V-2.38419e-07Z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div>
-                        <div class="whywe-q">
-                            Как посмотреть наши товары?
-                        </div>
-                        <div class="whywe-title">
-                            Интернет магазин
-                        </div>
-                        <div class="whywe-des">
-                            На нашем удобном сайте вы сможете легко и доступно изучить весь наш ассортимент продуктов собственного производства и собрать в корзину все интересующие вас товары. За доступными ценами и хорошим качеством выбирайте именно нас.
-                        </div>
-                        <div class="button-b">
-                            <div class="button-inner"">
-                                <a href="/shop" class="button-text">
-                                    Перейти в магазин
-                                </a>
-                                <svg class="button-svg" viewBox="0 0 13 18" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2.83333 -2.38419e-07L12 -2.38419e-07L12 9.16667H9.25V4.79417L2.85167 11L1 9.13917L7.27917 2.75L2.83333 2.75V-2.38419e-07Z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div>
-                        <div class="whywe-q">
-                            Где мы находимся?
-                        </div>
-                        <div class="whywe-title">
-                            Центр России
-                        </div>
-                        <div class="whywe-des">
-                            Удобное расположение производства в Москве, на пересечении множества магистралей и транспортных путей, позволяет найти логистические решения для быстрой доставки изделий практически в любую точку России и стран СНГ.
-                        </div>
-                        <div class="button-b">
-                            <div class="button-inner"">
-                                <a href="" class="button-text">
-                                    показать на карте
-                                </a>
-                                <svg class="button-svg" viewBox="0 0 13 18" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2.83333 -2.38419e-07L12 -2.38419e-07L12 9.16667H9.25V4.79417L2.85167 11L1 9.13917L7.27917 2.75L2.83333 2.75V-2.38419e-07Z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 
-    <div class="nums-section">
-        <div class="nums-cards-block">
-            <div class="nums-section-title">
-                Немного цифр
-            </div>
-            <div class="nums-block">
-                <div class="nums-one-block">
-                    <div class="nums-card">
-                        <div class="big-num">
-                            3
-                        </div>
-                        <div class="big-num-text">
-                            года
-                        </div>
-                    </div>
-                    <div class="nums-line"></div>
-                    <div class="nums-card-text">
-                        Мы стартовали в 2019 году в самый разгар пандемии и все время развиваемся
-                    </div>
-                </div>
-                <div class="nums-one-block">
-                    <div class="nums-card">
-                        <div class="big-num">
-                            356
-                        </div>
-                        <div class="big-num-text">
-                            проектов
-                        </div>
-                    </div>
-                    <div class="nums-line"></div>
-                    <div class="nums-card-text">
-                        Реализованных проектов с 2019 по 2022 год
-                    </div>
-                </div>
-                <div class="nums-one-block">
-                    <div class="nums-card">
-                        <div class="big-num">
-                            200
-                        </div>
-                        <div class="big-num-text">
-                            человек
-                        </div>
-                    </div>
-                    <div class="nums-line"></div>
-                    <div class="nums-card-text">
-                        Из них более 135 швей. Работают 24/7 в 6-х цехах.
-                    </div>
-                </div>
-                <div class="nums-one-block">
-                    <div class="nums-card">
-                        <div class="big-num">
-                            100
-                        </div>
-                        <div class="big-num-text">
-                            контрактов
-                        </div>
-                    </div>
-                    <div class="nums-line"></div>
-                    <div class="nums-card-text">
-                        Лишь за 2020 год мы выполнили более 100 государственных контрактов от Камчатки до Калининграда
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="wrapper">
-        <div class="content-section">
-            <div class="partners-section">
-                <div class="partners-section-title">Нам доверяют</div>
-                <div class="partners-logos">
-                    {% for partner in partners %}
-                    <img src="{{ partner.img.url }}" alt="">
-                    {% endfor %}
+<!-- КАТЕГОРИИ НА ГЛАВНОЙ СТРАНИЦЕ  -->
+<div class="wrapper wrapper-index-cat">
+    <div class="section section-index-cat">
+        <div class="index-cat-text">
+            <div class="index-cat-text-title">
+                КАТЕГОРИИ
+            </div>
+            <a href="/shop">
+                Смотреть все
+            </a>
+        </div>
+        <hr class="arma-hr">
+        <div class="index-cat">
+            {% for category in categories %}
+            <a href="shop/categories/{{ category.id }}" class="index-cat-card">
+                <div class="img">
+                    <img src="{{ category.img.url }}" alt="">
+                </div>
+                <div class="name">
+                    <div>
+                        {{ category.name }}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="index-cat-text-mobile mobile">
+            <a href="/shop">
+                Смотреть все
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ПОЧЕМУ ИМЕННО МЫ -->
+<div class="wrapper wrapper-whywe">
+    <div class="section section-whywe">
+        <div class="whywe">
+            <a href="/about" class="whywe-card">
+                <img src="../../static/main/media/whywe/1.png" alt="">
+                <div class="text">
+                    ПОДРОБНЕЕ О НАС
+                </div>
+            </a>
+            <div class="whywe-card">
+                <img src="../../static/main/media/whywe/2.png" alt="">
+                <div class="text">
+                    Собственное производство в Москве 
+                </div>
+            </div>
+            <div class="whywe-card">
+                <img src="../../static/main/media/whywe/3.png" alt="">
+                <div class="text">
+                    Высокотехнологичное оборудование
+                </div>
+            </div>
+            <div class="whywe-card">
+                <img src="../../static/main/media/whywe/4.png" alt="">
+                <div class="text">
+                    Профессиональные специалисты высокого класса
+                </div>
+            </div>
+            <div class="whywe-card">
+                <img src="../../static/main/media/whywe/5.png" alt="">
+                <div class="text">
+                    Быстрая доставка по всей России и стран СНГ
+                </div>
+            </div>
+            <div class="whywe-card">
+                <img src="../../static/main/media/whywe/6.png" alt="">
+                <div class="text">
+                    Выгодные скидки при оптовых закупках 
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+
+{% include 'sections/numbers.html' %}
+{% include 'sections/hits.html' %}
+{% include 'sections/contact_us.html' %}
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        speed: 500,
+        effect: 'slide',
+        loop: true,
+
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination',
+        },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // And if we need scrollbar
+        scrollbar: {
+            el: '.swiper-scrollbar',
+        },
+    });
+</script>
 {% endblock %}
+ 

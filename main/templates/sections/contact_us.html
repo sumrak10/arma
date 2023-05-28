@@ -1,0 +1,16 @@
+{% load static %}
+<div class="wrapper wrapper-contact-us">
+    <div class="section section-contact-us">
+        <div class="contact-us-img">
+            <img src="{% static '/main/media/contact_us/contact_us_element.png' %}" alt="">
+        </div>
+        <form class="contact-us-form" action="{% url 'question' %}" method="post">
+            {% csrf_token %}
+            <h3>Оставьте заявку<br>и мы с Вами свяжемся</h3>
+            <input type="text" name="name" placeholder="Ваше ФИО или название организации">
+            <input type="text" name="contacts" placeholder="Ваши контакты (укажите любые, удобные для вас)">
+            <textarea name="text" rows="6" placeholder="Напишите что бы Вы хотели узнать или уточнить?"></textarea>
+            <button type="submit" name="" id="">ОТПРАВИТЬ</button>
+        </form>
+    </div>
+</div>

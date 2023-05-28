@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-
-
+    // console.log(localStorage.getItem("basket"))
+    // КРАСНЫЙ БЭДЖИК В ХЕАДЕРЕ У КНОПКИ "КОРЗИНА"
     if (localStorage.getItem("basket") && localStorage.getItem("basket") != '{}') {
-        console.log(localStorage.getItem("basket"))
         document.getElementById("basket-data").value = localStorage.getItem("basket");
         document.getElementById("basket-not-empty").style.display = "block";
         
@@ -10,38 +9,40 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("basket-not-empty").style.display = "none";
     }
 
-    const elements = document.getElementsByClassName("put_in_basket");
 
+    // ОТРИСОВКА КНОПОК В НУЖНОМ СОСТОЯНИИ НА СТРАНИЦЕ С ПРОДУКТАМИ (/category)
+    const elements = document.getElementsByClassName("put_in_basket");
     for (let i = 0; i < elements.length; i++) {
-        let basket = {};
+        var basket = {};
         if (localStorage.getItem("basket")) {
             basket = JSON.parse(localStorage.getItem("basket"));
         }
-        const productId = elements[i].getAttribute("product_id");
+        var productId = elements[i].getAttribute("product-id");
         if (basket.hasOwnProperty(productId)) {
-            console.log(elements[i])
             elements[i].innerHTML = "В корзине"
-            elements[i].style.backgroundColor = "#414141"
+            elements[i].classList.toggle("product-card-buttons-in-basket-active")
         }
     }
     
+    // СОБЫТИЯ НА КНОПКИ У ТОВАРОВ НА СТРАНИЦЕ С ПРОДУКТАМИ
     for (let i = 0; i < elements.length; i++) {
     elements[i].addEventListener("click", function() {
-        let basket = {};
+        var basket = {};
         if (localStorage.getItem("basket")) {
             basket = JSON.parse(localStorage.getItem("basket"));
         }
-        const productId = this.getAttribute("product_id");
+        var productId = this.getAttribute("product-id");
         if (basket.hasOwnProperty(productId)) {
             delete basket[productId];
             this.innerHTML = "В корзину"
-            this.style.backgroundColor = "#CC0000"
+            this.classList.toggle("product-card-buttons-in-basket-active")
         } else {
             basket[productId] = 1;
             this.innerHTML = "В корзине"
-            this.style.backgroundColor = "#414141"
+            this.classList.toggle("product-card-buttons-in-basket-active")
 
         }
+        // обновляем бэджик у кнопки корзины в хеадере и сохраняем корзину в локальное хранилище
         localStorage.setItem("basket", JSON.stringify(basket));
         if (localStorage.getItem("basket") == '{}') {
             document.getElementById("basket-not-empty").style.display = "none";
@@ -50,6 +51,50 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         document.getElementById("basket-data").value = localStorage.getItem("basket");
     });
+    }
+    // ОТРИСОВКА КНОПОК В НУЖНОМ СОСТОЯНИИ НА СТРАНИЦЕ САМОГО ТОВАРА
+    const element = document.querySelector("#put-in-basket")
+    const counter = document.querySelector("#product-count")
+    if (element) {
+        var basket = {};
+        if (localStorage.getItem("basket")) {
+            basket = JSON.parse(localStorage.getItem("basket"));
+        }
+        var productId = element.getAttribute("product-id");
+        if (basket.hasOwnProperty(productId)) {
+            element.innerHTML = "Уже в корзине"
+            element.classList.toggle("product-card-buttons-in-basket-active")
+            counter.value = basket[productId]
+        }
+    
+
+    // СОБЫТИЕ НА КНОПКУ НА СТРАНИЦЕ САМОГО ТОВАРА
+    document.querySelector("#put-in-basket").addEventListener("click", function() {
+        var basket = {};
+        if (localStorage.getItem("basket")) {
+            basket = JSON.parse(localStorage.getItem("basket"));
+        }
+        var count = document.querySelector("#product-count").value
+        var productId = this.getAttribute("product-id");
+        if (basket.hasOwnProperty(productId)) {
+            delete basket[productId];
+            this.innerHTML = "Добавить в корзину"
+            this.classList.toggle("product-card-buttons-in-basket-active")
+        } else {
+            basket[productId] = count;
+            this.innerHTML = "Уже в корзине"
+            this.classList.toggle("product-card-buttons-in-basket-active")
+        }
+
+        // обновляем бэджик у кнопки корзины в хеадере и сохраняем корзину в локальное хранилище
+        localStorage.setItem("basket", JSON.stringify(basket));
+        if (localStorage.getItem("basket") == '{}') {
+            document.getElementById("basket-not-empty").style.display = "none";
+        } else {
+            document.getElementById("basket-not-empty").style.display = "block";
+        }
+        document.getElementById("basket-data").value = localStorage.getItem("basket");
+    })
     }
 
 })

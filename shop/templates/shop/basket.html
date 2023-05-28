@@ -7,122 +7,111 @@
 
 
 {% block content %}
-<div class="wrapper">
-    <div class="content">
-        <div class="basket-section">
-            {% if basket_not_empty %} 
-                <table cellpadding="10">
-                    <caption>Корзина</caption>
-                    <thead>
-                      <tr>
-                        <th scope="col">Изображение</th>
-                        <th scope="col">Наименование</th>
-                        <th scope="col">Оптовая цена</th>
-                        <th scope="col">Розничная цена(в рублях)</th>
-                        <th scope="col">Количество</th>
-                        <th scope="col">Итого</th>
-                      </tr>
-                    </thead>
-                    <tbody id="products">
-                        {% for product in basket %}
-                        <tr id="product">
-                            <td><img src="{{ product.img.url }}" alt=""></td>
-                            <td product_id="{{ product.id }}">{{ product.name }}</th>
-                            <td id="price1">{{ product.wholesale_price }}</td>
-                            <td id="price2">{{ product.retail_price }}</td>
-                            <td id="count" class="count">
-                                <div class="table-count">
-                                    <button class="table-count-btn table-count-btn-inc">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                            <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7Zm-1-5C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Z"/>
-                                        </svg>
-                                    </button>
-                                    <input id="table-count-btn-input" class="table-count-input" type="text" value="1" onchange="calculateTable()">
-                                    <button class="table-count-btn table-count-btn-dec">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                            <path d="M7 11v2h10v-2H7Zm5-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </td>
-                            <td id="summ">100</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <th scope="row">Итоговая сумма</th>
-                        <th id="all_summ"></th>
-                      </tr>
-                    </tfoot>
-                  </table>
-            {% else %}
-            <div class="basket_empty">
-                {% if errors %}
-                <div class="errors-text">
-                    <div>Перейдите в корзину и исправьте данные ошибки:</div> <br>
-                    {% for error in errors_text %}
-                    <div>
-                        {{ error }}
+
+<div class="wrapper wrapper-basket">
+    <div class="section section-basket">
+        {% if basket %}
+        <div class="title">КОРЗИНА</div>
+        {% else %}
+        <div class="title" style="padding: 120px 0;">КОРЗИНА ПУСТА</div>
+        {% endif %}
+        {% if basket %}
+        <hr class="arma-hr">
+        <div class="basket-list">
+            {% for item in basket %}
+                <div class="item-in-basket" product-id="{{ item.id }}" product-discount="{{ item.discount }}">
+                    <div class="item-image">
+                        {% if item.discount != 0 %}
+                        <div class="item-image-discount {% if item.discount >= 50 %}item-image-discount-red{% endif %}">- {{ item.discount }}%</div>
+                        {% endif %}
+                        <img src="{{ item.img.url }}" alt="">
                     </div>
-                    {% endfor %}
+                    <div class="item-column">
+                        <div class="item-label">Наименование</div>
+                        <div class="item-value">{{ item.name }}</div>
+                    </div>
+                    <div class="item-column">
+                        <div class="item-label">Оптовая цена</div>
+                        <div class="item-value"><span class="wholesale-price">{{ item.wholesale_price }}</span><span> ₽</span></div>
+                    </div>
+                    <div class="item-column">
+                        <div class="item-label">Розничная цена</div>
+                        <div class="item-value"><span class="retail-price">{{ item.retail_price }}</span><span> ₽</span></div>
+                    </div>
+                    <div class="item-column">
+                        <div class="counter-buttons">
+                            <button class="dec"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11 17H25V21H11V17Z"/>
+                                </svg>
+                            </button>
+                            <input class="number" type="number" name="value" id="product-count" value="1" min="0">
+                            <button class="inc"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M28 20.8265H19.875V29H16.125V20.8265H8V17.2192H16.125V9H19.875V17.2192H28V20.8265Z"/>
+                                </svg></button>
+                        </div>
+                    </div>
+                    <div class="item-column">
+                        <div class="item-label">Итого</div>
+                        <div class="item-value"><span class="summ-price">0</span></span><span> ₽</span></div>
+                    </div>
                 </div>
+            {% endfor %}
+        </div>
+        <form class="contact-basket-form" action="{% url 'basket_is_ready' %}" method="post">
+            {% csrf_token %}
+            <div class="titles">
+                {% if errors %}
+                <div>Заполните нужные поля и продолжите</div>
                 {% else %}
-                Ваша корзина пуста
+                <div>Оформить заказ</div>
                 {% endif %}
-            </div>
-            {% endif %}
-        </div>
-        
-        {% if basket_not_empty %}
-        <div class="form-section">
-            
-            <form class="form" action="{% url 'basket_is_ready' %}" method="post">
-                {% csrf_token %}
-                
-                <label>Ваше ФИО</label>
-                <input name="name" type="text">
-                <label>Ваши контактные данные</label>
-                <input name="contacts" type="text">
-                <input name="successful_basket" type="hidden" id="successful_basket" value="">
-                <input type="hidden" name="summ" id="successful_basket_summ" value="">
-                <div class="button-div">
-                    <button type="submit">Отправить заявку</button>
+                <div>
+                    <span>Общая стоимость: </span>
+                    <span id="all-summ-price">0</span>
+                    <span> ₽</span>
                 </div>
-                
-            </form>
-        </div>
+            </div>
+            <input type="hidden" name="successful_basket" id="successful_basket" value="{}">
+            <input type="hidden" name="successful_basket_summ" id="successful_basket_summ" value=0"">
+            {% if error_fio %}
+                <label for="fio">Введите ваше ФИО в поле ниже, чтобы мы знали, как к вам обращаться</label>
+            {% endif %}
+            {% if error_fio %}
+                <input id="fio" type="text" name="name" placeholder="Ваше ФИО или название организации">
+            {% else %}
+                <input id="fio" type="text" name="name" placeholder="Ваше ФИО или название организации" value="{{ name }}">
+            {% endif %}
+            {% if error_contacts %}
+                <label for="contacts">Введите удобные для вас контакты в поле ниже</label>
+            {% endif %}
+            {% if error_contacts %}
+                <input id="contacts" type="text" name="contacts" placeholder="Ваши контакты (укажите любые, удобные для вас)">
+            {% else %}
+                <input id="contacts" type="text" name="contacts" placeholder="Ваши контакты (укажите любые, удобные для вас)" value="{{ contacts }}">
+            {% endif %}
+            <button type="submit" name="" id="">ЗАКАЗАТЬ</button>
+        </form>
         {% endif %}
     </div>
 </div>
+
+<script src="{% static 'shop/js/counter.js' %}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        calculateTable();
+        calculateTable(true);
 
 
-        const incBtns = document.querySelectorAll('.table-count-btn-inc');
-        const decBtns = document.querySelectorAll('.table-count-btn-dec');
+        const incBtns = document.querySelectorAll('.inc');
+        const decBtns = document.querySelectorAll('.dec');
 
         incBtns.forEach(btn => {
         btn.addEventListener('click', e => {
-            const input = e.target.parentNode.parentNode.parentNode.querySelector('#table-count-btn-input');
-            const currentValue = parseInt(input.value);
-            input.value = currentValue + 1;
             calculateTable();
         });
         });
 
         decBtns.forEach(btn => {
         btn.addEventListener('click', e => {
-            const input = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('#table-count-btn-input');
-            const currentValue = parseInt(input.value);
-            if(currentValue > 0) {
-                input.value = currentValue - 1;
-            }
             calculateTable();
         });
         });
@@ -138,43 +127,46 @@
             return false;
         }
     }
-    function calculateTable() {
-        let basket = {};
-        // if (localStorage.getItem("basket")) {
-        //     basket = JSON.parse(localStorage.getItem("basket"));
-        // }
-        summ = 0
-        products = document.getElementById("products")
-        for(var i=0; i<products.rows.length; i++) {
-            product = products.rows[i]
-            id = product.cells[1].getAttribute("product_id")
-            price1 = product.cells[2].innerHTML
-            price2 = product.cells[3].innerHTML
-            count = product.cells[4].querySelector("#table-count-btn-input").value
+    function calculateTable(initial=false) {
+        var basket = {};
+        if (initial) {
+            if (localStorage.getItem("basket")) {
+                var full_basket = JSON.parse(localStorage.getItem("basket"));
+            }
+        }
+        var summ = 0
+        var products = document.querySelectorAll(".item-in-basket")
+        for(let i = 0; i < products.length; i++) {
+            let product = products[i]
+            let id = product.getAttribute("product-id")
+            let price1 = product.querySelector(".wholesale-price").innerHTML
+            let price2 = product.querySelector(".retail-price").innerHTML
+            if (initial) {
+                product.querySelector(".number").value = full_basket[id]
+            }
+            count = product.querySelector(".number").value
             if (count < 1) {
-                res = deleteProduct(products.rows[i])
+                res = deleteProduct(product, id)
                 if (!res) {
-                    product.cells[4].querySelector("#table-count-btn-input").value = 1;
+                    product.querySelector(".number").value = 1;
                     count = 1;
-                } else {
-                    calculateTable()
                 }
             }
-            basket[id] = count;
-            // КОНСТАНТА ПО СКИДКАМ СЕЙЧАС РАВНА 100
-            if (count < 100) {
-                product.cells[5].innerHTML = count * price2
-            } else {
-                product.cells[5].innerHTML = count * price1
+            if (count>0) {
+                basket[id] = count;
             }
-            summ += parseInt(product.cells[5].innerHTML)
+            // КОНСТАНТА ПО СКИДКАМ СЕЙЧАС РАВНА 100
+            if (count < 10) {
+                product.querySelector(".summ-price").innerHTML = count * price2 - (count * price2 * (parseInt(product.getAttribute("product-discount"))/100))
+            } else {
+                product.querySelector(".summ-price").innerHTML = count * price1 - (count * price1 * (parseInt(product.getAttribute("product-discount"))/100))
+            }
+            summ += parseInt(product.querySelector(".summ-price").innerHTML)
         };
-        console.log(basket)
-        document.getElementById("all_summ").innerHTML = summ
+        document.getElementById("all-summ-price").innerHTML = summ
         localStorage.setItem("basket", JSON.stringify(basket));
         document.getElementById("successful_basket").value = JSON.stringify(basket);
         document.getElementById("successful_basket_summ").value = summ
-        document.getElementById("basket-data").value = localStorage.getItem("basket");
     }
 </script>
 {% endblock %}

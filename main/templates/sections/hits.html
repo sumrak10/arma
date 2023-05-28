@@ -1,0 +1,47 @@
+{% load static %}
+<div class="wrapper wrapper-hits">
+    <div class="section section-hits">
+        <div class="hits slider">
+            <div class="hits-top-side">
+                <span class="hits-top-title">
+                    ХИТЫ ПРОДАЖ
+                </span>
+                <div class="hits-top-side-right-sidebar">
+                    <a class="hits-see-more" href="/shop">Смотреть все</a>
+                    <div class="slider-buttons">
+                        <img class="left_slider_button green-slider-button" src="{% static 'left_arrow.svg' %}" alt="">
+                        <img class="right_slider_button green-slider-button" src="{% static 'right_arrow.svg' %}" alt="">
+                    </div>
+                </div>
+            </div>
+            <hr style="background-color: white; width: auto;">
+            <div class="hits-product-list scroll_element">
+                {% for product in hits %}
+                    <div class="product-card">
+                        <img class="product-card-image" src="{{ product.img.url }}" alt="">
+                        {% if product.discount != 0 %}
+                            <div class="product-card-discount {% if product.discount >= 50 %}product-card-discount-red{% endif %}">
+                                <span>- {{ product.discount }}%</span>
+                            </div>
+                        {% endif %}
+                        <span class="product-card-title">{{ product.name }}</span>
+                        <div class="product-card-price-row">
+                            <div class="product-card-price">
+                                <span>{{ product.retail_price }} ₽</span>
+                                <span>за 1 шт</span>
+                            </div>
+                            <span class="product-card-old-price">
+                                {{ product.old_price }} ₽
+                            </span>
+                        </div> 
+                        <div class="product-card-buttons-row">
+                            <a href="/shop/products/{{ product.id }}" class="product-card-buttons-about">Подробнее</a>
+                            <button class="product-card-buttons-in-basket put_in_basket" product-id="{{ product.id }}">В корзину</button>
+                        </div>
+                    </div>
+            {% endfor %}
+            </div>
+        </div>
+        <a class="hits-see-more mobile" href="/shop">Смотреть все</a>
+    </div>
+</div>

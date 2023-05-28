@@ -2,14 +2,116 @@
 
 {% load static %}
 {% block css_link %} 
-<link rel="stylesheet" href="{% static 'main/css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/about.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/sections/numbers.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/sections/contact_us.css' %}">
+{% endblock %}
+ 
+{% block content %}
+<div class="wrapper wrapper-about">
+    <div class="section section-about">
+        <div class="image-side">
+            <img src="{% static 'main/media/about/logo.svg' %}" alt="">
+            <div class="photo-slider">
+                <div class="photo-slider-buttons">
+                    <img class="left_slider_button bw-slider-button" src="{% static 'left_arrow.svg' %}" alt="">
+                    <img class="right_slider_button bw-slider-button" src="{% static 'right_arrow.svg' %}" alt="">
+                </div>
+                <div class="sliding-imgs">
+                    <img class="active-img" data-img-id="0" src="{% static 'main/media/about/photo1.png' %}" alt="">
+                    <img class="inactive-img" src="{% static 'main/media/about/photo1.png' %}" alt="">
+                    <img class="inactive-img" src="{% static 'main/media/about/photo2.png' %}" alt="">
+                    <img class="inactive-img" src="{% static 'main/media/about/photo3.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="text-side">
+            <div class="text">
+                <p>Современное модернизированное предприятие, производственные линии которого оснащены новейшим высокотехнологичным оборудованием, с грамотно подобранным коллективом профессиональных и амбициозных специалистов высокого класса: дизайнеров, маркетологов, конструкторов, закройщиков и швей</p>
+                <p>А удобное расположение производства в Москве, на пересечении множества магистралей и транспортных путей, позволяет найти логистические решения для быстрой доставки изделий практически <b>в любую точку России и стран СНГ</b></p>
+                <p>Поможем Вам закрыть любой тендер или закупку по пошиву одежды, спальных мешков и других товаров в данной тематикеРасположены на территории бывшего, знаменитого завода "Красный Богатырь", выпускавшего резиновую и резино-такстильную обувь (сапоги, боты), формовые и неформовые изделия</p>
+            </div>
+            <div class="label">
+                <svg width="73" height="86" viewBox="0 0 73 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M36.5 74.8067L56.575 55.2144C60.545 51.3395 63.2484 46.4027 64.3436 41.0282C65.4388 35.6538 64.8764 30.0832 62.7276 25.0207C60.5789 19.9582 56.9402 15.6312 52.2717 12.5869C47.6032 9.54265 42.1147 7.91777 36.5 7.91777C30.8853 7.91777 25.3968 9.54265 20.7283 12.5869C16.0598 15.6312 12.4211 19.9582 10.2724 25.0207C8.1236 30.0832 7.56124 35.6538 8.6564 41.0282C9.75155 46.4027 12.455 51.3395 16.425 55.2144L36.5 74.8067ZM36.5 86L10.6905 60.811C5.58589 55.8291 2.10964 49.4818 0.701321 42.5718C-0.707003 35.6617 0.0158444 28.4993 2.77846 21.9902C5.54107 15.4811 10.2194 9.91764 16.2217 6.00342C22.2241 2.0892 29.281 0 36.5 0C43.719 0 50.7759 2.0892 56.7783 6.00342C62.7806 9.91764 67.4589 15.4811 70.2215 21.9902C72.9842 28.4993 73.707 35.6617 72.2987 42.5718C70.8904 49.4818 67.4141 55.8291 62.3095 60.811L36.5 86ZM36.5 43.5381C38.6512 43.5381 40.7143 42.7041 42.2354 41.2196C43.7565 39.735 44.6111 37.7215 44.6111 35.6221C44.6111 33.5226 43.7565 31.5091 42.2354 30.0245C40.7143 28.54 38.6512 27.706 36.5 27.706C34.3488 27.706 32.2857 28.54 30.7646 30.0245C29.2435 31.5091 28.3889 33.5226 28.3889 35.6221C28.3889 37.7215 29.2435 39.735 30.7646 41.2196C32.2857 42.7041 34.3488 43.5381 36.5 43.5381ZM36.5 51.4542C32.1976 51.4542 28.0714 49.7862 25.0292 46.8171C21.9869 43.848 20.2778 39.821 20.2778 35.6221C20.2778 31.4231 21.9869 27.3961 25.0292 24.427C28.0714 21.4579 32.1976 19.7899 36.5 19.7899C40.8024 19.7899 44.9286 21.4579 47.9708 24.427C51.0131 27.3961 52.7222 31.4231 52.7222 35.6221C52.7222 39.821 51.0131 43.848 47.9708 46.8171C44.9286 49.7862 40.8024 51.4542 36.5 51.4542Z" fill="#465F30"/>
+                </svg>
+                <h4>Мы есть в городах</h4>
+                <div class="col">
+                    <div class="row">
+                        <p>г. Москва</p>
+                        <p>г. Москва</p>
+                    </div>
+                    <div class="row">
+                        <p>г. Москва</p>
+                        <p>г. Москва</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper wrapper-delivery">
+    <div class="section section-delivery">
+        <div class="delivery">
+            <h2>Доставка<br>по всей России<br>и стран СНГ</h2>
+            <img src="{% static 'main/media/about/arrow.png' %}" alt="">
+            
+            <img class="side-img-mobile" src="{% static 'main/media/about/car.png' %}" alt="">
+            <button>Подробнее</button>
+        </div>
+        
+        <img class="side-img" src="{% static 'main/media/about/car.png' %}" alt="">
+    </div>
+</div>
+
+{% include 'sections/numbers.html' %}
+
+<div class="wrapper wrapper-team">
+    <div class="section section-team">
+        <div class="team slider">
+            <div class="team-top-side">
+                <span class="team-top-title">
+                    НАША КОМАНДА
+                </span>
+                <div class="team-top-side-right-sidebar">
+                    <div class="slider-buttons">
+                        <img class="left_slider_button green-slider-button" src="{% static 'left_arrow.svg' %}" alt="">
+                        <img class="right_slider_button green-slider-button" src="{% static 'right_arrow.svg' %}" alt="">
+                    </div>
+                </div>
+            </div>
+            <hr style="background-color: white; width: auto;">
+            <div class="team-product-list scroll_element">
+                {% for member in members %}
+                <div class="user-card">
+                    <img src="{{ member.img.url }}" alt="">
+                    <div class="user-data">
+                        <div>
+                            <p>{{ member.name }}</p>
+                            <p>{{ member.job }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-yt-video">
+    <div class="section section-yt-video">
+        <div class="text-side">
+            <p>Посмотрите<br>на один<br>из наших цехов</p>
+            <img src="{% static 'main/media/about/arrow2.png' %}" alt="">
+        </div>
+        <iframe width="633" height="443" src="https://www.youtube.com/embed/MAYOw2T8ADQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+</div>
+
 {% endblock %}
 
-{% block content %}
-
-<div class="about">
-    <div class="wrapper">
-        <div class="content-section">
+        <!-- <div class="content-section">
             <div class="company-des">
                 <div class="company-des-text">
                     <div class="company-des-title">Производственная компания «Арма-72»</div>
@@ -58,7 +160,4 @@
             </div>
         </div>
     </div>
-</div>
-
-
-{% endblock %}
+</div> -->

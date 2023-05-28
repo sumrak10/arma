@@ -3,62 +3,39 @@
 {% load static %}
 {% block css_link %} 
 <link rel="stylesheet" href="{% static 'shop/css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/sections/hits.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/sections/contact_us.css' %}">
 {% endblock %}
 
 
-{% block content %}
+{% block content %} 
 
-<div class="wrapper">
-    <div class="section">
-        <div class="hits">
-            <div class="hits-title">Хиты продаж</div>
-            <div class="cards">
-                {% for hit in hits %}
-                <div class="card">
-                    <img src="{{ hit.img.url }}" alt="Ошибка загрузки изображения">
-                    <div class="name">{{ hit.name }}</div>
-                    <div class="prices">
-                        <div class="oldprice">{{ hit.old_price }} р.</div>
-                        <div class="price">
-                            <div class="number">
-                                {{ hit.wholesale_price }} р.
-                            </div>
-                            <div class="text">
-                                /шт
-                            </div>
-                        </div>
-                    </div>
-                    <div class="buttons">
-                        <a href="products/{{ hit.id }}" class="more">
-                            Подробнее
-                        </a>
-                        <div class="in-basket put_in_basket" product_id="{{ hit.id }}">
-                            В корзину
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+<div class="wrapper wrapper-categories">
+    <div class="section section-categories">
+        <div class="categories-text">
+            <div class="categories-text-title">
+                КАТЕГОРИИ
             </div>
         </div>
+        <hr class="arma-hr">
         <div class="categories">
-            <div class="categories-title">Категории</div>
-            <div class="category-cards">
-                {% for category in categories %}
-                <a href="categories/{{ category.id }}" class="category-card">
-                    <div class="name">
-                        <div>
-                            {{ category.name }}
-                        </div>
-                    </div>
+            {% for category in categories %}
+            <a href="categories/{{ category.id }}" class="categories-card">
+                <div class="img">
                     <img src="{{ category.img.url }}" alt="">
-                </a>
-                {% endfor %}
-                
-            </div>
+                </div>
+                <div class="name">
+                    <div>
+                        {{ category.name }}
+                    </div>
+                    <hr class="arma-hr">
+                </div>
+            </a>
+            {% endfor %}
         </div>
     </div>
 </div>
-
-
+{% include 'sections/hits.html' %}
+{% include 'sections/contact_us.html' %}
 
 {% endblock %}

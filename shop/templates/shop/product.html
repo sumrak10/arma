@@ -1,131 +1,342 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load filters %}
 {% block css_link %} 
 <link rel="stylesheet" href="{% static 'shop/css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/sections/contact_us.css' %}">
 {% endblock %}
 
 
 {% block content %}
-<div class="wrapper">
-    <div class="section">
-        <div class="shop-nav">
-            <a href="/shop/" class="shop-nav-link">
-                <svg class="shop-nav-link-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
-                    <path d="M15.65 3.299 14.1 1.75 5.35 10.5l8.75 8.75 1.55-1.549L8.447 10.5l7.201-7.201Z"/>
+<div id="write-review-wrapper" class="write-review-wrapper" {% if review %} style="display: flex;" {% endif %}>
+    <form class="write-review-form" action="{% url 'save_review' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if review %}
+        <label for="fio">
+            Заполните поле ФИО
+        </label>
+        {% endif %}
+        <input id="fio" type="text" name="name" placeholder="Ваше ФИО или название организации" {% if review %} value="{{ review.name }}" {% endif %}>
+        {% if review %}
+        <label for="review-text">
+            Заполните поле ниже
+        </label>
+        {% endif %}
+        <textarea id="review-text" type="text" name="text" placeholder="Поделитесь своими впечатлениями" rows="12">{% if review %}{{ review.text }}{% endif %}</textarea>
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <div class="photos-and-stars">
+            <input type="file" id="photos" name="photos" accept="image/*,image/jpeg,image/png" multiple>
+            <label for="photos" class="photos-label">
+               <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.9504 5.64556L6.29436 11.3026C6.19885 11.3948 6.12267 11.5052 6.07026 11.6272C6.01785 11.7492 5.99026 11.8804 5.98911 12.0132C5.98795 12.1459 6.01325 12.2776 6.06354 12.4005C6.11382 12.5234 6.18807 12.6351 6.28196 12.729C6.37586 12.8228 6.48751 12.8971 6.6104 12.9474C6.7333 12.9977 6.86498 13.023 6.99776 13.0218C7.13054 13.0207 7.26176 12.9931 7.38376 12.9407C7.50577 12.8883 7.61611 12.8121 7.70836 12.7166L13.3654 7.06056C13.928 6.4979 14.2441 5.73478 14.2441 4.93906C14.2441 4.14334 13.928 3.38022 13.3654 2.81756C12.8027 2.2549 12.0396 1.93881 11.2439 1.93881C10.4481 1.93881 9.68501 2.2549 9.12236 2.81756L3.46536 8.47456C2.99143 8.93669 2.61399 9.48832 2.35491 10.0975C2.09584 10.7066 1.9603 11.3611 1.95615 12.023C1.95201 12.685 2.07934 13.3411 2.33075 13.9535C2.58217 14.5658 2.95268 15.1221 3.42077 15.5902C3.88887 16.0582 4.44524 16.4286 5.05761 16.6799C5.66998 16.9313 6.32616 17.0585 6.98809 17.0543C7.65002 17.05 8.30452 16.9144 8.91362 16.6552C9.52272 16.3961 10.0743 16.0185 10.5364 15.5446L16.1934 9.88856L17.6074 11.3026L11.9504 16.9596C11.3003 17.6096 10.5286 18.1252 9.67928 18.477C8.82996 18.8288 7.91966 19.0099 7.00036 19.0099C6.08106 19.0099 5.17076 18.8288 4.32144 18.477C3.47211 18.1252 2.7004 17.6096 2.05036 16.9596C1.40031 16.3095 0.884671 15.5378 0.53287 14.6885C0.181069 13.8392 -6.84932e-09 12.9289 0 12.0096C6.84932e-09 11.0903 0.181069 10.18 0.53287 9.33064C0.884671 8.48132 1.40031 7.7096 2.05036 7.05956L7.70836 1.40356C8.65137 0.492769 9.91438 -0.0112031 11.2254 0.000189013C12.5363 0.0115811 13.7904 0.537426 14.7175 1.46447C15.6445 2.39151 16.1703 3.64557 16.1817 4.95655C16.1931 6.26754 15.6891 7.53055 14.7784 8.47356L9.12236 14.1326C8.84369 14.4112 8.51288 14.6321 8.14881 14.7829C7.78474 14.9336 7.39455 15.0112 7.0005 15.0112C6.60646 15.0111 6.21628 14.9335 5.85225 14.7826C5.48822 14.6318 5.15746 14.4107 4.87886 14.1321C4.60026 13.8534 4.37927 13.5226 4.22852 13.1585C4.07777 12.7944 4.0002 12.4043 4.00025 12.0102C4.0003 11.6162 4.07795 11.226 4.22879 10.8619C4.37963 10.4979 4.60069 10.1672 4.87936 9.88856L10.5364 4.23156L11.9504 5.64556Z" fill="#B4C7A4"/>
                 </svg>
-                <div class="shop-nav-link-text">
-                    К категориям
+               <span>Прикрепить фотографии</span>
+            </label>
+            <input type="hidden" name="rate" value="5" id="stars-rate-input">
+            <input type="hidden" name="review_id" id="review_id" {% if review %} value="{{ review.id }}" {% else %} value="none" {% endif %}>
+            <div class="write-rate-for-review">
+                <span>Оценить</span>
+                <div class="stars">
+                    <div class="star" star-number="1">
+                        <svg width="39" height="36" viewBox="0 0 39 36" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.5393 0L23.9261 13.5013H38.1222L26.6373 21.8456L31.0242 35.3469L19.5393 27.0026L8.05437 35.3469L12.4412 21.8456L0.95632 13.5013H15.1524L19.5393 0Z"/>
+                        </svg>
+                    </div>
+                    <div class="star" star-number="2">
+                        <svg width="39" height="36" viewBox="0 0 39 36" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.5393 0L23.9261 13.5013H38.1222L26.6373 21.8456L31.0242 35.3469L19.5393 27.0026L8.05437 35.3469L12.4412 21.8456L0.95632 13.5013H15.1524L19.5393 0Z"/>
+                        </svg>
+                    </div>
+                    <div class="star" star-number="3">
+                        <svg width="39" height="36" viewBox="0 0 39 36" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.5393 0L23.9261 13.5013H38.1222L26.6373 21.8456L31.0242 35.3469L19.5393 27.0026L8.05437 35.3469L12.4412 21.8456L0.95632 13.5013H15.1524L19.5393 0Z"/>
+                        </svg>
+                    </div>
+                    <div class="star" star-number="4">
+                        <svg width="39" height="36" viewBox="0 0 39 36" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.5393 0L23.9261 13.5013H38.1222L26.6373 21.8456L31.0242 35.3469L19.5393 27.0026L8.05437 35.3469L12.4412 21.8456L0.95632 13.5013H15.1524L19.5393 0Z"/>
+                        </svg>
+                    </div>
+                    <div class="star" star-number="5">
+                        <svg width="39" height="36" viewBox="0 0 39 36" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.5393 0L23.9261 13.5013H38.1222L26.6373 21.8456L31.0242 35.3469L19.5393 27.0026L8.05437 35.3469L12.4412 21.8456L0.95632 13.5013H15.1524L19.5393 0Z"/>
+                        </svg>
+                    </div>
                 </div>
-            </a>
-            <a href="/shop/categories/{{ product.category.id }}" class="shop-nav-link">
-                <svg class="shop-nav-link-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
-                    <path d="M15.65 3.299 14.1 1.75 5.35 10.5l8.75 8.75 1.55-1.549L8.447 10.5l7.201-7.201Z"/>
-                </svg>
-                <div class="shop-nav-link-text">
-                    К товарам
-                </div>
-            </a>
-        </div>
-        <div class="product">
-            <div class="image">
+            </div>
+         </div>
+         <div id="added_photos">
+
+         </div>
+        <button type="submit" name="" id="">ОТПРАВИТЬ</button>
+    </form>
+</div>
+
+<div class="wrapper wrapper-backto">
+    <div class="section section-backto">
+        <a href="/shop" class="backto">
+            <p>К категориям</p>
+            <div>
+                <img src="{% static 'right_arrow.svg' %}" alt="">
+            </div>
+        </a>
+        <a href="/shop/categories/{{ product.category.id }}" class="backto">
+            <p>К продуктам</p>
+            <div>
+                <img src="{% static 'right_arrow.svg' %}" alt="">
+            </div>
+        </a>
+    </div>
+</div>
+<div class="wrapper wrapper-product">
+    <div class="section section-product">
+        <div class="product-sides">
+            <div class="product-side">
                 <div class="main-image">
-                    <img id="main-image" src="{{ product.img.url }}" alt="">
+                    <img src="{{ product.img.url }}" alt="" id="main-image">
                 </div>
-                {% if other_images_founded %}
-                <div class="other-images">
-                    <img id="main-image" src="{{ product.img.url }}" alt="">
-                    {% for product_image in product_images %}
-                    <img src="{{ product_image.img.url }}" alt="">
+                {% if product_images_founded %}
+                <div class="other-images" id="other-images">
+                    {% for image in product_images  %}
+                    <img src="{{ image.img.url }}" alt="">
                     {% endfor %}
                 </div>
                 {% endif %}
             </div>
-            <div class="details">
-                <div class="name">
-                    {{ product.name }}
-                </div>
+            <div class="product-side">
+                <div class="title">{{ product.name }}</div>
                 <div class="prices">
-                    <div class="price-type">Оптовая цена</div>
                     <div class="price">
-                        <div class="number">
-                            {{ product.wholesale_price }} р.
-                        </div>
-                        <div class="text">
-                            /шт
-                        </div>
+                        <div>Оптовая цена</div>
+                        <div>{{ product.wholesale_price }} ₽ <span>за 1 шт.</span></div>
                     </div>
-                    <div class="price-type">Розничная цена</div>
                     <div class="price">
-                        <div class="number">
-                            {{ product.retail_price }} р.
+                        <div>Розничная цена</div>
+                        <div>{{ product.retail_price }} ₽ <span>за 1 шт.</span></div>
+                    </div>
+                </div>
+                <div class="counter">
+                    <div>Количество</div>
+                    <div class="buttons">
+                        <div class="counter-buttons">
+                            <button class="dec"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11 17H25V21H11V17Z"/>
+                                </svg>
+                            </button>
+                            <input class="number" type="number" name="value" id="product-count" value="0" min="0">
+                            <button class="inc"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M28 20.8265H19.875V29H16.125V20.8265H8V17.2192H16.125V9H19.875V17.2192H28V20.8265Z"/>
+                                </svg></button>
                         </div>
-                        <div class="text">
-                            /шт
-                        </div>
+                        <button class="in_basket" id="put-in-basket" product-id="{{ product.id }}">Добавить в корзину</button>
                     </div>
                 </div>
                 <div class="des">
-                    {{ product.des|linebreaksbr }}
-                </div>
-                <div class="in-basket put_in_basket" product_id="{{ product.id }}">
-                    В корзину
-                </div>
-            </div>
-        </div>
-        {% if product.video %}
-        <div class="yt-video">
-            <iframe src="{{ product.video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-        {% endif %}
-        <div class="comments">
-            {% for comment in comments %}
-            <div class="comment">
-                <div class="comment-side-img">
-                    <img src="{{ comment.img.url }}" alt="">
-                </div>
-                <div class="comment-side-text">
-                    <div class="name">
-                        {{ comment.name }}
-                    </div>
-                    <div class="text">
-                        {{ comment.text }}
-                    </div>
-                    <div class="date">
-                        {{ comment.created_at }}
+                    <div>Описание</div>
+                    <div>
+                        {{ product.des }}
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
-        <div class="form-section">
-            <form class="form" action="{% url 'add_comment' %}" method="post">
-                {% csrf_token %}
-                <label>Ваше ФИО или название организации</label>
-                <input name="name" type="text">
-                <input name="product_id" type="hidden" value="{{ product.id }}">
-                <label>Расскажите нам о ваших впечатлениях</label>
-                <textarea name="text" name="" id="" cols="30" rows="10"></textarea>
-                <div class="button-div">
-                    <button type="submit">Отправить комментарий</button>
+        <hr class="base-hr">
+        <div class="product-sides">
+            <div class="product-side reviews">
+                <div class="reviews-header">
+                    <div>Отзывы
+                        <svg width="76" height="12" viewBox="0 0 76 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 1.61803L6.87156 4.30041L6.98381 4.6459H7.34708H10.1675L7.88573 6.3037L7.59184 6.51722L7.7041 6.86271L8.57565 9.54508L6.29389 7.88729L6 7.67376L5.70611 7.88729L3.42435 9.54508L4.2959 6.86271L4.40816 6.51722L4.11426 6.3037L1.8325 4.6459H4.65292H5.01619L5.12844 4.30041L6 1.61803Z" stroke="#85AB3A"/>
+                        <path d="M22 1.61803L22.8716 4.30041L22.9838 4.6459H23.3471H26.1675L23.8857 6.3037L23.5918 6.51722L23.7041 6.86271L24.5757 9.54508L22.2939 7.88729L22 7.67376L21.7061 7.88729L19.4243 9.54508L20.2959 6.86271L20.4082 6.51722L20.1143 6.3037L17.8325 4.6459H20.6529H21.0162L21.1284 4.30041L22 1.61803Z" stroke="#85AB3A"/>
+                        <path d="M38 1.61803L38.8716 4.30041L38.9838 4.6459H39.3471H42.1675L39.8857 6.3037L39.5918 6.51722L39.7041 6.86271L40.5757 9.54508L38.2939 7.88729L38 7.67376L37.7061 7.88729L35.4243 9.54508L36.2959 6.86271L36.4082 6.51722L36.1143 6.3037L33.8325 4.6459H36.6529H37.0162L37.1284 4.30041L38 1.61803Z" stroke="#85AB3A"/>
+                        <path d="M54 1.61803L54.8716 4.30041L54.9838 4.6459H55.3471H58.1675L55.8857 6.3037L55.5918 6.51722L55.7041 6.86271L56.5757 9.54508L54.2939 7.88729L54 7.67376L53.7061 7.88729L51.4243 9.54508L52.2959 6.86271L52.4082 6.51722L52.1143 6.3037L49.8325 4.6459H52.6529H53.0162L53.1284 4.30041L54 1.61803Z" stroke="#85AB3A"/>
+                        <path d="M70 1.61803L70.8716 4.30041L70.9838 4.6459H71.3471H74.1675L71.8857 6.3037L71.5918 6.51722L71.7041 6.86271L72.5757 9.54508L70.2939 7.88729L70 7.67376L69.7061 7.88729L67.4243 9.54508L68.2959 6.86271L68.4082 6.51722L68.1143 6.3037L65.8325 4.6459H68.6529H69.0162L69.1284 4.30041L70 1.61803Z" stroke="#85AB3A"/>
+                        </svg></div>
+                    <div id="write-review-button">
+                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.09091 1.73333V2.88889H1.18182V10.6224L2.22359 9.82222H10.6364V5.77778H11.8182V10.4C11.8182 10.5532 11.7559 10.7002 11.6451 10.8086C11.5343 10.9169 11.384 10.9778 11.2273 10.9778H2.6325L0 13V2.31111C0 2.15788 0.0622563 2.01092 0.173073 1.90256C0.28389 1.79421 0.43419 1.73333 0.590909 1.73333H7.09091ZM10.0455 1.73333V0H11.2273V1.73333H13V2.88889H11.2273V4.62222H10.0455V2.88889H8.27273V1.73333H10.0455Z" fill="#828282"/>
+                            </svg>
+                            Написать отзыв
+                    </div>
                 </div>
+                {% if reviews_founded %}
+                <div class="reviews-list" id="reviews-list">
+                    {% for r in reviews %}
+                        <div class="review">
+                            <div class="review-data">
+                                <div class="review-user-data">
+                                    <img src="{{ r.img.url }}" alt="">
+                                    <div class="review-user-data-name-date">
+                                        <div class="review-user-data-name">{{ r.name }}</div>
+                                        <div class="review-user-data-date">{{ r.created_at }}</div>
+                                    </div>
+                                </div>
+                                <div class="review-rate">
+                                    {% for i in 0|range:r.rate %}
+                                    <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6 0L7.34708 4.1459H11.7063L8.17963 6.7082L9.52671 10.8541L6 8.2918L2.47329 10.8541L3.82037 6.7082L0.293661 4.1459H4.65292L6 0Z" fill="#F5B81C"/>
+                                        </svg>
+                                    {% endfor%}
+                                </div>
+                            </div>
+                            <div class="review-text">
+                                {{ r.text }}
+                            </div>
+                            {% if r.text|length > 35%}
+                            <div class="show-more">
+                                Посмотреть полностью
+                            </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if reviews_more_than_2 %}
+                <div class="download-reviews" id="download-reviews">
+                    Смотреть все отзывы
+                </div>
+                {% endif %}
+                {% else %}
+                    <p class="help-text">Отзывов пока что нет, будьте первыми!</p>
+                {% endif %}
+            </div>
+            <div class="product-side">
+                <div class="characteristics-title">Характеристики</div>
                 
-            </form>
+                {% if characteristics_founded %}
+                <div class="characteristics">
+                    {% for ch in characteristics %}
+                    <div class="characteristic">
+                        <div class="dotted"></div>
+                        <div class="text">{{ ch.name }} </div>
+                        <div class="text"> {{ ch.value }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="help-text">Товару не свойственны характеристики</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
 
+{% include 'sections/contact_us.html' %}
+
+<script src="{% static 'shop/js/counter.js' %}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        main_img = document.getElementById("main-image")
-        imgs_block = document.getElementsByClassName("other-images")[0];
+        const stars = document.querySelector(".stars")
+        stars.addEventListener("click", (e) => {
+            if (e.target.tagName == "path") {
+                target = e.target.parentElement.parentElement
+            }
+            if (e.target.tagName == "svg") {
+                target = e.target.parentElement
+            }
+            if (target.classList.contains("star")) {
+                for (let i = 0; i < 5; i++) {
+                    let star = stars.querySelectorAll(".star")[i].querySelector("svg")
+                    star.style.fill = "#7c7c7c"
+                }
+                rate = target.getAttribute("star-number")
+                document.querySelector("#stars-rate-input").value = rate
+                for (let i = 0; i < rate; i++) {
+                    let star = stars.querySelectorAll(".star")[i].querySelector("svg")
+                    star.style.fill = "#fff200"
+                }
+            }
+        })
+
+
+        document.querySelector("#write-review-button").addEventListener("click", (e) => {
+            document.querySelector("#write-review-wrapper").style.display = "flex"
+        })
+        document.querySelector("#write-review-wrapper").addEventListener("click", (e) => {
+            if (e.target.classList.contains("write-review-wrapper"))
+            document.querySelector("#write-review-wrapper").style.display = "none"
+        })
+
+        document.querySelector("#photos").addEventListener("change", (e) => {
+            var formData = new FormData();
+            const input = document.querySelector('#photos');
+            formData.append('id', document.querySelector("#put-in-basket").getAttribute("product-id"))
+            formData.append('review_id', document.querySelector("#review_id").value)
+            for (let i = 0;i < input.files.length; i++) {
+                formData.append('photos', input.files[i]);
+            }
+            fetch('/shop/save_image_for_review', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json()).then(data => {
+                console.log('Успех:', data);
+                document.querySelector("#review_id").value = data["review_id"]
+                for (let j = 0; j < data['imgs_url'].length; j++) {
+                    console.log(j)
+                    img = document.createElement("img")
+                    img.src=data['imgs_url'][j]
+                    document.querySelector("#added_photos").appendChild(img)
+                }
+            })
+        })
+
+
+
+        document.querySelector("#reviews-list").addEventListener("click", (e) => {
+            if (e.target.classList.contains("show-more")) {
+                t = e.target.parentElement
+                if (!e.target.classList.contains("showed")) {
+                    e.target.classList.add("showed")
+                    e.target.innerHTML = "Скрыть"
+                    t.querySelector(".review-text").style.whiteSpace = "normal"
+                } else {
+                    e.target.classList.remove("showed")
+                    e.target.innerHTML = "Посмотреть полностью"
+                    t.querySelector(".review-text").style.whiteSpace = "nowrap"
+                }
+            }
+        })
+        {% if product_images_founded %}
+        main_img = document.getElementById("main-image");
+        imgs_block = document.getElementById("other-images");
         imgs_block.addEventListener("click", (e) => {
             if (e.target.tagName == "IMG") {
                 let main_src = main_img.src;
                 main_img.src = event.target.src;
-                event.target_src = main_src;
+                event.target.src = main_src;
             }
         })
-    });
+        {% endif %}
+        document.querySelector('#download-reviews').addEventListener("click", (e) => {
+            fetch('/shop/get_reviews?id={{ product.id }}', {
+                method: "GET",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                }
+            }).then(response => response.json()).then(data => {
+                data = data['reviews']
+                for (i in data) {
+                    if (i == 0 || i== 1) {
+                        continue
+                    }
+                    review = document.createElement("div")
+                    review.classList.add("review")
+                    review.innerHTML = '<div class="review-data"><div class="review-user-data"><img alt=""><div class="review-user-data-name-date"><div class="review-user-data-name"></div><div class="review-user-data-date"></div></div></div><div class="review-rate"></div></div><div class="review-text">r.text</div>'
+                    review.querySelector("img").setAttribute("src", "/media/"+data[i]["img"])
+                    review.querySelector(".review-user-data-name").innerHTML = data[i]["name"]
+                    review.querySelector(".review-user-data-date").innerHTML = data[i]["created_at"]
+                    review.querySelector(".review-rate").innerHTML = '<svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 0L7.34708 4.1459H11.7063L8.17963 6.7082L9.52671 10.8541L6 8.2918L2.47329 10.8541L3.82037 6.7082L0.293661 4.1459H4.65292L6 0Z" fill="#F5B81C"/></svg>'.repeat(data[i]["rate"])
+                    review.querySelector(".review-text").innerHTML = data[i]["text"]
+                    if (data[i]["text"].length > 35) {
+                        showmore = document.createElement("div")
+                        showmore.classList.add("show-more")
+                        showmore.innerHTML = "Посмотреть полностью"
+                        review.appendChild(showmore)
+                    }
+                    document.querySelector("#reviews-list").appendChild(review)
+                }
+                document.querySelector("#download-reviews").style.display = "none"
+            });
+        })
+    })
 </script>
 {% endblock %}

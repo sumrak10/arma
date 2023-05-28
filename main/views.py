@@ -5,19 +5,23 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.shortcuts import render,get_object_or_404
 
-from .models import Member, News, Partners
+from .models import Member, Partners, Slide
+from shop.models import Category, Product
 
 # Create your views here.
 def index(request):
-    news = News.objects.all()
+    hits = Product.objects.all().order_by('-buy_count')[:10]
+    slides = Slide.objects.all()
     partners = Partners.objects.all()
-    return render(request, 'main/index.html', {"news":news, "partners":partners})
+    categories = Category.objects.all()[:4]
+    return render(request, 'main/index.html', {"slides":slides, "partners":partners, "categories":categories, "hits":hits})
 
 @csrf_exempt
 def contacts(request):
-    template = loader.get_template('main/contacts.html')
-    return HttpResponse(template.render())
+    partners = Partners.objects.all()
+    return render(request, 'main/contacts.html', {"partners":partners})
 
 def about(request):
+    partners = Partners.objects.all()
     members = Member.objects.all()
-    return render(request, 'main/about.html', {"members":members})
+    return render(request, 'main/about.html', {"members":members, "partners":partners})

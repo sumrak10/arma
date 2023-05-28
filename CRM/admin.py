@@ -1,7 +1,6 @@
 from django.contrib import admin
 
 from .models import Question, Order, Product_in_basket
-from shop.models import Product
 
 class ProductInBasketInstanceInline(admin.TabularInline):
     model = Product_in_basket

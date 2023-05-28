@@ -5,50 +5,54 @@
 <link rel="stylesheet" href="{% static 'shop/css/styles.css' %}">
 {% endblock %}
 
-
 {% block content %}
-<div class="wrapper">
-    <div class="section">
-        <div class="shop-nav">
-            <a href="/shop/" class="shop-nav-link">
-                <svg class="shop-nav-link-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
-                    <path d="M15.65 3.299 14.1 1.75 5.35 10.5l8.75 8.75 1.55-1.549L8.447 10.5l7.201-7.201Z"/>
-                </svg>
-                <div class="shop-nav-link-text">
-                    К категориям
-                </div>
-            </a>
-        </div>
-        <div class="products">
-            <div class="products-title">{{ category.name }}</div>
-            <div class="cards">
-                {% for product in products %}
-                <div class="card">
-                    <img src="{{ product.img.url }}" alt="Ошибка загрузки изображения">
-                    <div class="name">{{ product.name }}</div>
-                    <div class="prices">
-                        <div class="oldprice">{{ product.old_price }} р.</div>
-                        <div class="price">
-                            <div class="number">
-                                {{ product.wholesale_price }} р.
-                            </div>
-                            <div class="text">
-                                /шт
-                            </div>
-                        </div>
-                    </div>
-                    <div class="buttons">
-                        <a href="/shop/products/{{ product.id }}" class="more">
-                            Подробнее
-                        </a>
-                        <div class="in-basket put_in_basket" product_id="{{ product.id }}">
-                            В корзину
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+<div class="wrapper wrapper-backto">
+    <div class="section section-backto">
+        <a href="/shop" class="backto">
+            <p>К категориям</p>
+            <div>
+                <img src="{% static 'right_arrow.svg' %}" alt="">
             </div>
+        </a>
+    </div>
+</div>
+
+
+<div class="wrapper wrapper-category">
+    <div class="section section-category">
+        <div class="category-text">
+            <div class="category-text-title">
+                Тактическая медицина
+            </div>
+        </div>
+        <hr class="arma-hr">
+        <div class="category">
+            {% for product in products %}
+                <div class="product-card">
+                    <img class="product-card-image" src="{{ product.img.url }}" alt="">
+                    {% if product.discount != 0 %}
+                        <div class="product-card-discount {% if product.discount >= 50 %}product-card-discount-red{% endif %}">
+                            <span>- {{ product.discount }}%</span>
+                        </div>
+                    {% endif %}
+                    <span class="product-card-title">{{ product.name }}</span>
+                    <div class="product-card-price-row">
+                        <div class="product-card-price">
+                            <span>{{ product.retail_price }} ₽</span>
+                            <span>за 1 шт</span>
+                        </div>
+                        <span class="product-card-old-price">
+                            {{ product.old_price }} ₽
+                        </span>
+                    </div> 
+                    <div class="product-card-buttons-row">
+                        <a href="/shop/products/{{ product.id }}" class="product-card-buttons-about">Подробнее</a>
+                        <button class="product-card-buttons-in-basket put_in_basket" product-id="{{ product.id }}">В корзину</button>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 </div>
+
 {% endblock %}

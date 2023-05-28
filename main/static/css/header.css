@@ -70,7 +70,7 @@
     text-transform: uppercase;
 }
 .nav .link:hover a {
-    color: var(--light-red);
+    color: #85AB3A;
 }
 
 
