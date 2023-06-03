@@ -1,0 +1,122 @@
+.wrapper-numbers {
+    background-color: #fff;
+}
+.section-numbers {
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+.numbers .title {
+    font-size: 28px;
+    font-weight: 500;
+    color: #465F30;
+    padding-bottom: 24px;
+}
+.numbers-and-image-side {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+.numbers-and-image-side .image-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 400px;
+}
+.numbers-and-image-side .image-side img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: 100%; */
+    height: 100%;
+}
+.numbers-and-image-side .numbers-side {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 400px;
+}
+.numbers-and-image-side .numbers-side .item {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.numbers-and-image-side .numbers-side .item {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+.numbers-and-image-side .numbers-side .item .bignum {
+    font-size: 58px;
+    color: #465F30;
+    font-weight: 800;
+}
+.numbers-and-image-side .numbers-side .item .subsection {
+    display: flex;
+    flex-direction: column;
+}
+.numbers-and-image-side .numbers-side .item .subsection .des {
+    width: 80%;
+}
+.numbers-and-image-side .numbers-side .item .subsection .bigtext {
+    font-size: 28px;
+    color: #465F30;
+    font-weight: 700;
+}
+.numbers .button {
+    display: flex;
+    flex-direction: row;
+    margin-top: 32px;
+    width: 100%;
+}
+.numbers .button .text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 20px;
+    padding: 12px 0;
+    width: 100%;
+    border: solid #828282 2px;
+    color:#828282;
+}
+
+.numbers .button .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    background-color: #828282;
+}
+.numbers .button:hover .text {
+    background-color: #000;
+    color: #85AB3A;
+    border: solid #000 2px;
+}
+.numbers .button:hover .icon {
+    background-color: #465F30;
+}
+@media (max-width: 800px) {
+    .numbers-and-image-side .image-side {
+        display: none;
+    }.numbers-and-image-side .numbers-side {
+        width: 100%;
+    }
+}
+@media (max-width: 600px) {
+    .numbers-and-image-side {
+        flex-wrap: wrap;
+    }
+    .numbers-and-image-side .numbers-side {
+        width: 100%;
+    }
+    .numbers-and-image-side .image-side {
+        width: 100%;
+        height: 100%;
+    }
+    
+}

@@ -18,10 +18,12 @@
                     <img class="right_slider_button bw-slider-button" src="{% static 'right_arrow.svg' %}" alt="">
                 </div>
                 <div class="sliding-imgs">
-                    <img class="active-img" data-img-id="0" src="{% static 'main/media/about/photo1.png' %}" alt="">
-                    <img class="inactive-img" src="{% static 'main/media/about/photo1.png' %}" alt="">
-                    <img class="inactive-img" src="{% static 'main/media/about/photo2.png' %}" alt="">
-                    <img class="inactive-img" src="{% static 'main/media/about/photo3.png' %}" alt="">
+                    {% if first_slide %}
+                    <img class="active-img" data-img-id="0" src="{{ first_slide.img.url }}" alt="">
+                    {% for slide in slides %}
+                    <img class="inactive-img" src="{{ slide.img.url }}" alt="">
+                    {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -35,7 +35,18 @@ class Slide(models.Model):
         verbose_name = "слайд"
         verbose_name_plural = "Слайды"
         ordering = ['id']
+        
+class AboutUsSlide(models.Model):
 
+    img = models.ImageField(upload_to='partners/',default='placeholders/aboutusslide.jpg',blank=True, verbose_name="Слайд")
+
+    def __str__(self):
+        return f"Слайд (о нас) {self.id}"
+    
+    class Meta():
+        verbose_name = "слайд (о нас)"
+        verbose_name_plural = "Слайды (о нас)"
+        ordering = ['id']
 
 class Partners(models.Model):
 

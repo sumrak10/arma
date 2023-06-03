@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.shortcuts import render,get_object_or_404
 
-from .models import Member, Partners, Slide
+from .models import Member, Partners, Slide, AboutUsSlide
 from shop.models import Category, Product
 
 # Create your views here.
@@ -24,4 +24,9 @@ def contacts(request):
 def about(request):
     partners = Partners.objects.all()
     members = Member.objects.all()
-    return render(request, 'main/about.html', {"members":members, "partners":partners})
+    slides = AboutUsSlide.objects.all()
+    try:
+        first_slide =  slides[0]
+    except:
+        first_slide = 0
+    return render(request, 'main/about.html', {"members":members, "partners":partners, "slides": slides, "first_slide": first_slide})

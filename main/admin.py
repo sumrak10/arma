@@ -1,8 +1,12 @@
 from django.contrib import admin
 
-from .models import Member, Partners, Slide
+from .models import Member, Partners, Slide, AboutUsSlide
 
 
+@admin.register(AboutUsSlide)
+class AboutUsSlideAdmin(admin.ModelAdmin):
+    list_display = ["id"]
+    
 @admin.register(Member)
 class MemberAdmin(admin.ModelAdmin):
     list_display = ["name", "job"]

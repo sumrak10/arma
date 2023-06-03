@@ -38,7 +38,7 @@ class Product(models.Model):
 
 class ProductImages(models.Model):
 
-    product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE)
     img = models.ImageField(upload_to='products/',default='placeholders/product.jpg',blank=True,null=True, verbose_name="Фотография")
 
     def __str__(self):
@@ -51,7 +51,7 @@ class ProductImages(models.Model):
 
 class ProductCharacteristic(models.Model):
 
-    product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE)
     name = name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
     value = models.CharField(max_length=512, verbose_name='Значение 512зн.')
 

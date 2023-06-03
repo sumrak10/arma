@@ -279,22 +279,22 @@
             })
         })
 
-
-
-        document.querySelector("#reviews-list").addEventListener("click", (e) => {
-            if (e.target.classList.contains("show-more")) {
-                t = e.target.parentElement
-                if (!e.target.classList.contains("showed")) {
-                    e.target.classList.add("showed")
-                    e.target.innerHTML = "Скрыть"
-                    t.querySelector(".review-text").style.whiteSpace = "normal"
-                } else {
-                    e.target.classList.remove("showed")
-                    e.target.innerHTML = "Посмотреть полностью"
-                    t.querySelector(".review-text").style.whiteSpace = "nowrap"
+        if (document.querySelector("#reviews-list")) {
+            document.querySelector("#reviews-list").addEventListener("click", (e) => {
+                if (e.target.classList.contains("show-more")) {
+                    t = e.target.parentElement
+                    if (!e.target.classList.contains("showed")) {
+                        e.target.classList.add("showed")
+                        e.target.innerHTML = "Скрыть"
+                        t.querySelector(".review-text").style.whiteSpace = "normal"
+                    } else {
+                        e.target.classList.remove("showed")
+                        e.target.innerHTML = "Посмотреть полностью"
+                        t.querySelector(".review-text").style.whiteSpace = "nowrap"
+                    }
                 }
-            }
-        })
+            })
+        }
         {% if product_images_founded %}
         main_img = document.getElementById("main-image");
         imgs_block = document.getElementById("other-images");
