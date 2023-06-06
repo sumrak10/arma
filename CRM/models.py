@@ -1,21 +1,32 @@
 from django.db import models
+from django.contrib import admin
 from django.contrib.auth.models import User
 
 from shop.models import Product
 
+from arma.settings import BASKET_COOKIES_RANDOM_STRING_LENGTH
 
 
+class Basket(models.Model):
+    unique_id = models.CharField(max_length=BASKET_COOKIES_RANDOM_STRING_LENGTH, verbose_name="Уникальный идентификатор")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+
+    def __str__(self):
+        return self.unique_id
+
+    class Meta():
+        verbose_name = "корзина"
+        verbose_name_plural = "Корзины"
+        ordering = ['unique_id']
 
 class Order(models.Model):
 
     client_name = models.CharField(max_length=50, verbose_name='ФИО клиента')
     contacts = models.CharField(max_length=50, verbose_name='Контакты клиента')
     summ = models.IntegerField(verbose_name='Сумма заявки')
-    user = models.ForeignKey(User, verbose_name='Ответственный', on_delete=models.PROTECT, null=True)
+    user = models.ForeignKey(User, verbose_name='Ответственный', on_delete=models.PROTECT, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    # def display_basket(self):
-
-    #     return ', '.join()
+    
 
     def __str__(self):
         return self.client_name
@@ -24,13 +35,14 @@ class Order(models.Model):
         verbose_name = "заявку"
         verbose_name_plural = "Заявки"
         ordering = ['client_name']
-        
 
-class Product_in_basket(models.Model):
+
+class ProductInBasket(models.Model):
     count = models.IntegerField(verbose_name='Количество')
     product =  models.ForeignKey(Product, verbose_name='Товар', on_delete=models.PROTECT)
 
-    order = models.ForeignKey(Order, verbose_name='Владелец заявки', on_delete=models.CASCADE)
+    basket = models.ForeignKey(Basket, verbose_name='Владелец заявки', on_delete=models.CASCADE) 
+
 
     def __str__(self):
         return self.product.name
@@ -39,6 +51,34 @@ class Product_in_basket(models.Model):
         verbose_name = "товар в корзине"
         verbose_name_plural = "Товары в корзине"
         ordering = ['product']
+
+class ProductInSendedBasket(models.Model):
+    count = models.IntegerField(verbose_name='Количество')
+    product =  models.ForeignKey(Product, verbose_name='Товар', on_delete=models.PROTECT)
+    options = models.TextField(default='', verbose_name="Опции", null=True, blank=True)
+
+    order = models.ForeignKey(Order, verbose_name='Владелец заявки', on_delete=models.CASCADE) 
+
+    def __str__(self):
+        return self.product.name
+    
+    class Meta():
+        verbose_name = "товар в корзине"
+        verbose_name_plural = "Товары в корзине"
+        ordering = ['product']
+
+class ProductInBasketOption(models.Model):
+    name = models.CharField(max_length=512, verbose_name="Опция")
+    value = models.CharField(max_length=512, verbose_name="Значение")
+    product_in_basket = models.ForeignKey(ProductInBasket, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name + ": " + self.value
+    
+    class Meta():
+        verbose_name = "опция"
+        verbose_name_plural = "Опции"
+        ordering = ['name']
 
 
 class Question(models.Model):

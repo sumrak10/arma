@@ -68,6 +68,16 @@ body {
 .product-card-discount-red span {
     color: #fff;
 }
+.product-card-new {
+    position: absolute;
+    top: 6%;
+    left: 0;
+    background-color: #ff0000;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 5px 8px;
+}
 .product-card-title {
     width: 85%;
     font-weight: 600;

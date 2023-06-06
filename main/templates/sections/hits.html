@@ -24,15 +24,22 @@
                                 <span>- {{ product.discount }}%</span>
                             </div>
                         {% endif %}
+                        {% if product.new %}
+                        <div class="product-card-new">
+                            <span>НОВИНКА</span>
+                        </div>
+                        {% endif %}
                         <span class="product-card-title">{{ product.name }}</span>
                         <div class="product-card-price-row">
                             <div class="product-card-price">
                                 <span>{{ product.retail_price }} ₽</span>
                                 <span>за 1 шт</span>
                             </div>
+                            {% if product.discount != 0 %}
                             <span class="product-card-old-price">
                                 {{ product.old_price }} ₽
                             </span>
+                            {% endif %}
                         </div> 
                         <div class="product-card-buttons-row">
                             <a href="/shop/products/{{ product.id }}" class="product-card-buttons-about">Подробнее</a>

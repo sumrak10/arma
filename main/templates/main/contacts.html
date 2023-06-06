@@ -19,13 +19,13 @@
                         <div class="time"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18ZM11 10H15V12H9V5H11V10Z" fill="#85AB3A"/>
                             </svg>
-                        с 8-00 до 22-00</div>
-                        <div class="label">по Московскому времени</div>
+                        с {{ manufactory.start_time }} до {{ manufactory.finish_time }}</div>
+                        <div class="label">{{ manufactory.utc_text }}</div>
                     </div>
                     <div class="location">
-                        <span>г. Москва,</span><br>ул. Краснобогатырская 2, стр. 4
+                        <span>{{ manufactory.city }}</span><br>{{ manufactory.address }}
                     </div>
-                    <div class="phone">+7 9999 - 623 - 469</div>
+                    <div class="phone">{{ manufactory.contacts }}</div>
                 </div>
             </div>
         </div>
@@ -37,48 +37,22 @@
             <h3>ТАК ЖЕ МЫ ЕСТЬ В ДРУГИХ ГОРОДАХ</h3>
             <hr class="arma">
             <div class="cols">
-                <div class="bg-map-inner-box nobg">
-                    <div class="work-time">
-                        <div class="title">Режим работы:</div>
-                        <div class="time"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18ZM11 10H15V12H9V5H11V10Z" fill="#85AB3A"/>
-                            </svg>
-                        с 8-00 до 22-00</div>
-                        <div class="label">по Московскому времени</div>
+                {% for mf in manufactories %}
+                    <div class="bg-map-inner-box nobg">
+                        <div class="work-time">
+                            <div class="title">Режим работы:</div>
+                            <div class="time"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18ZM11 10H15V12H9V5H11V10Z" fill="#85AB3A"/>
+                                </svg>
+                            с {{ mf.start_time }} до {{ mf.finish_time }}</div>
+                            <div class="label">{{ mf.utc_text }}</div>
+                        </div>
+                        <div class="location">
+                            <span>{{ mf.city }}</span><br>{{ mf.address }}
+                        </div>
+                        <div class="phone">{{ mf.contacts }}</div>
                     </div>
-                    <div class="location">
-                        <span>г. Серпухов,</span><br>ул. Краснобогатырская 2, стр. 4
-                    </div>
-                    <div class="phone">+7 9999 - 623 - 469</div>
-                </div>
-                <div class="bg-map-inner-box nobg">
-                    <div class="work-time">
-                        <div class="title">Режим работы:</div>
-                        <div class="time"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18ZM11 10H15V12H9V5H11V10Z" fill="#85AB3A"/>
-                            </svg>
-                        с 8-00 до 22-00</div>
-                        <div class="label">по Московскому времени</div>
-                    </div>
-                    <div class="location">
-                        <span>г. Волоколамск,</span><br>ул. Краснобогатырская 2, стр. 4
-                    </div>
-                    <div class="phone">+7 9999 - 623 - 469</div>
-                </div>
-                <div class="bg-map-inner-box nobg">
-                    <div class="work-time">
-                        <div class="title">Режим работы:</div>
-                        <div class="time"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18ZM11 10H15V12H9V5H11V10Z" fill="#85AB3A"/>
-                            </svg>
-                        с 8-00 до 22-00</div>
-                        <div class="label">по Тюменскому времени</div>
-                    </div>
-                    <div class="location">
-                        <span>г. Тюмень,</span><br>ул. Краснобогатырская 2, стр. 4
-                    </div>
-                    <div class="phone">+7 9999 - 623 - 469</div>
-                </div>
+                {% endfor %}
             </div>
         </div>
         <img src="{% static 'main/media/location.png' %}" alt="">

@@ -1,10 +1,17 @@
 from django.db import models
+from django.contrib import admin
+from django.utils.html import format_html
 
-class Category(models.Model):
+from .mixins import IncDecPrioMixin
+
+
+
+class Category(models.Model, IncDecPrioMixin):
 
     name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
+    prio = models.IntegerField(verbose_name="Приоритет", default=1)
     
-    img = models.ImageField(upload_to='categories/',default='placeholders/categories.jpg',blank=True,null=True, verbose_name="Фотография")
+    img = models.ImageField(upload_to='categories/',default='placeholders/categories.jpg',blank=True,null=True, verbose_name="Изображение 260х300")
 
     def __str__(self):
         return self.name
@@ -12,31 +19,70 @@ class Category(models.Model):
     class Meta():
         verbose_name = "категорию"
         verbose_name_plural = "Категории"
-        ordering = ['name']
+        ordering = ['-prio']
 
-class Product(models.Model): 
+class Product(models.Model, IncDecPrioMixin): 
 
     name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
+    new = models.BooleanField(default=1, verbose_name="Новинка")
+    wholesale_count = models.IntegerField(verbose_name="С какого кол-ва товаров будет считать оптовая цена")
+    prio = models.IntegerField(verbose_name="Приоритет", default=1)
     wholesale_price = models.IntegerField(verbose_name='Оптовая цена')
     retail_price = models.IntegerField(verbose_name='Розничная цена')
-    old_price = models.IntegerField(verbose_name='Старая цена', default=0)
     des = models.TextField(verbose_name='Описание')
-    category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.PROTECT)
-    buy_count = models.IntegerField(verbose_name='Сколько раз приобретали', default=0)
-    img = models.ImageField(upload_to='products/',default='placeholders/product.jpg',blank=True,null=True, verbose_name="Изображение товара")
+    categories = models.ManyToManyField(Category, verbose_name='Категории')
+    img = models.ImageField(upload_to='products/',default='placeholders/product.jpg',blank=True,null=True, verbose_name="Изображение товара 260x220")
     video = models.CharField(max_length=1024, verbose_name='Ссылка на видео в youtube 1024зн.', default='', null=True, blank=True)
     discount = models.IntegerField(verbose_name='Скидка (0-100)')
+    buy_count = models.IntegerField(verbose_name='Сколько раз приобретали', default=0)
+    old_price = models.IntegerField(verbose_name='Старая цена (Будет автоматически рассчитана при наличии скидки)', default=0)
+
+    @property
+    @admin.display(
+        ordering="average_reviews",
+        description="Средняя оценка",
+    )
+    def average_reviews(self):
+        reviews = Review.objects.filter(product=self)
+        if len(reviews) > 0:
+            reviews_count = len(reviews)
+            answer = 0
+            for review in reviews:
+                answer += review.rate/reviews_count
+            answer = str(round(answer,2))
+            answer = format_html(f"<a href='/admin/shop/review/?product__id__exact={id}'>{answer} ({str(reviews_count)} шт.)</a>")
+        else:
+            answer = "Нет отзывов"
+        return answer
 
     def __str__(self):
         return self.name
     
+    
+    def save(self, *args, **kwargs):
+        self.old_price = self.retail_price - round(self.retail_price * (self.discount/100))
+        super().save(*args, **kwargs)
+    
     class Meta():
         verbose_name = "товар"
         verbose_name_plural = "Товары"
-        ordering = ['name']
+        ordering = ['-prio']
 
 
-class ProductImages(models.Model):
+class ProductOption(models.Model):
+    product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE)
+    name = models.CharField(max_length=512, verbose_name="Наименование")
+    values = models.TextField(verbose_name="Варианты (Перечислите их, разделяя символом ';'")
+
+    class Meta():
+        verbose_name = "Варианты товара"
+        verbose_name_plural = "Варианты товара"
+        ordering = ['id']
+
+
+    
+
+class ProductImage(models.Model):
 
     product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE)
     img = models.ImageField(upload_to='products/',default='placeholders/product.jpg',blank=True,null=True, verbose_name="Фотография")

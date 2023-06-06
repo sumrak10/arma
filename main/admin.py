@@ -1,7 +1,14 @@
 from django.contrib import admin
 
-from .models import Member, Partners, Slide, AboutUsSlide
+from .models import Member, Partners, Slide, AboutUsSlide, Manufactory, SiteConfiguration
 
+@admin.register(SiteConfiguration)
+class SiteConfigurationAdmin(admin.ModelAdmin):
+    list_display = ["phone", "email", "inn", "ogrn"]
+
+@admin.register(Manufactory)
+class ManufactoryAdmin(admin.ModelAdmin):
+    list_display = ["id", "city", "address"]
 
 @admin.register(AboutUsSlide)
 class AboutUsSlideAdmin(admin.ModelAdmin):

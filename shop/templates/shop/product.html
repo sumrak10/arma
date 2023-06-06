@@ -81,12 +81,14 @@
                 <img src="{% static 'right_arrow.svg' %}" alt="">
             </div>
         </a>
-        <a href="/shop/categories/{{ product.category.id }}" class="backto">
-            <p>К продуктам</p>
+        {% for cat in product.categories.all %}
+        <a href="/shop/categories/{{ cat.id }}" class="backto">
+            <p>{{ cat.name }}</p>
             <div>
                 <img src="{% static 'right_arrow.svg' %}" alt="">
             </div>
         </a>
+        {% endfor %}
     </div>
 </div>
 <div class="wrapper wrapper-product">
@@ -124,14 +126,37 @@
                                 <path d="M11 17H25V21H11V17Z"/>
                                 </svg>
                             </button>
-                            <input class="number" type="number" name="value" id="product-count" value="0" min="0">
+                            <input class="number" type="number" name="value" id="product-count" value="{{ product|get_count_this_product:products_in_basket }}" min="0">
                             <button class="inc"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M28 20.8265H19.875V29H16.125V20.8265H8V17.2192H16.125V9H19.875V17.2192H28V20.8265Z"/>
                                 </svg></button>
                         </div>
-                        <button class="in_basket" id="put-in-basket" product-id="{{ product.id }}">Добавить в корзину</button>
+                        <button class="in_basket {% if product|queryset_have_this_product:products_in_basket %}in_basket-active{% endif %}" id="put_in_basket-product-page" product-id="{{ product.id }}">
+                            {% if product|queryset_have_this_product:products_in_basket %}
+                            Убрать из корзины
+                            {% else %}
+                            Добавить в корзину
+                            {% endif %}
+                        </button>
                     </div>
                 </div>
+                {% if options_founded %}
+                <div class="options">
+                    {% for option in options %}
+                    <div class="option option-for-basker-manager-js">
+                        <span class="option-name">{{ option.name }}</span>
+                        <form class="option_vars">
+                            {% for var in option.values|split_by_semicolon %}
+                            <div class="option-var">
+                                <input type="radio" name="n" value="{{ var }}">
+                                <span>{{ var }}</span>
+                            </div>
+                            {% endfor %}
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
                 <div class="des">
                     <div>Описание</div>
                     <div>
@@ -264,11 +289,10 @@
             for (let i = 0;i < input.files.length; i++) {
                 formData.append('photos', input.files[i]);
             }
-            fetch('/shop/save_image_for_review', {
-                method: 'POST',
-                body: formData
-            }).then(response => response.json()).then(data => {
-                console.log('Успех:', data);
+            axios.post('/shop/save_image_for_review', formData)
+            .then(result => {
+                data = result['data']
+                console.log(data)
                 document.querySelector("#review_id").value = data["review_id"]
                 for (let j = 0; j < data['imgs_url'].length; j++) {
                     console.log(j)
@@ -276,6 +300,9 @@
                     img.src=data['imgs_url'][j]
                     document.querySelector("#added_photos").appendChild(img)
                 }
+            })
+            .catch(error => {
+                console.log('error', error)
             })
         })
 
@@ -295,7 +322,7 @@
                 }
             })
         }
-        {% if product_images_founded %}
+        //{% if product_images_founded %}
         main_img = document.getElementById("main-image");
         imgs_block = document.getElementById("other-images");
         imgs_block.addEventListener("click", (e) => {
@@ -305,15 +332,12 @@
                 event.target.src = main_src;
             }
         })
-        {% endif %}
+        //{% endif %}
+        //{% if reviews_more_than_2 %}
         document.querySelector('#download-reviews').addEventListener("click", (e) => {
-            fetch('/shop/get_reviews?id={{ product.id }}', {
-                method: "GET",
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest",
-                }
-            }).then(response => response.json()).then(data => {
-                data = data['reviews']
+            axios.get('/shop/get_reviews?id={{ product.id }}')
+            .then(result => {
+                data = result['data']['reviews']
                 for (i in data) {
                     if (i == 0 || i== 1) {
                         continue
@@ -335,8 +359,10 @@
                     document.querySelector("#reviews-list").appendChild(review)
                 }
                 document.querySelector("#download-reviews").style.display = "none"
-            });
+            })
+            .catch(error => console.log('error', error));
         })
+        //{% endif %}
     })
 </script>
 {% endblock %}

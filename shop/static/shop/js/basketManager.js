@@ -1,100 +1,71 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // console.log(localStorage.getItem("basket"))
-    // КРАСНЫЙ БЭДЖИК В ХЕАДЕРЕ У КНОПКИ "КОРЗИНА"
-    if (localStorage.getItem("basket") && localStorage.getItem("basket") != '{}') {
-        document.getElementById("basket-data").value = localStorage.getItem("basket");
-        document.getElementById("basket-not-empty").style.display = "block";
-        
-    } else {
-        document.getElementById("basket-not-empty").style.display = "none";
+    if (document.querySelector("#put_in_basket-product-page")) {
+        document.querySelector("#put_in_basket-product-page").addEventListener("click", (e) => {
+            let data = new FormData()
+            
+            data.append("product_id", document.querySelector("#put_in_basket-product-page").getAttribute("product-id"))
+            let count = parseInt(document.querySelector("#product-count").value)
+            if (count === 0) {
+                count = 1
+            }
+            data.append("count", count)
+            let options = document.querySelectorAll(".option-for-basker-manager-js")
+            let options_data = {}
+            if (options.length != 0) {
+                for (let j = 0; j < options.length; j++) {
+                    let option = options[j]
+                    let name = option.querySelector(".option-name").innerHTML
+                    let value = ''
+                    let vars = option.querySelectorAll(".option-var")
+                    for (let k = 0; k < vars.length; k++) {
+                        let var_ = vars[k]
+                        if (var_.querySelector("input").checked) {
+                            value = var_.querySelector("span").innerHTML
+                        }
+                    }
+                    if (value === '') {
+                        value = "Не выбран"
+                    }
+                    options_data[name] = value
+                }
+                data.append("options", JSON.stringify(options_data))
+            }
+            axios.post("/shop/put_in_basket", data)
+            .then(result => {
+                if (result['data']['status'] == 'added') {
+                    document.querySelector("#put_in_basket-product-page").innerHTML = "Убрать из корзины"
+                    document.querySelector("#put_in_basket-product-page").classList.add("in_basket-active")
+                    console.log("добавлен")
+                } else {
+                    document.querySelector("#put_in_basket-product-page").innerHTML = "В корзину"
+                    document.querySelector("#put_in_basket-product-page").classList.remove("in_basket-active")
+                    console.log("удален")
+                }
+            })
+            .catch(error => {
+                console.log("error")
+            })
+        })
     }
-
-
-    // ОТРИСОВКА КНОПОК В НУЖНОМ СОСТОЯНИИ НА СТРАНИЦЕ С ПРОДУКТАМИ (/category)
-    const elements = document.getElementsByClassName("put_in_basket");
-    for (let i = 0; i < elements.length; i++) {
-        var basket = {};
-        if (localStorage.getItem("basket")) {
-            basket = JSON.parse(localStorage.getItem("basket"));
-        }
-        var productId = elements[i].getAttribute("product-id");
-        if (basket.hasOwnProperty(productId)) {
-            elements[i].innerHTML = "В корзине"
-            elements[i].classList.toggle("product-card-buttons-in-basket-active")
-        }
+    c_buttons = document.querySelectorAll(".put_in_basket-category-page")
+    for (let i=0; i < c_buttons.length; i++) {
+        c_buttons[i].addEventListener("click", (e) => {
+            let data = new FormData()
+            data.append("product_id", c_buttons[i].getAttribute("product-id"))
+            data.append("count", 1)
+            axios.post("/shop/put_in_basket", data)
+            .then(result => {
+                if (result['data']['status'] == 'added') {
+                    c_buttons[i].innerHTML = "В корзине"
+                    c_buttons[i].classList.add("product-card-buttons-in-basket-active")
+                } else {
+                    c_buttons[i].innerHTML = "В корзину"
+                    c_buttons[i].classList.remove("product-card-buttons-in-basket-active")
+                }
+            })
+            .catch(error => {
+                console.log("error")
+            })
+        })
     }
-    
-    // СОБЫТИЯ НА КНОПКИ У ТОВАРОВ НА СТРАНИЦЕ С ПРОДУКТАМИ
-    for (let i = 0; i < elements.length; i++) {
-    elements[i].addEventListener("click", function() {
-        var basket = {};
-        if (localStorage.getItem("basket")) {
-            basket = JSON.parse(localStorage.getItem("basket"));
-        }
-        var productId = this.getAttribute("product-id");
-        if (basket.hasOwnProperty(productId)) {
-            delete basket[productId];
-            this.innerHTML = "В корзину"
-            this.classList.toggle("product-card-buttons-in-basket-active")
-        } else {
-            basket[productId] = 1;
-            this.innerHTML = "В корзине"
-            this.classList.toggle("product-card-buttons-in-basket-active")
-
-        }
-        // обновляем бэджик у кнопки корзины в хеадере и сохраняем корзину в локальное хранилище
-        localStorage.setItem("basket", JSON.stringify(basket));
-        if (localStorage.getItem("basket") == '{}') {
-            document.getElementById("basket-not-empty").style.display = "none";
-        } else {
-            document.getElementById("basket-not-empty").style.display = "block";
-        }
-        document.getElementById("basket-data").value = localStorage.getItem("basket");
-    });
-    }
-    // ОТРИСОВКА КНОПОК В НУЖНОМ СОСТОЯНИИ НА СТРАНИЦЕ САМОГО ТОВАРА
-    const element = document.querySelector("#put-in-basket")
-    const counter = document.querySelector("#product-count")
-    if (element) {
-        var basket = {};
-        if (localStorage.getItem("basket")) {
-            basket = JSON.parse(localStorage.getItem("basket"));
-        }
-        var productId = element.getAttribute("product-id");
-        if (basket.hasOwnProperty(productId)) {
-            element.innerHTML = "Уже в корзине"
-            element.classList.toggle("product-card-buttons-in-basket-active")
-            counter.value = basket[productId]
-        }
-    
-
-    // СОБЫТИЕ НА КНОПКУ НА СТРАНИЦЕ САМОГО ТОВАРА
-    document.querySelector("#put-in-basket").addEventListener("click", function() {
-        var basket = {};
-        if (localStorage.getItem("basket")) {
-            basket = JSON.parse(localStorage.getItem("basket"));
-        }
-        var count = document.querySelector("#product-count").value
-        var productId = this.getAttribute("product-id");
-        if (basket.hasOwnProperty(productId)) {
-            delete basket[productId];
-            this.innerHTML = "Добавить в корзину"
-            this.classList.toggle("product-card-buttons-in-basket-active")
-        } else {
-            basket[productId] = count;
-            this.innerHTML = "Уже в корзине"
-            this.classList.toggle("product-card-buttons-in-basket-active")
-        }
-
-        // обновляем бэджик у кнопки корзины в хеадере и сохраняем корзину в локальное хранилище
-        localStorage.setItem("basket", JSON.stringify(basket));
-        if (localStorage.getItem("basket") == '{}') {
-            document.getElementById("basket-not-empty").style.display = "none";
-        } else {
-            document.getElementById("basket-not-empty").style.display = "block";
-        }
-        document.getElementById("basket-data").value = localStorage.getItem("basket");
-    })
-    }
-
 })

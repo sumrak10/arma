@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load filters %}
 {% block css_link %} 
 <link rel="stylesheet" href="{% static 'shop/css/styles.css' %}">
 {% endblock %}
@@ -22,7 +23,7 @@
     <div class="section section-category">
         <div class="category-text">
             <div class="category-text-title">
-                Тактическая медицина
+                {{ category.name }}
             </div>
         </div>
         <hr class="arma-hr">
@@ -35,24 +36,40 @@
                             <span>- {{ product.discount }}%</span>
                         </div>
                     {% endif %}
+                    {% if product.new %}
+                        <div class="product-card-new">
+                            <span>НОВИНКА</span>
+                        </div>
+                    {% endif %}
                     <span class="product-card-title">{{ product.name }}</span>
                     <div class="product-card-price-row">
                         <div class="product-card-price">
                             <span>{{ product.retail_price }} ₽</span>
                             <span>за 1 шт</span>
                         </div>
+                        {% if product.discount != 0 %}
                         <span class="product-card-old-price">
                             {{ product.old_price }} ₽
                         </span>
+                        {% endif %}
                     </div> 
                     <div class="product-card-buttons-row">
                         <a href="/shop/products/{{ product.id }}" class="product-card-buttons-about">Подробнее</a>
-                        <button class="product-card-buttons-in-basket put_in_basket" product-id="{{ product.id }}">В корзину</button>
+                        <button class="product-card-buttons-in-basket put_in_basket-category-page {% if product|queryset_have_this_product:products_in_basket %}product-card-buttons-in-basket-active{% endif %}" product-id="{{ product.id }}">
+                            {% if product|queryset_have_this_product:products_in_basket %}
+                            В корзине
+                            {% else %}
+                            В корзину
+                            {% endif %}
+                        </button>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
+    <script>
+        console.log("downloaded")
+    </script>
 </div>
 
 {% endblock %}

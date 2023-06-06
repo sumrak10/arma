@@ -33,6 +33,8 @@ else:
     ALLOWED_HOSTS = ['arma72.com','www.arma72.com','arma72.ru','www.arma72.ru']
 # ALLOWED_HOSTS = ['*']
 
+COOKIE_EXPIRES = 31 # days
+BASKET_COOKIES_RANDOM_STRING_LENGTH = 64
 
 # Application definition
 

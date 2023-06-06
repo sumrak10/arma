@@ -10,33 +10,34 @@
 
 <div class="wrapper wrapper-basket">
     <div class="section section-basket">
-        {% if basket %}
+        {% if products_in_basket %}
         <div class="title">КОРЗИНА</div>
         {% else %}
         <div class="title" style="padding: 120px 0;">КОРЗИНА ПУСТА</div>
         {% endif %}
-        {% if basket %}
+        {% if products_in_basket %}
         <hr class="arma-hr">
         <div class="basket-list">
-            {% for item in basket %}
-                <div class="item-in-basket" product-id="{{ item.id }}" product-discount="{{ item.discount }}">
+            {% for item in products_in_basket %}
+                <div class="item-in-basket" product-id="{{ item.product.id }}" product-discount="{{ item.product.discount }}" product-wholesale-count="{{ item.product.wholesale_count }}">
                     <div class="item-image">
-                        {% if item.discount != 0 %}
-                        <div class="item-image-discount {% if item.discount >= 50 %}item-image-discount-red{% endif %}">- {{ item.discount }}%</div>
+                        {% if item.product.discount != 0 %}
+                        <div class="item-image-discount {% if item.product.discount >= 50 %}item-image-discount-red{% endif %}">- {{ item.product.discount }}%</div>
                         {% endif %}
-                        <img src="{{ item.img.url }}" alt="">
+                        <img src="{{ item.product.img.url }}" alt="">
                     </div>
                     <div class="item-column">
                         <div class="item-label">Наименование</div>
-                        <div class="item-value">{{ item.name }}</div>
+                        <div class="item-value">{{ item.product.name }}</div>
                     </div>
                     <div class="item-column">
                         <div class="item-label">Оптовая цена</div>
-                        <div class="item-value"><span class="wholesale-price">{{ item.wholesale_price }}</span><span> ₽</span></div>
+                        <div class="item-value"><span class="wholesale-price">{{ item.product.wholesale_price }}</span><span> ₽</span></div>
+                        <div class="item-label">(При кол-ве товара от {{ item.product.wholesale_count }} шт.)</div>
                     </div>
                     <div class="item-column">
                         <div class="item-label">Розничная цена</div>
-                        <div class="item-value"><span class="retail-price">{{ item.retail_price }}</span><span> ₽</span></div>
+                        <div class="item-value"><span class="retail-price">{{ item.product.retail_price }}</span><span> ₽</span></div>
                     </div>
                     <div class="item-column">
                         <div class="counter-buttons">
@@ -44,7 +45,7 @@
                                 <path d="M11 17H25V21H11V17Z"/>
                                 </svg>
                             </button>
-                            <input class="number" type="number" name="value" id="product-count" value="1" min="0">
+                            <input class="number inp" type="number" name="value" id="product-count" value="{{ item.count }}" min="0" product-id="{{ item.product.id }}">
                             <button class="inc"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M28 20.8265H19.875V29H16.125V20.8265H8V17.2192H16.125V9H19.875V17.2192H28V20.8265Z"/>
                                 </svg></button>
@@ -71,7 +72,6 @@
                     <span> ₽</span>
                 </div>
             </div>
-            <input type="hidden" name="successful_basket" id="successful_basket" value="{}">
             <input type="hidden" name="successful_basket_summ" id="successful_basket_summ" value=0"">
             {% if error_fio %}
                 <label for="fio">Введите ваше ФИО в поле ниже, чтобы мы знали, как к вам обращаться</label>
@@ -100,50 +100,92 @@
     document.addEventListener("DOMContentLoaded", () => {
         calculateTable(true);
 
-
         const incBtns = document.querySelectorAll('.inc');
         const decBtns = document.querySelectorAll('.dec');
+        const inputs = document.querySelectorAll('.inp');
 
         incBtns.forEach(btn => {
         btn.addEventListener('click', e => {
+            let elem = e.target.parentNode.parentNode.parentNode.querySelector("#product-count")
+            let count = elem.value
+            let p_id = elem.getAttribute("product-id")
+            updateProductAxios(p_id, count)
             calculateTable();
         });
         });
 
         decBtns.forEach(btn => {
         btn.addEventListener('click', e => {
+            let elem = e.target.parentNode.parentNode.parentNode.querySelector("#product-count")
+            let count = elem.value
+            let p_id = elem.getAttribute("product-id")
+            updateProductAxios(p_id, count)
+            calculateTable();
+        });
+        });
+
+        inputs.forEach(btn => {
+        btn.addEventListener('change', e => {
+            let elem = e.target.parentNode.parentNode.parentNode.querySelector("#product-count")
+            let count = elem.value
+            let p_id = elem.getAttribute("product-id")
+            updateProductAxios(p_id, count)
             calculateTable();
         });
         });
 
 
     })
-    function deleteProduct(elem) {
+    function updateProductAxios(pid, count) {
+        let data = new FormData()
+        data.append("product_id", pid)
+        data.append("count", count)
+        axios.post("/shop/update_in_basket", data)
+        .then(result => {
+            if (result['data']['status'] == 'updated') {
+                console.log("обновлен")
+            } else {
+                console.log("не обновлен")
+            }
+        })
+        .catch(error => {
+            console.log("error")
+        })
+    }
+    function deleteProductAxios(pid) {
+        let data = new FormData()
+        data.append("product_id", pid) 
+        axios.post("/shop/delete_in_basket", data)
+        .then(result => {
+            if (result['data']['status'] == 'deleted') {
+                console.log("удален")
+            } else {
+                onsole.log("не удален")
+            }
+        })
+        .catch(error => {
+            console.log("error")
+        })
+    }
+    function deleteProduct(elem, pid) {
         var result = confirm("Вы уверены, что хотите удалить этот товар из корзины?");
         if (result) {
             elem.remove();
+            deleteProductAxios(pid)
             return true;
         } else {
             return false;
         }
     }
     function calculateTable(initial=false) {
-        var basket = {};
-        if (initial) {
-            if (localStorage.getItem("basket")) {
-                var full_basket = JSON.parse(localStorage.getItem("basket"));
-            }
-        }
         var summ = 0
         var products = document.querySelectorAll(".item-in-basket")
         for(let i = 0; i < products.length; i++) {
             let product = products[i]
             let id = product.getAttribute("product-id")
+            let product_wholesale_count = product.getAttribute("product-wholesale-count")
             let price1 = product.querySelector(".wholesale-price").innerHTML
             let price2 = product.querySelector(".retail-price").innerHTML
-            if (initial) {
-                product.querySelector(".number").value = full_basket[id]
-            }
             count = product.querySelector(".number").value
             if (count < 1) {
                 res = deleteProduct(product, id)
@@ -152,11 +194,7 @@
                     count = 1;
                 }
             }
-            if (count>0) {
-                basket[id] = count;
-            }
-            // КОНСТАНТА ПО СКИДКАМ СЕЙЧАС РАВНА 100
-            if (count < 10) {
+            if (parseInt(count) < parseInt(product_wholesale_count)) {
                 product.querySelector(".summ-price").innerHTML = count * price2 - (count * price2 * (parseInt(product.getAttribute("product-discount"))/100))
             } else {
                 product.querySelector(".summ-price").innerHTML = count * price1 - (count * price1 * (parseInt(product.getAttribute("product-discount"))/100))
@@ -164,8 +202,6 @@
             summ += parseInt(product.querySelector(".summ-price").innerHTML)
         };
         document.getElementById("all-summ-price").innerHTML = summ
-        localStorage.setItem("basket", JSON.stringify(basket));
-        document.getElementById("successful_basket").value = JSON.stringify(basket);
         document.getElementById("successful_basket_summ").value = summ
     }
 </script>

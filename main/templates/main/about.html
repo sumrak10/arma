@@ -39,14 +39,9 @@
                 </svg>
                 <h4>Мы есть в городах</h4>
                 <div class="col">
-                    <div class="row">
-                        <p>г. Москва</p>
-                        <p>г. Москва</p>
-                    </div>
-                    <div class="row">
-                        <p>г. Москва</p>
-                        <p>г. Москва</p>
-                    </div>
+                    {% for mf in manufactories %}
+                    <p>{{ mf.city }}</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>

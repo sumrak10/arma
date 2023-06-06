@@ -7,7 +7,8 @@
     align-items: center;
     gap: 12px;
     justify-content: flex-start;
-    padding: 46px;
+    padding: 24px 0;
+    flex-wrap: wrap;
 }
 .backto {
     display: flex;
@@ -16,11 +17,15 @@
     color: black;
     border: 2px #828282 solid;
 }
+.backto p {
+    font-weight: 500;
+    margin: 8px;
+}
 .backto div:last-child {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 18px;
+    padding: 0px 16px;
     background-color: #828282;
 }
 .backto img {
@@ -186,10 +191,15 @@
     font-size: 32px;
     font-weight: 500;
 }
+.product-side .prices {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
 .product-side .price {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 4px;
 }
 .product-side .price div:first-child {
     font-size: 16px;
@@ -201,6 +211,7 @@
     color: #465F30;
 }
 .product-side .price div:last-child span {
+    white-space: nowrap;
     font-size: 14px;
     color: black;
 }
@@ -270,11 +281,49 @@
     font-weight: 500;
     border: 1px #fff solid;
 }
+.product-side .counter .buttons .in_basket-active {
+    color: black;
+    border: 1px black solid;
+    background-color: #fff;
+}
 .product-side .counter .buttons .in_basket:hover {
     background-color: #fff;
     color: #85AB3A;
     border: 1px #85AB3A solid;
 }
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.option {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.option-name {
+    font-size: 16px;
+    color: #828282;
+}
+.option_vars {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+.option-var {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    align-items: center;
+}
+.option-var input[type=radio] {
+    cursor: pointer;
+}
+.option-var span {
+    cursor: default;
+}
+
 
 .product-side .des {
     display: flex;
@@ -615,6 +664,7 @@ body {
     gap: 12px;
 }
 .item-label {
+    text-align: center;
     font-size: 12px;
     color: #828282;
 }

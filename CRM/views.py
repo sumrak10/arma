@@ -17,4 +17,8 @@ def question(request):
     return render(request, 'CRM/question.html', {"partners": partners})
     # else:
     #     return redirect('/')
-    
+
+
+@csrf_exempt
+def add_product_in_basket(request):
+    pass

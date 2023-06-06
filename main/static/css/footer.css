@@ -69,7 +69,7 @@ a {
     gap: 12px;
 }
 
-.footer-icons {
+.footer-icons { 
     width: 100%;
     padding: 18px;
     display: flex;
@@ -85,8 +85,12 @@ a {
     gap: 38px;
 }
 .footer-icon {
-    width: 211px;
-    height: 45px;
+    /* width: 211px; */
+    height: 58px;
+}
+.footer-icon img {
+    height: 100%;
+    object-fit: contain;
 }
 .footer-buttons {
     display: flex;
@@ -122,7 +126,7 @@ a {
     width: 100%;
     padding-bottom: 24px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     flex-wrap: wrap;
     font-size: 14px;
@@ -130,10 +134,18 @@ a {
     cursor: default;
     color: #c2c2c2;
 }
+.footer-text div span {
+    display: flex;
+    gap: 16px;
+}
+.footer-text div span p {
+    margin: 0;
+}
 .footer-text a {
     color: #c2c2c2;
 }
 .smrk {
+    margin: 14px 0;
     cursor: pointer; 
 }
 .smrk:hover {
