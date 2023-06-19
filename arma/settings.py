@@ -33,7 +33,7 @@ else:
     ALLOWED_HOSTS = ['arma72.com','www.arma72.com','arma72.ru','www.arma72.ru']
 # ALLOWED_HOSTS = ['*']
 
-COOKIE_EXPIRES = 31 # days
+COOKIE_EXPIRES = 365 # days
 BASKET_COOKIES_RANDOM_STRING_LENGTH = 64
 
 # Application definition
@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'arma.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if DEBUG:
+if 1:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

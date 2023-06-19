@@ -9,16 +9,16 @@ from .utils import get_random_string
 
 from .settings import COOKIE_EXPIRES, BASKET_COOKIES_RANDOM_STRING_LENGTH
 
-def base_render(request, template:str, context:dict|None={}):
+def base_render(request, template:str, context:dict={}):
     basket_uid = request.COOKIES.get('basket_uid')
     if basket_uid is not None:
         try:
             basket_get = Basket.objects.get(unique_id=basket_uid)
             products_in_basket = ProductInBasket.objects.filter(basket = basket_get)
+            context.update({"products_in_basket":products_in_basket})
         except:
             basket_get = 0
             basket_uid = None
-        context.update({"products_in_basket":products_in_basket})
     base_template_dependencies(context)
     response = render(request, template, context)
     if basket_uid is None:
@@ -31,6 +31,6 @@ def base_render(request, template:str, context:dict|None={}):
     
 
 def base_template_dependencies(context:dict) -> None:
-    site_config = SiteConfiguration.objects.get(id=1)
+    site_config = SiteConfiguration.objects.first()
     partners = Partners.objects.all()
     context.update({"partners":partners, "site_config": site_config})

@@ -1,45 +1,58 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load filters %}
 {% block css_link %} 
 <link rel="stylesheet" href="{% static 'shop/css/styles.css' %}">
 {% endblock %}
 
 
 {% block content %}
-<div class="wrapper">
+<div class="wrapper" style="padding: 60px 0;">
     <div class="section">
         <div class="products">
-            <div class="products-title">
+            <div class="products-title" style="padding: 28px 0; font-size: 24px;">
                 {% if founded %}
-                Вот что нашлось по вашему запросу "{{query}}"
+                Вот что нашлось по вашему запросу "<b>{{query}}</b>"
                 {% else %}
-                К сожалению по запросу "{{query}}" ничего не нашлось, попробуйте ввести другой запрос
+                К сожалению по запросу "<b>{{query}}</b>" ничего не нашлось, попробуйте ввести другой запрос
                 {% endif %}
             </div>
-            <div class="cards">
+            <div class="category">
                 {% for product in products %}
-                <div class="card">
-                    <img src="{{ product.img.url }}" alt="Ошибка загрузки изображения">
-                    <div class="name">{{ product.name }}</div>
-                    <div class="prices">
-                        <div class="oldprice">{{ product.old_price }} р.</div>
-                        <div class="price">
-                            <div class="number">
-                                {{ product.wholesale_price }} р.
-                            </div>
-                            <div class="text">
-                                /шт
-                            </div>
+                <div class="product-card">
+                    <img class="product-card-image" src="{{ product.img.url }}" alt="">
+                    {% if product.discount != 0 %}
+                        <div class="product-card-discount {% if product.discount >= 50 %}product-card-discount-red{% endif %}">
+                            <span>- {{ product.discount }}%</span>
                         </div>
-                    </div>
-                    <div class="buttons">
-                        <a href="/shop/products?product={{ product.id }}" class="more">
-                            Подробнее
-                        </a>
-                        <div class="in-basket">
+                    {% endif %}
+                    {% if product.new %}
+                        <div class="product-card-new">
+                            <span>НОВИНКА</span>
+                        </div>
+                    {% endif %}
+                    <span class="product-card-title">{{ product.name }}</span>
+                    <div class="product-card-price-row">
+                        <div class="product-card-price">
+                            <span>{{ product.retail_price }} ₽</span>
+                            <span>за {{ product.min_unit }} {{ product.unit }}</span>
+                        </div>
+                        {% if product.discount != 0 %}
+                        <span class="product-card-old-price">
+                            {{ product.old_price }} ₽
+                        </span>
+                        {% endif %}
+                    </div> 
+                    <div class="product-card-buttons-row">
+                        <a href="/shop/products/{{ product.id }}" class="product-card-buttons-about">Подробнее</a>
+                        <button class="product-card-buttons-in-basket put_in_basket-category-page {% if product|queryset_have_this_product:products_in_basket %}product-card-buttons-in-basket-active{% endif %}" product-id="{{ product.id }}">
+                            {% if product|queryset_have_this_product:products_in_basket %}
+                            В корзине
+                            {% else %}
                             В корзину
-                        </div>
+                            {% endif %}
+                        </button>
                     </div>
                 </div>
                 {% endfor %}

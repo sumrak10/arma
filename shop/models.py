@@ -33,9 +33,11 @@ class Product(models.Model, IncDecPrioMixin):
     categories = models.ManyToManyField(Category, verbose_name='Категории')
     img = models.ImageField(upload_to='products/',default='placeholders/product.jpg',blank=True,null=True, verbose_name="Изображение товара 260x220")
     video = models.CharField(max_length=1024, verbose_name='Ссылка на видео в youtube 1024зн.', default='', null=True, blank=True)
-    discount = models.IntegerField(verbose_name='Скидка (0-100)')
+    discount = models.IntegerField(verbose_name='Скидка (Положительное число от 0 до 100)')
     buy_count = models.IntegerField(verbose_name='Сколько раз приобретали', default=0)
     old_price = models.IntegerField(verbose_name='Старая цена (Будет автоматически рассчитана при наличии скидки)', default=0)
+    unit = models.CharField(max_length=16, verbose_name="Единица измерения. Например 'шт.' или  'пара(ы)'", default="шт.")
+    min_unit = models.IntegerField(verbose_name="Минимальное кол-во доступное для покупки", default=1)
 
     @property
     @admin.display(
@@ -60,7 +62,7 @@ class Product(models.Model, IncDecPrioMixin):
     
     
     def save(self, *args, **kwargs):
-        self.old_price = self.retail_price - round(self.retail_price * (self.discount/100))
+        self.old_price = self.retail_price + round(self.retail_price * (self.discount/100))
         super().save(*args, **kwargs)
     
     class Meta():

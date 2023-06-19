@@ -50,6 +50,7 @@ body {
 .product-card-image {
     width: 260px;
     height: 220px;
+    object-fit: contain;
 }
 .product-card-discount {
     position: absolute;

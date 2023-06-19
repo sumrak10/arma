@@ -111,11 +111,11 @@
                 <div class="prices">
                     <div class="price">
                         <div>Оптовая цена</div>
-                        <div>{{ product.wholesale_price }} ₽ <span>за 1 шт.</span></div>
+                        <div>{{ product.wholesale_price }} ₽ <span>за {{ product.min_unit }} {{ product.unit }}</span></div>
                     </div>
                     <div class="price">
                         <div>Розничная цена</div>
-                        <div>{{ product.retail_price }} ₽ <span>за 1 шт.</span></div>
+                        <div>{{ product.retail_price }} ₽ <span>за {{ product.min_unit }} {{ product.unit }}</span></div>
                     </div>
                 </div>
                 <div class="counter">
@@ -231,7 +231,6 @@
                 <div class="characteristics">
                     {% for ch in characteristics %}
                     <div class="characteristic">
-                        <div class="dotted"></div>
                         <div class="text">{{ ch.name }} </div>
                         <div class="text"> {{ ch.value }}</div>
                     </div>
