@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
 
-from shop.models import Product
+from shop.models import Product, ProductOption
 
 from arma.settings import BASKET_COOKIES_RANDOM_STRING_LENGTH
 
@@ -40,6 +40,7 @@ class Order(models.Model):
 class ProductInBasket(models.Model):
     count = models.IntegerField(verbose_name='Количество')
     product =  models.ForeignKey(Product, verbose_name='Товар', on_delete=models.PROTECT)
+    options = models.ForeignKey(ProductOption, default=0, verbose_name="Опции", null=True, blank=True, on_delete=models.PROTECT)
 
     basket = models.ForeignKey(Basket, verbose_name='Владелец заявки', on_delete=models.CASCADE) 
 
@@ -52,10 +53,10 @@ class ProductInBasket(models.Model):
         verbose_name_plural = "Товары в корзине"
         ordering = ['product']
 
-class ProductInSendedBasket(models.Model):
+class ProductInOrder(models.Model):
     count = models.IntegerField(verbose_name='Количество')
     product =  models.ForeignKey(Product, verbose_name='Товар', on_delete=models.PROTECT)
-    options = models.TextField(default='', verbose_name="Опции", null=True, blank=True)
+    options = models.ForeignKey(ProductOption, default=0, verbose_name="Опции", null=True, blank=True, on_delete=models.PROTECT)
 
     order = models.ForeignKey(Order, verbose_name='Владелец заявки', on_delete=models.CASCADE) 
 
@@ -66,19 +67,6 @@ class ProductInSendedBasket(models.Model):
         verbose_name = "товар в корзине"
         verbose_name_plural = "Товары в корзине"
         ordering = ['product']
-
-class ProductInBasketOption(models.Model):
-    name = models.CharField(max_length=512, verbose_name="Опция")
-    value = models.CharField(max_length=512, verbose_name="Значение")
-    product_in_basket = models.ForeignKey(ProductInBasket, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name + ": " + self.value
-    
-    class Meta():
-        verbose_name = "опция"
-        verbose_name_plural = "Опции"
-        ordering = ['name']
 
 
 class Question(models.Model):

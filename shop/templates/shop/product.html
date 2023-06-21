@@ -16,7 +16,7 @@
         <label for="fio">
             Заполните поле ФИО
         </label>
-        {% endif %}
+        {% endif %} 
         <input id="fio" type="text" name="name" placeholder="Ваше ФИО или название организации" {% if review %} value="{{ review.name }}" {% endif %}>
         {% if review %}
         <label for="review-text">
@@ -111,11 +111,11 @@
                 <div class="prices">
                     <div class="price">
                         <div>Оптовая цена</div>
-                        <div>{{ product.wholesale_price }} ₽ <span>за {{ product.min_unit }} {{ product.unit }}</span></div>
+                        <div><span id="WP-for-option">{{ product.wholesale_price }}</span><span>₽</span><span>за {{ product.min_unit }} {{ product.unit }}</span></div>
                     </div>
                     <div class="price">
                         <div>Розничная цена</div>
-                        <div>{{ product.retail_price }} ₽ <span>за {{ product.min_unit }} {{ product.unit }}</span></div>
+                        <div><span id="RP-for-option">{{ product.retail_price }}</span><span>₽</span><span>за {{ product.min_unit }} {{ product.unit }}</span></div>
                     </div>
                 </div>
                 <div class="counter">
@@ -126,12 +126,12 @@
                                 <path d="M11 17H25V21H11V17Z"/>
                                 </svg>
                             </button>
-                            <input class="number" type="number" name="value" id="product-count" value="{{ product|get_count_this_product:products_in_basket }}" min="0">
+                            <input class="number" type="number" name="value" id="product-count" value="{{ product|get_count_this_product:products_in_basket }}" min="0" min-unit="{{ product.min_unit }}">
                             <button class="inc"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M28 20.8265H19.875V29H16.125V20.8265H8V17.2192H16.125V9H19.875V17.2192H28V20.8265Z"/>
                                 </svg></button>
                         </div>
-                        <button class="in_basket {% if product|queryset_have_this_product:products_in_basket %}in_basket-active{% endif %}" id="put_in_basket-product-page" product-id="{{ product.id }}">
+                        <button class="in_basket {% if product|queryset_have_this_product:products_in_basket %}in_basket-active{% endif %}" id="put_in_basket-product-page" product-id="{{ product.id }}" min-unit="{{ product.min_unit }}">
                             {% if product|queryset_have_this_product:products_in_basket %}
                             Убрать из корзины
                             {% else %}
@@ -142,19 +142,16 @@
                 </div>
                 {% if options_founded %}
                 <div class="options">
-                    {% for option in options %}
                     <div class="option option-for-basker-manager-js">
-                        <span class="option-name">{{ option.name }}</span>
-                        <form class="option_vars">
-                            {% for var in option.values|split_by_semicolon %}
-                            <div class="option-var">
-                                <input type="radio" name="n" value="{{ var }}">
-                                <span>{{ var }}</span>
-                            </div>
+                        <span class="option-name">{{ options.first.name }}</span>
+                        <div class="option-vars">
+                            {% for option in options %}
+                            <button class="option-var {% if product|get_product_option_id:products_in_basket == option.id %}option-var-active{% endif %}" wholesale-price="{{ option.wholesale_price }}" retail-price="{{ option.retail_price }}" option-id="{{ option.id }}">
+                                {{ option.value }}
+                            </button>
                             {% endfor %}
-                        </form>
+                        </div>
                     </div>
-                    {% endfor %}
                 </div>
                 {% endif %}
                 <div class="des">
@@ -190,7 +187,7 @@
                         <div class="review">
                             <div class="review-data">
                                 <div class="review-user-data">
-                                    <img src="{{ r.img.url }}" alt="">
+                                    <img src="{{ r.img.url }}" alt="" style="display: none;"> <!-- пока не требуется -->
                                     <div class="review-user-data-name-date">
                                         <div class="review-user-data-name">{{ r.name }}</div>
                                         <div class="review-user-data-date">{{ r.created_at }}</div>
@@ -246,7 +243,7 @@
 
 {% include 'sections/contact_us.html' %}
 
-<script src="{% static 'shop/js/counter.js' %}"></script>
+<script src="{% static 'shop/js/site_counters_listener.js' %}">console.log("adblock")</script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const stars = document.querySelector(".stars")
@@ -362,6 +359,21 @@
             .catch(error => console.log('error', error));
         })
         //{% endif %}
+
+        w_price = document.querySelector("#WP-for-option")
+        r_price = document.querySelector("#RP-for-option")
+        option_vars = document.querySelectorAll(".option-var")
+        if (document.querySelector(".option-var-active") == null) {
+            option_vars[0].classList.add("option-var-active")
+        }
+        for (let j = 0; j < option_vars.length; j++) {
+            option_vars[j].addEventListener("click", (e) => {
+                w_price.innerHTML = option_vars[j].getAttribute("wholesale-price")
+                r_price.innerHTML = option_vars[j].getAttribute("retail-price")
+                document.querySelector(".option-var-active").classList.remove("option-var-active")
+                option_vars[j].classList.add("option-var-active")
+            })
+        }
     })
 </script>
 {% endblock %}

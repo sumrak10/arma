@@ -31,7 +31,7 @@ if DEBUG:
     ALLOWED_HOSTS = ["*"]
 else:
     ALLOWED_HOSTS = ['arma72.com','www.arma72.com','arma72.ru','www.arma72.ru']
-# ALLOWED_HOSTS = ['*']
+
 
 COOKIE_EXPIRES = 365 # days
 BASKET_COOKIES_RANDOM_STRING_LENGTH = 64

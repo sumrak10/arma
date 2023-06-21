@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Question, Order, Basket, ProductInBasket, ProductInSendedBasket, ProductInBasketOption
+from .models import Question, Order, Basket, ProductInBasket, ProductInOrder
 
 class ProductInBasketInstanseInline(admin.TabularInline):
     extra = 1
@@ -8,7 +8,7 @@ class ProductInBasketInstanseInline(admin.TabularInline):
 
 class ProductInSendedBasketInstanseInline(admin.TabularInline):
     extra = 1
-    model = ProductInSendedBasket
+    model = ProductInOrder
     
 
 # Register your models here.
@@ -17,9 +17,6 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ("name__startswith", )
     list_display = ["name", "contacts", "text"]
 
-# @admin.register(ProductInBasketOption)
-# class ProductInBasketOptionAdmin(admin.ModelAdmin):
-#     list_display = ["name", "value"]
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):

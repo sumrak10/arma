@@ -25,19 +25,20 @@ class Product(models.Model, IncDecPrioMixin):
 
     name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
     new = models.BooleanField(default=1, verbose_name="Новинка")
-    wholesale_count = models.IntegerField(verbose_name="С какого кол-ва товаров будет считать оптовая цена")
+    wholesale_count = models.IntegerField(verbose_name="С какого кол-ва товаров будет считаться оптовая цена")
     prio = models.IntegerField(verbose_name="Приоритет", default=1)
     wholesale_price = models.IntegerField(verbose_name='Оптовая цена')
     retail_price = models.IntegerField(verbose_name='Розничная цена')
     des = models.TextField(verbose_name='Описание')
     categories = models.ManyToManyField(Category, verbose_name='Категории')
     img = models.ImageField(upload_to='products/',default='placeholders/product.jpg',blank=True,null=True, verbose_name="Изображение товара 260x220")
-    video = models.CharField(max_length=1024, verbose_name='Ссылка на видео в youtube 1024зн.', default='', null=True, blank=True)
+    video = models.CharField(max_length=1024, verbose_name='Ссылка на видео в youtube 1024зн. (пока что не используется)', default='', null=True, blank=True)
     discount = models.IntegerField(verbose_name='Скидка (Положительное число от 0 до 100)')
     buy_count = models.IntegerField(verbose_name='Сколько раз приобретали', default=0)
     old_price = models.IntegerField(verbose_name='Старая цена (Будет автоматически рассчитана при наличии скидки)', default=0)
-    unit = models.CharField(max_length=16, verbose_name="Единица измерения. Например 'шт.' или  'пара(ы)'", default="шт.")
+    unit = models.CharField(max_length=16, verbose_name="Единица измерения. Например 'шт.' или  'пара'", default="шт.")
     min_unit = models.IntegerField(verbose_name="Минимальное кол-во доступное для покупки", default=1)
+
 
     @property
     @admin.display(
@@ -68,18 +69,24 @@ class Product(models.Model, IncDecPrioMixin):
     class Meta():
         verbose_name = "товар"
         verbose_name_plural = "Товары"
-        ordering = ['-prio']
+        ordering = ['-prio', 'id']
 
 
 class ProductOption(models.Model):
     product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE)
     name = models.CharField(max_length=512, verbose_name="Наименование")
-    values = models.TextField(verbose_name="Варианты (Перечислите их, разделяя символом ';'")
+    # uni_id = models.IntegerField(verbose_name='Идентификатор варианта')
+    value = models.CharField(max_length=512,verbose_name='Текст на кнопке')
+    wholesale_price = models.IntegerField(verbose_name='Оптовая цена')
+    retail_price = models.IntegerField(verbose_name='Розничная цена')
 
     class Meta():
         verbose_name = "Варианты товара"
         verbose_name_plural = "Варианты товара"
         ordering = ['id']
+
+    def __str__(self) -> str:
+        return self.name+' '+self.value
 
 
     

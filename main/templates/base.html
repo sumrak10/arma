@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% block title %} Арма-72 {% endblock %}</title>
+    <title>{% block title %}Арма-72 | Производственная компания{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,6 +17,18 @@
     {% block css_link %} {% endblock %}
 </head>
 <body>
+    <div class="cookies-accept-notify" style="display: {% if cookies_setted %}flex{% else %}none{% endif %}">
+        <p>Данный сайт использует куки для вашего комфорта и удобства.</p>
+        <button id="cookies-accept-button">
+            <p>Хорошо</p>
+            <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.5 9.01273C9.32843 9.01273 10 8.34116 10 7.51273C10 6.6843 9.32843 6.01273 8.5 6.01273C7.67157 6.01273 7 6.6843 7 7.51273C7 8.34116 7.67157 9.01273 8.5 9.01273Z" />
+                <path d="M6.5 14.0127C7.32843 14.0127 8 13.3412 8 12.5127C8 11.6843 7.32843 11.0127 6.5 11.0127C5.67157 11.0127 5 11.6843 5 12.5127C5 13.3412 5.67157 14.0127 6.5 14.0127Z" />
+                <path d="M13 15.0127C13.5523 15.0127 14 14.565 14 14.0127C14 13.4604 13.5523 13.0127 13 13.0127C12.4477 13.0127 12 13.4604 12 14.0127C12 14.565 12.4477 15.0127 13 15.0127Z" />
+                <path d="M19.95 10.0027C18.16 9.97273 16.25 8.05273 17.27 5.78273C14.3 6.78273 11.49 4.19273 12.08 1.22273C5.11 -0.247268 0 5.42273 0 11.0127C0 16.5327 4.48 21.0127 10 21.0127C15.89 21.0127 20.54 15.9327 19.95 10.0027ZM10 19.0127C5.59 19.0127 2 15.4227 2 11.0127C2 7.70273 4.73 2.83273 10.08 2.99273C10.5 5.53273 12.52 7.55273 15.07 7.93273C15.14 8.29273 15.59 10.4827 17.99 11.5627C17.7 15.8727 14.06 19.0127 10 19.0127Z" />
+            </svg>
+        </button>
+    </div>
     {% include 'blocks/header.html' %}
     {% block content %}
     {% endblock %}
@@ -24,6 +36,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.10/SmoothScroll.min.js" integrity="sha512-HaoDYc3PGduguBWOSToNc0AWGHBi2Y432Ssp3wNIdlOzrunCtB2qq6FrhtPbo+PlbvRbyi86dr5VQx61eg/daQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector("#cookies-accept-button").addEventListener("click", (e) => {
+                document.querySelector(".cookies-accept-notify").style.display = "none"
+            })
+        })
         window.SmoothScroll({
             animationTime    : 1000, // [ms]
             stepSize         : 50, // [px]

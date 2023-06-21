@@ -3,33 +3,15 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#put_in_basket-product-page").addEventListener("click", (e) => {
             let data = new FormData()
             
+            if (document.querySelector(".option-var-active") != null) {
+                data.append("option_id", document.querySelector(".option-var-active").getAttribute("option-id"))
+            } 
             data.append("product_id", document.querySelector("#put_in_basket-product-page").getAttribute("product-id"))
             let count = parseInt(document.querySelector("#product-count").value)
             if (count === 0) {
-                count = 1
+                count = document.querySelector("#put_in_basket-product-page").getAttribute("min-unit")
             }
             data.append("count", count)
-            let options = document.querySelectorAll(".option-for-basker-manager-js")
-            let options_data = {}
-            if (options.length != 0) {
-                for (let j = 0; j < options.length; j++) {
-                    let option = options[j]
-                    let name = option.querySelector(".option-name").innerHTML
-                    let value = ''
-                    let vars = option.querySelectorAll(".option-var")
-                    for (let k = 0; k < vars.length; k++) {
-                        let var_ = vars[k]
-                        if (var_.querySelector("input").checked) {
-                            value = var_.querySelector("span").innerHTML
-                        }
-                    }
-                    if (value === '') {
-                        value = "Не выбран"
-                    }
-                    options_data[name] = value
-                }
-                data.append("options", JSON.stringify(options_data))
-            }
             axios.post("/shop/put_in_basket", data)
             .then(result => {
                 if (result['data']['status'] == 'added') {
@@ -52,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         c_buttons[i].addEventListener("click", (e) => {
             let data = new FormData()
             data.append("product_id", c_buttons[i].getAttribute("product-id"))
-            data.append("count", 1)
+            data.append("count", c_buttons[i].getAttribute("min-unit"))
             axios.post("/shop/put_in_basket", data)
             .then(result => {
                 if (result['data']['status'] == 'added') {

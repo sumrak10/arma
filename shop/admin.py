@@ -36,7 +36,9 @@ class CategoryAdmin(admin.ModelAdmin):
     actions = [IncDecPrioMixin.decrease_product_prio, IncDecPrioMixin.increase_product_prio]
 
 
-
+@admin.register(ProductOption)
+class ProductOptionAdmin(admin.ModelAdmin):
+    list_display = ["name"]
 
 
 class ProductOptionInstanseInline(admin.TabularInline):

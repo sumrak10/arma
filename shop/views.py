@@ -10,7 +10,7 @@ from django.core.files import File
 from arma.middlewares import base_render
 
 from .models import Category, Product, ProductImage, Review, ProductCharacteristic, ReviewImages, ProductOption
-from CRM.models import Order, ProductInBasket, ProductInBasketOption, Basket, ProductInSendedBasket
+from CRM.models import Order, ProductInBasket, Basket, ProductInOrder
 
 
 # Create your views here.
@@ -112,15 +112,11 @@ def basket_is_ready(request):
     
     products = ProductInBasket.objects.filter(basket=basket)
     for product in products:
-        p = ProductInSendedBasket()
-        options = ProductInBasketOption.objects.filter(product_in_basket=product)
+        p = ProductInOrder()
         p.count = product.count
         p.product = product.product
         p.order = order
-        options_str = ''
-        for option in options:
-            options_str += option.name + ": " + option.value + "\n"
-        p.options = options_str
+        p.options = product.options
         p.save()
         product.delete()
     return base_render(request, 'shop/basket_ready.html', {})
@@ -180,6 +176,14 @@ def put_in_basket(request):
     if request.method == 'POST':
         basket = Basket.objects.get(unique_id=request.COOKIES.get('basket_uid'))
         product = Product.objects.get(id=request.POST["product_id"])
+        if request.POST.get('option_id'):
+            option = ProductOption.objects.get(id=request.POST["option_id"])
+        else:
+            options = ProductOption.objects.filter(product=product)
+            if options:
+                option = options[0]
+            else:
+                option = 0
         try:
             del_product = ProductInBasket.objects.get(basket = basket, product = product)
             del_product.delete()
@@ -189,14 +193,11 @@ def put_in_basket(request):
             p.count = request.POST["count"]
             p.product = product
             p.basket = basket
+            if option:
+                p.options = option
+            else:
+                p.options = None
             p.save()
-            if request.POST.get('options'):
-                for key,value in json.loads(request.POST['options']).items():
-                    o = ProductInBasketOption()
-                    o.name = key
-                    o.value = value
-                    o.product_in_basket = p
-                    o.save()
             return JsonResponse({'status':'added'})
         
 @csrf_exempt
@@ -204,9 +205,15 @@ def update_in_basket(request):
     if request.method == 'POST':
         basket = Basket.objects.get(unique_id=request.COOKIES.get('basket_uid'))
         product = Product.objects.get(id=request.POST["product_id"])
+        if request.POST.get('option_id'):
+            option = ProductOption.objects.get(id=request.POST["option_id"])
+        else:
+            option = 0
         try:
             upd_product = ProductInBasket.objects.get(basket = basket, product = product)
             upd_product.count = request.POST["count"]
+            if option:
+                upd_product.options = option
             upd_product.save()
             return JsonResponse({'status':'updated'})
         except:

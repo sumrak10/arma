@@ -144,12 +144,22 @@ a {
 .footer-text a {
     color: #c2c2c2;
 }
-.smrk {
+.sxmrxk {
     margin: 14px 0;
     cursor: pointer; 
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
-.smrk:hover {
+.sxmrxk svg {
+    fill: #c2c2c2;
+    width: 90px;
+}
+.sxmrxk:hover {
     color: #85AB3A;
+}
+.sxmrxk:hover svg {
+    fill: #85AB3A;
 }
 @media (max-width: 700px) {
     .footer-text {

@@ -16,9 +16,11 @@ def base_render(request, template:str, context:dict={}):
             basket_get = Basket.objects.get(unique_id=basket_uid)
             products_in_basket = ProductInBasket.objects.filter(basket = basket_get)
             context.update({"products_in_basket":products_in_basket})
+            context.update({"cookies_setted": False})
         except:
             basket_get = 0
             basket_uid = None
+            context.update({"cookies_setted": True})
     base_template_dependencies(context)
     response = render(request, template, context)
     if basket_uid is None:
