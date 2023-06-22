@@ -2,17 +2,17 @@
     background: linear-gradient(180deg, #51693D -22.47%, #000000 100%, #000000 100%);
 }
 .section-hits {
-    padding-left: 10%;
-    width: 90%;
+    width: 100%;
 }
 .hits {
     padding: 120px 0;
 }
 .hits-top-side {
-    padding-right: 10%;
+    padding: 0 10%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-bottom: 24px;
 }
 .hits-top-side-right-sidebar {
     display: flex;
@@ -37,6 +37,7 @@
     align-items: center;
     flex-direction: row;
     gap: 32px;
+    padding: 0 10%;
 }
 .mobile {
     display: none;
@@ -52,7 +53,10 @@
         display: inline-block;
         width: 100%;
         text-align: center;
-        font-size: 26px;
+        font-size: 18px;
         margin-bottom: 40px;
+    }
+    .hits-top-title {
+        font-size: 26px;
     }
 }

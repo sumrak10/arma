@@ -124,7 +124,7 @@
     .bg-map {
         flex-direction: column;
         width: 100%;
-        height: 100vh;
+        height: 50vh;
         background-color: #465F30;
     }
     .bg-map iframe {

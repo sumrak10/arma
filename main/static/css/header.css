@@ -86,6 +86,7 @@
     border: none;
 }
 .basket-text {
+    font-family: 'Montserrat', sans-serif;
     color: var(--black);
     font-weight: 600;
     font-size: 12px;

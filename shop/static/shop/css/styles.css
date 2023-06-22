@@ -897,6 +897,7 @@ body {
     .item-in-basket {
         flex-direction: column;
         gap: 18px;
+        padding: 0 8px;
     }
     .item-image {
         padding-right: 0;
