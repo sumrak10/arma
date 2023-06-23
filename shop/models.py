@@ -38,7 +38,7 @@ class Product(models.Model, IncDecPrioMixin):
     old_price = models.IntegerField(verbose_name='Старая цена (Будет автоматически рассчитана при наличии скидки)', default=0)
     unit = models.CharField(max_length=16, verbose_name="Единица измерения. Например 'шт.' или  'пара'", default="шт.")
     min_unit = models.IntegerField(verbose_name="Минимальное кол-во доступное для покупки", default=1)
-
+    articul = models.CharField(max_length=512, verbose_name="Артикул", default='', null=True, blank=True)
 
     @property
     @admin.display(
@@ -64,6 +64,14 @@ class Product(models.Model, IncDecPrioMixin):
     
     def save(self, *args, **kwargs):
         self.old_price = self.retail_price + round(self.retail_price * (self.discount/100))
+        articul = ProductCharacteristic.objects.filter(product=self).filter(its_articul=True)
+        if self.articul != '' and self.articul is not None and len(articul) == 0:
+            o = ProductCharacteristic()
+            o.product = self
+            o.name = "Артикул"
+            o.value = self.articul
+            o.its_articul = True
+            o.save()
         super().save(*args, **kwargs)
     
     class Meta():
@@ -115,6 +123,7 @@ class ProductCharacteristic(models.Model):
     product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE)
     name = name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
     value = models.CharField(max_length=512, verbose_name='Значение 512зн.')
+    its_articul = models.BooleanField(verbose_name="Это артикул", default=0)
 
     def __str__(self):
         return f"Характеристика товара {self.product}"
@@ -122,7 +131,7 @@ class ProductCharacteristic(models.Model):
     class Meta():
         verbose_name = "характеристика товара"
         verbose_name_plural = "Характеристики товара"
-        ordering = ['product']
+        ordering = ['-its_articul','product']
 
 
 class Review(models.Model):

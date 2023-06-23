@@ -50,6 +50,7 @@ class ProductImagesInstanseInline(admin.TabularInline):
 class ProductCharacteristicsInstanseInline(admin.TabularInline):
     extra = 1
     model = ProductCharacteristic
+    exclude = ['its_articul']
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     @admin.action(description='Убрать скидку')

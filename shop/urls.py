@@ -8,6 +8,7 @@ urlpatterns = [
     path('categories/<int:category_id>', views.category, name="categories"),
     path('products/<int:product_id>', views.product, name="products"),
     path('search',views.search, name="search"),
+    path('s_recomendations', views.search_recomendations, name="s_recomendations"),
     path('get_reviews', views.get_reviews),
     path('save_image_for_review', views.save_image_for_review),
     path('save_review', views.save_review, name="save_review"),

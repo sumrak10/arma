@@ -194,7 +194,7 @@
                         <div class="review">
                             <div class="review-data">
                                 <div class="review-user-data">
-                                    <img src="{{ r.img.url }}" alt="" style="display: none;"> <!-- пока не требуется -->
+                                    <!--<img src="{{ r.img.url }}" alt="" style="display: none;">  пока не требуется -->
                                     <div class="review-user-data-name-date">
                                         <div class="review-user-data-name">{{ r.name }}</div>
                                         <div class="review-user-data-date">{{ r.created_at }}</div>
@@ -367,27 +367,30 @@
         })
         //{% endif %}
 
-
-        let null_price = 0 
-        if (document.querySelector("#null-price") != null) {
-            null_price = 1
-        } else {
-            let w_price = document.querySelector("#WP-for-option")
-            let r_price = document.querySelector("#RP-for-option")
-        }
-        let option_vars = document.querySelectorAll(".option-var")
-        if (document.querySelector(".option-var-active") == null) {
-            option_vars[0].classList.add("option-var-active")
-        }
-        for (let j = 0; j < option_vars.length; j++) {
-            option_vars[j].addEventListener("click", (e) => {
+        if (document.querySelector(".options") != null) {
+            let null_price = 0 
+            if (document.querySelector("#null-price") != null) {
+                null_price = 1
+            } else {
+                let w_price = document.querySelector("#WP-for-option")
+                let r_price = document.querySelector("#RP-for-option")
+            }
+            let option_vars = document.querySelectorAll(".option-var")
+            if (document.querySelector(".option-var-active") == null) {
                 if (null_price == 0) {
-                    w_price.innerHTML = option_vars[j].getAttribute("wholesale-price")
-                    r_price.innerHTML = option_vars[j].getAttribute("retail-price")
+                    option_vars[0].classList.add("option-var-active")
                 }
-                document.querySelector(".option-var-active").classList.remove("option-var-active")
-                option_vars[j].classList.add("option-var-active")
-            })
+            }
+            for (let j = 0; j < option_vars.length; j++) {
+                option_vars[j].addEventListener("click", (e) => {
+                    if (null_price == 0) {
+                        w_price.innerHTML = option_vars[j].getAttribute("wholesale-price")
+                        r_price.innerHTML = option_vars[j].getAttribute("retail-price")
+                    }
+                    document.querySelector(".option-var-active").classList.remove("option-var-active")
+                    option_vars[j].classList.add("option-var-active")
+                })
+            }
         }
     })
 </script>
