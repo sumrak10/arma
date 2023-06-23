@@ -43,14 +43,21 @@
                     {% endif %}
                     <span class="product-card-title">{{ product.name }}</span>
                     <div class="product-card-price-row">
-                        <div class="product-card-price">
-                            <span>{{ product.retail_price }} ₽</span>
-                            <span>за {{ product.min_unit }} {{ product.unit }}</span>
-                        </div>
-                        {% if product.discount != 0 %}
-                        <span class="product-card-old-price">
-                            {{ product.old_price }} ₽
-                        </span>
+                        {% if product.retail_price > 0 %}
+                            <div class="product-card-price">
+                                <span>{{ product.retail_price }} ₽</span>
+                                <span>за {{ product.min_unit }} {{ product.unit }}</span>
+                            </div>
+                            {% if product.discount != 0 %}
+                            <span class="product-card-old-price">
+                                {{ product.old_price }} ₽
+                            </span>
+                            {% endif %}
+                        {% else %}
+                            <div class="product-card-price">
+                                <span>Цена договорная</span>
+                                <span></span>
+                            </div>
                         {% endif %}
                     </div> 
                     <div class="product-card-buttons-row">

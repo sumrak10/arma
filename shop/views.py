@@ -92,7 +92,7 @@ def get_reviews(request):
 def basket(request):
     return base_render(request, 'shop/basket.html', {})
 
-def basket_is_ready(request):
+def create_order(request):
 
     error_fio = 0
     error_contacts = 0
@@ -108,9 +108,11 @@ def basket_is_ready(request):
     order.client_name = request.POST.get('name')
     order.contacts = request.POST.get('contacts')
     order.summ = request.POST.get('successful_basket_summ')
-    order.save()
     
     products = ProductInBasket.objects.filter(basket=basket)
+    if len(products) == 0:
+        return base_render(request, 'shop/status.html', {"status":"Не удалось сформировать заказ. Корзина пуста или заказ уже находится в обработке"})
+    order.save()
     for product in products:
         p = ProductInOrder()
         p.count = product.count
@@ -119,7 +121,8 @@ def basket_is_ready(request):
         p.options = product.options
         p.save()
         product.delete()
-    return base_render(request, 'shop/basket_ready.html', {})
+
+    return base_render(request, 'shop/status.html', {"status": "Ваш заказ уже принят в обработку. Скоро с вами свяжется менеджер"})
 
 
 

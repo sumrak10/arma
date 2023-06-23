@@ -20,7 +20,7 @@
         <hr class="arma-hr">
         <div class="basket-list">
             {% for item in products_in_basket %}
-                <div class="item-in-basket" product-id="{{ item.product.id }}" product-discount="{{ item.product.discount }}" product-wholesale-count="{{ item.product.wholesale_count }}">
+                <div class="item-in-basket {% if item.product.retail_price == 0 %}null-price{%endif%}" product-id="{{ item.product.id }}" product-discount="{{ item.product.discount }}" product-wholesale-count="{{ item.product.wholesale_count }}">
                     <div class="item-image">
                         {% if item.product.discount != 0 %}
                         <div class="item-image-discount {% if item.product.discount >= 50 %}item-image-discount-red{% endif %}">- {{ item.product.discount }}%</div>
@@ -32,11 +32,16 @@
                         <a class="item-value product-name" href="/shop/products/{{ item.product.id }}">{{ item.product.name }}</a>
                     </div>
                     <div class="item-column prices-mobile">
+                        {% if item.product.retail_price > 0 %}
                         <div class="item-label">Оптовая цена</div>
                         <div class="item-value"><span class="wholesale-price">{{ item.product.wholesale_price }}</span><span> ₽</span></div>
                         <!-- <div class="item-label">(При кол-ве товара от {{ item.product.wholesale_count }} шт.)</div> -->
                         <div class="item-label">Розничная цена</div>
                         <div class="item-value"><span class="retail-price">{{ item.product.retail_price }}</span><span> ₽</span></div>
+                        {% else %}
+                            <div class="item-label">Цена</div>
+                            <div class="item-value"><span class="wholesale-price">Договорная</span><span></span></div>
+                        {% endif %}
                     </div>
                     <!-- <div class="item-column">
                         <div class="item-label"></div>
@@ -60,7 +65,13 @@
                     <div class="item-column">
                         
                         <div class="item-label">Итого</div>
-                        <div class="item-value"><span class="summ-price">0</span><span> ₽</span></div>
+                        <div class="item-value">
+                            {% if item.product.retail_price > 0 %}
+                            <span class="summ-price">0</span><span> ₽</span>
+                            {% else %}
+                            <span class="summ-price">Договорная</span><span></span>
+                            {% endif %}
+                        </div>
                         <div class="counter-buttons">
                             <button class="dec"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M11 17H25V21H11V17Z"/>
@@ -71,8 +82,12 @@
                                 <path d="M28 20.8265H19.875V29H16.125V20.8265H8V17.2192H16.125V9H19.875V17.2192H28V20.8265Z"/>
                                 </svg></button>
                         </div>
+                        {% if item.product.retail_price > 0 %}
                         <div class="item-label wholesale-price-not-dooo">Еще <span class="wholesale-price-not-dooo-count"></span> {{ item.product.unit }} и цена будет оптовой</div>
                         <div class="item-label wholesale-price-dooo">Оптовая цена действует!</div>
+                        {% else %}
+                        <div class="item-label wholesale-price-not-dooo">Данный товар не влияет на общую сумму корзины</div>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
@@ -122,17 +137,26 @@
         for(let i = 0; i < products.length; i++) {
             let product = products[i]
             if (product.querySelector(".product-dont-have-options") == null) {
-                w_price = product.querySelector(".wholesale-price")
-                r_price = product.querySelector(".retail-price")
+                let null_price = 0 
+                if (product.classList.contains("null-price")) {
+                    null_price = 1
+                } else {
+                    let w_price = document.querySelector("#WP-for-option")
+                    let r_price = document.querySelector("#RP-for-option")
+                }
                 option_vars = product.querySelectorAll(".option-var")
                 if (product.querySelector(".option-var-active") != null) {
-                    w_price.innerHTML = product.querySelector(".option-var-active").getAttribute("wholesale-price")
-                    r_price.innerHTML = product.querySelector(".option-var-active").getAttribute("retail-price")
+                    if (null_price == 0) {
+                            w_price.innerHTML = option_vars[j].getAttribute("wholesale-price")
+                            r_price.innerHTML = option_vars[j].getAttribute("retail-price")
+                        }
                 }
                 for (let j = 0; j < option_vars.length; j++) {
                     option_vars[j].addEventListener("click", (e) => {
-                        w_price.innerHTML = option_vars[j].getAttribute("wholesale-price")
-                        r_price.innerHTML = option_vars[j].getAttribute("retail-price")
+                        if (null_price == 0) {
+                            w_price.innerHTML = option_vars[j].getAttribute("wholesale-price")
+                            r_price.innerHTML = option_vars[j].getAttribute("retail-price")
+                        }
                         product.querySelector(".option-var-active").classList.remove("option-var-active")
                         option_vars[j].classList.add("option-var-active")
                         updateProductAxios(product.getAttribute("product-id"), product.querySelector(".number").value, product.querySelector(".option-var-active").getAttribute("option-id"))
@@ -229,31 +253,33 @@
         var products = document.querySelectorAll(".item-in-basket")
         for(let i = 0; i < products.length; i++) {
             let product = products[i]
-            let id = product.getAttribute("product-id")
-            let product_wholesale_count = product.getAttribute("product-wholesale-count")
-            let price1 = product.querySelector(".wholesale-price").innerHTML
-            let price2 = product.querySelector(".retail-price").innerHTML
-            count = product.querySelector(".number").value
-            if (count < 1) {
-                res = deleteProduct(product, id)
-                // if (!res) {
-                //     product.querySelector(".number").value = 1;
-                //     count = 1;
-                // }
+            if (!product.classList.contains("null-price")) {
+                let id = product.getAttribute("product-id")
+                let product_wholesale_count = product.getAttribute("product-wholesale-count")
+                let price1 = product.querySelector(".wholesale-price").innerHTML
+                let price2 = product.querySelector(".retail-price").innerHTML
+                count = product.querySelector(".number").value
+                if (count < 1) {
+                    res = deleteProduct(product, id)
+                    // if (!res) {
+                    //     product.querySelector(".number").value = 1;
+                    //     count = 1;
+                    // }
+                }
+                if (parseInt(count) < parseInt(product_wholesale_count)) {
+                    product.querySelector(".summ-price").innerHTML = count * price2
+                    product.querySelector(".wholesale-price-not-dooo-count").innerHTML = product_wholesale_count - count
+                    product.querySelector(".wholesale-price-not-dooo").style.display = "block"
+                    product.querySelector(".wholesale-price-dooo").style.display = "none"
+                } else {
+                    product.querySelector(".summ-price").innerHTML = count * price1
+                    product.querySelector(".wholesale-price-not-dooo").style.display = "None"
+                    product.querySelector(".wholesale-price-dooo").style.display = "block"
+                    
+                    // - (count * price1 * (parseInt(product.getAttribute("product-discount"))/100))
+                }
+                summ += parseInt(product.querySelector(".summ-price").innerHTML)
             }
-            if (parseInt(count) < parseInt(product_wholesale_count)) {
-                product.querySelector(".summ-price").innerHTML = count * price2
-                product.querySelector(".wholesale-price-not-dooo-count").innerHTML = product_wholesale_count - count
-                product.querySelector(".wholesale-price-not-dooo").style.display = "block"
-                product.querySelector(".wholesale-price-dooo").style.display = "none"
-            } else {
-                product.querySelector(".summ-price").innerHTML = count * price1
-                product.querySelector(".wholesale-price-not-dooo").style.display = "None"
-                product.querySelector(".wholesale-price-dooo").style.display = "block"
-                
-                // - (count * price1 * (parseInt(product.getAttribute("product-discount"))/100))
-            }
-            summ += parseInt(product.querySelector(".summ-price").innerHTML)
         };
         document.getElementById("all-summ-price").innerHTML = summ
         document.getElementById("successful_basket_summ").value = summ

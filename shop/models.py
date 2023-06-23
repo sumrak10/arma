@@ -28,7 +28,7 @@ class Product(models.Model, IncDecPrioMixin):
     wholesale_count = models.IntegerField(verbose_name="С какого кол-ва товаров будет считаться оптовая цена")
     prio = models.IntegerField(verbose_name="Приоритет", default=1)
     wholesale_price = models.IntegerField(verbose_name='Оптовая цена')
-    retail_price = models.IntegerField(verbose_name='Розничная цена')
+    retail_price = models.IntegerField(verbose_name='Розничная цена (Если данное поле будет = 0, то цена будет договорной.')
     des = models.TextField(verbose_name='Описание')
     categories = models.ManyToManyField(Category, verbose_name='Категории')
     img = models.ImageField(upload_to='products/',default='placeholders/product.jpg',blank=True,null=True, verbose_name="Изображение товара 260x220")
@@ -79,6 +79,12 @@ class ProductOption(models.Model):
     value = models.CharField(max_length=512,verbose_name='Текст на кнопке')
     wholesale_price = models.IntegerField(verbose_name='Оптовая цена')
     retail_price = models.IntegerField(verbose_name='Розничная цена')
+
+    def save(self, *args, **kwargs):
+        if self.product.retail_price == 0:
+            self.wholesale_price = 0
+            self.retail_price = 0
+        super().save(*args, **kwargs)
 
     class Meta():
         verbose_name = "Варианты товара"

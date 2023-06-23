@@ -109,14 +109,21 @@
             <div class="product-side">
                 <div class="title">{{ product.name }}</div>
                 <div class="prices">
-                    <div class="price">
-                        <div>Оптовая цена</div>
-                        <div><span id="WP-for-option">{{ product.wholesale_price }}</span><span>₽</span><span>за {{ product.min_unit }} {{ product.unit }}</span></div>
+                    {% if product.retail_price > 0 %}
+                        <div class="price">
+                            <div>Оптовая цена</div>
+                            <div><span id="WP-for-option">{{ product.wholesale_price }}</span><span>₽</span><span>за {{ product.min_unit }} {{ product.unit }}</span></div>
+                        </div>
+                        <div class="price">
+                            <div>Розничная цена</div>
+                            <div><span id="RP-for-option">{{ product.retail_price }}</span><span>₽</span><span>за {{ product.min_unit }} {{ product.unit }}</span></div>
+                        </div>
+                    {% else %}
+                    <div class="price" id="null-price">
+                        <div>Цена</div>
+                        <div><span id="WP-for-option">Договорная</span><span></span><span></span></div>
                     </div>
-                    <div class="price">
-                        <div>Розничная цена</div>
-                        <div><span id="RP-for-option">{{ product.retail_price }}</span><span>₽</span><span>за {{ product.min_unit }} {{ product.unit }}</span></div>
-                    </div>
+                    {% endif %}
                 </div>
                 <div class="counter">
                     <div>Количество</div>
@@ -360,16 +367,24 @@
         })
         //{% endif %}
 
-        w_price = document.querySelector("#WP-for-option")
-        r_price = document.querySelector("#RP-for-option")
-        option_vars = document.querySelectorAll(".option-var")
+
+        let null_price = 0 
+        if (document.querySelector("#null-price") != null) {
+            null_price = 1
+        } else {
+            let w_price = document.querySelector("#WP-for-option")
+            let r_price = document.querySelector("#RP-for-option")
+        }
+        let option_vars = document.querySelectorAll(".option-var")
         if (document.querySelector(".option-var-active") == null) {
             option_vars[0].classList.add("option-var-active")
         }
         for (let j = 0; j < option_vars.length; j++) {
             option_vars[j].addEventListener("click", (e) => {
-                w_price.innerHTML = option_vars[j].getAttribute("wholesale-price")
-                r_price.innerHTML = option_vars[j].getAttribute("retail-price")
+                if (null_price == 0) {
+                    w_price.innerHTML = option_vars[j].getAttribute("wholesale-price")
+                    r_price.innerHTML = option_vars[j].getAttribute("retail-price")
+                }
                 document.querySelector(".option-var-active").classList.remove("option-var-active")
                 option_vars[j].classList.add("option-var-active")
             })
