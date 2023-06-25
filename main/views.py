@@ -9,7 +9,7 @@ from arma.middlewares import base_render
 def index(request):
     hits = Product.objects.all().order_by('-buy_count')[:10]
     slides = Slide.objects.all()
-    categories = Category.objects.all()[:4]
+    categories = Category.objects.all()[:3]
     
     return base_render(request, 'main/index.html', {"slides":slides,  "categories":categories, "hits":hits})
 

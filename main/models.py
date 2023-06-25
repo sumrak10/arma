@@ -88,6 +88,8 @@ class SiteConfiguration(models.Model):
     ogrn = models.CharField(max_length=128, verbose_name="ОГРН")
     yandex = models.CharField(max_length=512, verbose_name="Ссылка на местоположение (Яндекс.Карты)")
 
+    about_us_text = models.TextField(verbose_name="Текст на странице 'О нас'")
+
     def __str__(self):
         return f"Конфигурация {self.id}"
     
