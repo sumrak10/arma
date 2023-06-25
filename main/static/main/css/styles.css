@@ -116,6 +116,10 @@
     background-size: cover;
     width: 290px;
     height: 290px;
+    background-image: url("../../cat-bg.png");
+    width: 260px;
+    height: 300px;
+    object-fit: cover;
 }
 .index-cat-card .img img {
 
