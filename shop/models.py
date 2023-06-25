@@ -11,7 +11,7 @@ class Category(models.Model, IncDecPrioMixin):
     name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
     prio = models.IntegerField(verbose_name="Приоритет", default=1)
     
-    img = models.ImageField(upload_to='categories/',default='placeholders/categories.jpg',blank=True,null=True, verbose_name="Изображение 260х300")
+    img = models.ImageField(upload_to='categories/',default='placeholders/categories.jpg',blank=True,null=True, verbose_name="Изображение 1:1")
 
     def __str__(self):
         return self.name
