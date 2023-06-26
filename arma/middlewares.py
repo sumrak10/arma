@@ -3,11 +3,12 @@ import datetime
 from django.shortcuts import render
 
 from main.models import Partners, SiteConfiguration
-from CRM.models import Basket, ProductInBasket
+from shop.models import Basket, ProductInBasket
 
 from .utils import get_random_string
 
 from .settings import COOKIE_EXPIRES, BASKET_COOKIES_RANDOM_STRING_LENGTH
+
 
 def base_render(request, template:str, context:dict={}):
     basket_uid = request.COOKIES.get('basket_uid')

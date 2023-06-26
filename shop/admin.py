@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib import messages
 from django.utils.translation import ngettext
 
-from .models import Category, Product, ProductImage, Review, ProductCharacteristic, ReviewImages, ProductOption
+from .models import Category, Product, ProductImage, Review, ProductCharacteristic, ReviewImages, ProductOption, Basket, ProductInBasket
 
 from .mixins import IncDecPrioMixin
 
@@ -154,3 +154,13 @@ class ReviewAdmin(admin.ModelAdmin):
     exclude = ['completed', 'img']
     list_filter = ['product','created_at']
     inlines = [ReviewImagesInstanseInline]
+
+
+class ProductInBasketInstanseInline(admin.TabularInline):
+    extra = 0
+    model = ProductInBasket
+
+@admin.register(Basket)
+class BasketAdmin(admin.ModelAdmin):
+    list_display = ["unique_id", "created_at"]
+    inlines = [ProductInBasketInstanseInline]

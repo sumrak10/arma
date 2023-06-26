@@ -4,20 +4,7 @@ from django.contrib.auth.models import User
 
 from shop.models import Product, ProductOption
 
-from arma.settings import BASKET_COOKIES_RANDOM_STRING_LENGTH
 
-
-class Basket(models.Model):
-    unique_id = models.CharField(max_length=BASKET_COOKIES_RANDOM_STRING_LENGTH, verbose_name="Уникальный идентификатор")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-
-    def __str__(self):
-        return self.unique_id
-
-    class Meta():
-        verbose_name = "корзина"
-        verbose_name_plural = "Корзины"
-        ordering = ['unique_id']
 
 class Order(models.Model):
 
@@ -39,21 +26,7 @@ class Order(models.Model):
         ordering = ['client_name']
 
 
-class ProductInBasket(models.Model):
-    count = models.IntegerField(verbose_name='Количество')
-    product =  models.ForeignKey(Product, verbose_name='Товар', on_delete=models.PROTECT)
-    options = models.ForeignKey(ProductOption, default=0, verbose_name="Опции", null=True, blank=True, on_delete=models.PROTECT)
 
-    basket = models.ForeignKey(Basket, verbose_name='Владелец заявки', on_delete=models.CASCADE) 
-
-
-    def __str__(self):
-        return self.product.name + " (в корзине)"
-    
-    class Meta():
-        verbose_name = "товар в корзине"
-        verbose_name_plural = "Товары в корзине"
-        ordering = ['product']
 
 class ProductInOrder(models.Model):
     count = models.IntegerField(verbose_name='Количество')

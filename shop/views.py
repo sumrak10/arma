@@ -9,8 +9,8 @@ from django.core.files import File
 
 from arma.middlewares import base_render
 
-from .models import Category, Product, ProductImage, Review, ProductCharacteristic, ReviewImages, ProductOption
-from CRM.models import Order, ProductInBasket, Basket, ProductInOrder
+from .models import Category, Product, ProductImage, Review, ProductCharacteristic, ReviewImages, ProductOption, Basket, ProductInBasket
+from CRM.models import Order, ProductInOrder
 
 
 # Create your views here.

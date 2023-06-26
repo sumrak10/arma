@@ -119,9 +119,9 @@
                 <label for="contacts">Введите удобные для вас контакты в поле ниже</label>
             {% endif %}
             {% if error_contacts %}
-                <input id="contacts" type="text" name="contacts" placeholder="Ваши контакты (укажите любые, удобные для вас)">
+                <input id="contacts" type="text" name="contacts" placeholder="Email">
             {% else %}
-                <input id="contacts" type="text" name="contacts" placeholder="Ваши контакты (укажите любые, удобные для вас)" value="{{ contacts }}">
+                <input id="contacts" type="email" name="contacts" placeholder="Email" value="{{ contacts }}">
             {% endif %}
             <button type="submit" name="" id="">ЗАКАЗАТЬ</button>
         </form>
@@ -136,7 +136,6 @@
         var products = document.querySelectorAll(".item-in-basket")
         for(let i = 0; i < products.length; i++) {
             let product = products[i]
-            console.log(product)
             if (product.querySelector(".product-dont-have-options") == null) {
                 let null_price = 0 
                 if (product.classList.contains("null-price")) {
@@ -156,8 +155,7 @@
                             product.querySelector(".retail-price").innerHTML = option_vars[j].getAttribute("retail-price")
                         }
                         product.querySelector(".option-var-active").classList.remove("option-var-active")
-                        option_vars[j].classList.add("option-var-active")
-                        console.log(option_vars[j])
+                        e.target.classList.add("option-var-active")
                         updateProductAxios(product.getAttribute("product-id"), product.querySelector(".number").value, product.querySelector(".option-var-active").getAttribute("option-id"))
                         calculateTable()
                     })
