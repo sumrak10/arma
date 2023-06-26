@@ -371,9 +371,6 @@
             let null_price = 0 
             if (document.querySelector("#null-price") != null) {
                 null_price = 1
-            } else {
-                let w_price = document.querySelector("#WP-for-option")
-                let r_price = document.querySelector("#RP-for-option")
             }
             let option_vars = document.querySelectorAll(".option-var")
             if (document.querySelector(".option-var-active") == null) {
@@ -384,8 +381,8 @@
             for (let j = 0; j < option_vars.length; j++) {
                 option_vars[j].addEventListener("click", (e) => {
                     if (null_price == 0) {
-                        w_price.innerHTML = option_vars[j].getAttribute("wholesale-price")
-                        r_price.innerHTML = option_vars[j].getAttribute("retail-price")
+                        document.querySelector("#WP-for-option").innerHTML = option_vars[j].getAttribute("wholesale-price")
+                        document.querySelector("#RP-for-option").innerHTML = option_vars[j].getAttribute("retail-price")
                     }
                     document.querySelector(".option-var-active").classList.remove("option-var-active")
                     option_vars[j].classList.add("option-var-active")
