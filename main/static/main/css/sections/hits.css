@@ -37,7 +37,7 @@
     align-items: center;
     flex-direction: row;
     gap: 32px;
-    padding: 0 10%;
+    padding: 48px 10%;
 }
 .mobile {
     display: none;

@@ -287,8 +287,8 @@
 .counter-buttons button svg {
     fill: #4b4b4b;
 }
-.counter-buttons button:hover svg path{
-    fill: #627f4c;
+.counter-buttons button:hover svg {
+    fill: #76ba43;
 }
 .counter-buttons input {
     position: relative;
@@ -367,9 +367,9 @@
     border: 1px #85AB3A solid;
 }
 .option-var:hover {
-    background-color: #fff;
+    background-color: #85AB3A;
+    color: white;
     border: 1px #85AB3A solid;
-    color: #85AB3A;
 }
 
 

@@ -18,49 +18,8 @@
             <!-- <hr style="background-color: white; width: auto;"> -->
             <div class="hits-product-list scroll_element">
                 {% for product in hits %}
-                    <div class="product-card">
-                    <img class="product-card-image" src="{{ product.img.url }}" alt="">
-                    {% if product.discount != 0 %}
-                        <div class="product-card-discount {% if product.discount >= 50 %}product-card-discount-red{% endif %}">
-                            <span>- {{ product.discount }}%</span>
-                        </div>
-                    {% endif %}
-                    {% if product.new %}
-                        <div class="product-card-new">
-                            <span>НОВИНКА</span>
-                        </div>
-                    {% endif %}
-                    <span class="product-card-title">{{ product.name }}</span>
-                    <div class="product-card-price-row">
-                        {% if product.retail_price > 0 %}
-                            <div class="product-card-price">
-                                <span>{{ product.retail_price }} ₽</span>
-                                <span>за {{ product.min_unit }} {{ product.unit }}</span>
-                            </div>
-                            {% if product.discount != 0 %}
-                            <span class="product-card-old-price">
-                                {{ product.old_price }} ₽
-                            </span>
-                            {% endif %}
-                        {% else %}
-                            <div class="product-card-price">
-                                <span>Цена договорная</span>
-                                <span></span>
-                            </div>
-                        {% endif %}
-                    </div> 
-                    <div class="product-card-buttons-row">
-                        <a href="/shop/products/{{ product.id }}" class="product-card-buttons-about">Подробнее</a>
-                        <button class="product-card-buttons-in-basket put_in_basket-category-page {% if product|queryset_have_this_product:products_in_basket %}product-card-buttons-in-basket-active{% endif %}" product-id="{{ product.id }}">
-                            {% if product|queryset_have_this_product:products_in_basket %}
-                            В корзине
-                            {% else %}
-                            В корзину
-                            {% endif %}
-                        </button> 
-                    </div>
-                </div>
-            {% endfor %}
+                {% include 'shop/blocks/product.html' %}
+                {% endfor %}
             </div>
         </div>
         <a class="hits-see-more mobile" href="/shop">Смотреть все</a>

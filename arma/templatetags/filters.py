@@ -58,6 +58,11 @@ def product_has_options(obj):
 def get_product_options(obj):
     return ProductOption.objects.filter(product=obj)
 
+@register.filter(name='get_product_first_option')
+def get_product_first_option(obj):
+    p = ProductOption.objects.filter(product=obj)
+    return p[0].name + " " + p[0].value
+
 @register.filter(name='get_product_first_option_name')
 def get_product_first_option_name(obj):
     p = ProductOption.objects.filter(product=obj)

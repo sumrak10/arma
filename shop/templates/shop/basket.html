@@ -48,7 +48,7 @@
                         <div class="item-value"><span class="retail-price">{{ item.product.retail_price }}</span><span> ₽</span></div>
                     </div> -->
                     <div class="item-column">
-                        {% if item.product|product_has_options%}
+                        {% if item.product|product_has_options %}
                         <div class="item-label">{{ item.product|get_product_first_option_name }}</div>
                         <div class="option-vars">
                             {% for option in item.product|get_product_options %}
