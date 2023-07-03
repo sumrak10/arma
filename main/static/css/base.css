@@ -139,7 +139,7 @@ body {
     gap: 12px;
     background-color: #fff;
     width: 250px;
-    height: 450px;
+    height: 460px;
 }
 .product-card-image {
     width: 250px;
@@ -175,7 +175,7 @@ body {
 }
 .product-card-title {
     width: 90%;
-    height: 40px;
+    height: 50px;
     font-weight: 600;
 }
 .product-card-price-row {

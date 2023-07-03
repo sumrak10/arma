@@ -138,7 +138,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ["name","average_reviews","wholesale_price","retail_price","discount","prio"]
     list_filter = ["categories","discount", "new"]
     search_fields = ["name"]
-    readonly_fields = ["old_price", "buy_count"]
+    readonly_fields = ["old_price"]
     actions = [divider_action1, IncDecPrioMixin.decrease_product_prio, IncDecPrioMixin.increase_product_prio, divider_action2, remove_from_new, make_new, divider_action3, change_discount_to_0, change_discount_to_10, change_discount_to_30, change_discount_to_50]
     inlines = [ProductImagesInstanseInline, ProductCharacteristicsInstanseInline, ProductOptionInstanseInline]
 
