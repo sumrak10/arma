@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = ['arma72.com','www.arma72.com','arma72.ru','www.arma72.ru']
+    ALLOWED_HOSTS = ['arma72.com','www.arma72.com','arma72.ru','www.arma72.ru', 'www.mc.yandex.ru','mc.yandex.ru']
 
 
 COOKIE_EXPIRES = 365 # days
