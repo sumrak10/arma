@@ -18,7 +18,7 @@
         {% if product.retail_price > 0 %}
             <div class="product-card-price">
                 <span class="product-card-r-price">{{ product.retail_price }} ₽</span>
-                <span>за {{ product.min_unit }} {{ product.unit }}</span>
+                <span>за 1 {{ product.unit }}</span>
             </div>
             {% if product.discount != 0 %}
             <span class="product-card-old-price">
