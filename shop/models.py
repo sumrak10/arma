@@ -66,15 +66,16 @@ class Product(models.Model, IncDecPrioMixin):
     
     def save(self, *args, **kwargs):
         self.old_price = self.retail_price + round(self.retail_price * (self.discount/100))
-        articul = ProductCharacteristic.objects.filter(product=self).filter(its_articul=True)
-        if self.articul != '' and self.articul is not None and len(articul) == 0:
+        super().save(*args, **kwargs)
+        
+        articuls = ProductCharacteristic.objects.filter(product=self).filter(its_articul=True)
+        if self.articul != '' and self.articul is not None and len(articuls) == 0:
             o = ProductCharacteristic()
             o.product = self
             o.name = "Артикул"
             o.value = self.articul
             o.its_articul = True
             o.save()
-        super().save(*args, **kwargs)
     
     class Meta():
         verbose_name = "товар"
