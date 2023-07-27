@@ -5,17 +5,48 @@
 <link rel="stylesheet" href="{% static 'main/css/sections/numbers.css' %}">
 <link rel="stylesheet" href="{% static 'main/css/sections/hits.css' %}">
 <link rel="stylesheet" href="{% static 'main/css/sections/contact_us.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/sections/consultation.css' %}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="{% static 'main/css/styles.css' %}">
 {% endblock %} 
 
 {% block content %}
-<div class="wrapper wrapper-hello">
+<!-- <div class="wrapper wrapper-hello">
     <div class="section section-hello">
+        <div class="hello-text__side">
+            <div class="hello-text__wrapper">
+                <h1>Военное снаряжение и экипировка оптом и в розницу</h1>
+            <h2>Поможем Вам закрыть любой тендер или закупку по пошиву одежды, спальных мешков и других товаров в данной тематике.</h2>
+            </div>
+
+        </div>
+        <div class="hello-image__side">
+            <div class="hello-address">
+                <div class="hello-address__text">
+                    <p>г. Москва</p>
+                    <p>ул. Краснобогатырская 2, стр. 4 </p>
+                </div>
+                <div class="hello-address__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="54" height="54" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                        <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="hello-consultation">
+                <a href="tel:{{ site_config.phone_link }}">{{ site_config.phone }}</a>
+                <button>Закажите обратный звонок</button>
+            </div>
+        </div>
+        
+    </div>
+</div> -->
+<!--
+<div class="wrapper wrapper-slider">
+    <div class="section section-slider">
         <div class="swiper">
-            <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
-              <!-- Slides -->
               {% for slide in slides %}
               <div class="swiper-slide hello-slider">
                 <img class="hello-slider-image-desktop " src="{{ slide.desktop_img.url }}" alt="">
@@ -31,18 +62,68 @@
               </div>
               {% endfor %}
             </div>
-            <!-- If we need pagination -->
             <div class="swiper-pagination"></div>
           
-            <!-- If we need navigation buttons -->
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
           
-            <!-- If we need scrollbar -->
             <div class="swiper-scrollbar"></div>
-          </div>
+        </div> 
     </div>
 </div>
+-->
+
+
+{% include 'sections/consultation.html' %}
+
+<!-- ПОЧЕМУ ИМЕННО МЫ -->
+<div class="wrapper wrapper-whywe">
+    <div class="section section-whywe">
+        <div class="whywe">
+            <a href="/about" class="whywe-card">
+                <div class="img">
+                    <p>Почему<br>выбирают<br>нас?</p>
+                </div>
+                <div class="text">
+                    ПОДРОБНЕЕ О НАС
+                </div>
+            </a>
+            <div class="whywe-card">
+                <img src="../../static/main/media/whywe/2.png" alt="">
+                <h2 class="text">
+                    Собственное производство в Москве 
+                </h2>
+            </div>
+            <div class="whywe-card">
+                <img src="../../static/main/media/whywe/3.png" alt="">
+                <h2 class="text">
+                    Высокотехнологичное оборудование
+                </h2>
+            </div>
+            <div class="whywe-card">
+                <img src="../../static/main/media/whywe/4.png" alt="">
+                <h2 class="text">
+                    Профессиональные специалисты высокого класса
+                </h2>
+            </div>
+            <div class="whywe-card">
+                <img src="../../static/main/media/whywe/5.png" alt="">
+                <h2 class="text">
+                    Быстрая доставка по всей России и стран СНГ
+                </h2>
+            </div>
+            <div class="whywe-card">
+                <img src="../../static/main/media/whywe/6.png" alt="">
+                <h2 class="text">
+                    Выгодные скидки при оптовых закупках 
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% include 'sections/hits.html' %}
 
 
 <!-- КАТЕГОРИИ НА ГЛАВНОЙ СТРАНИЦЕ  -->
@@ -78,57 +159,6 @@
         </div>
     </div>
 </div>
-
-
-
-<!-- ПОЧЕМУ ИМЕННО МЫ -->
-<div class="wrapper wrapper-whywe">
-    <div class="section section-whywe">
-        <div class="whywe">
-            <a href="/about" class="whywe-card">
-                <img src="../../static/main/media/whywe/1.png" alt="">
-                <div class="text">
-                    ПОДРОБНЕЕ О НАС
-                </div>
-            </a>
-            <div class="whywe-card">
-                <img src="../../static/main/media/whywe/2.png" alt="">
-                <div class="text">
-                    Собственное производство в Москве 
-                </div>
-            </div>
-            <div class="whywe-card">
-                <img src="../../static/main/media/whywe/3.png" alt="">
-                <div class="text">
-                    Высокотехнологичное оборудование
-                </div>
-            </div>
-            <div class="whywe-card">
-                <img src="../../static/main/media/whywe/4.png" alt="">
-                <div class="text">
-                    Профессиональные специалисты высокого класса
-                </div>
-            </div>
-            <div class="whywe-card">
-                <img src="../../static/main/media/whywe/5.png" alt="">
-                <div class="text">
-                    Быстрая доставка по всей России и стран СНГ
-                </div>
-            </div>
-            <div class="whywe-card">
-                <img src="../../static/main/media/whywe/6.png" alt="">
-                <div class="text">
-                    Выгодные скидки при оптовых закупках 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{% include 'sections/numbers.html' %}
-{% include 'sections/hits.html' %}
-{% include 'sections/contact_us.html' %}
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <script>

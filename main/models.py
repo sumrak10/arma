@@ -79,7 +79,8 @@ class Manufactory(models.Model):
 
 class SiteConfiguration(models.Model):
 
-    phone = models.CharField(max_length=56, verbose_name="Номер телефона")
+    phone = models.CharField(max_length=56, verbose_name="Номер телефона (Удобный для чтения)")
+    phone_link = models.CharField(max_length=56, verbose_name="Номер телефона (Содержащий только цифры и знак плюса, без пробелов, без дефисов)")
     email = models.CharField(max_length=128, verbose_name="Почта")
     telegram = models.CharField(max_length=128, verbose_name="Телеграм")
     whatsapp = models.CharField(max_length=128, verbose_name="Ватсап")

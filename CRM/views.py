@@ -1,3 +1,6 @@
+import requests
+
+from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -20,5 +23,9 @@ def question(request):
 
 
 @csrf_exempt
-def add_product_in_basket(request):
-    pass
+def consultation(request):
+    if request.POST:
+        url = 'https://www.w3schools.com/python/demopage.php'
+        myobj = {'somekey': 'somevalue'}
+        requests.post(url, json = myobj)
+        return JsonResponse({"message":"sended"})

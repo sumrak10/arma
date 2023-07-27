@@ -11,6 +11,7 @@ from arma.settings import BASKET_COOKIES_RANDOM_STRING_LENGTH
 class Category(models.Model, IncDecPrioMixin):
 
     name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
+    des = models.CharField(max_length=512, verbose_name='Описание 512зн.')
     prio = models.IntegerField(verbose_name="Приоритет", default=1)
     
     img = models.ImageField(upload_to='categories/',default='placeholders/categories.jpg',blank=True,null=True, verbose_name="Изображение 1:1")

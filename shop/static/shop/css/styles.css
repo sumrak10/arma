@@ -118,6 +118,7 @@
     width: 100%;
     padding-bottom: 6px;
     padding-top: 6px;
+    margin: 0;
 }
 /* .categories-card .name div:first-child {
     white-space: nowrap;
@@ -863,6 +864,7 @@ body {
     }
     .categories-card .name {
         font-size: 12px;
+        margin: 0;
     }
     .categories-card .img  {
         width: 160px;

@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
             axios.post("/shop/put_in_basket", data)
             .then(result => {
                 if (result['data']['status'] == 'added') {
+                    ym(94231080,'reachGoal','inBasket')
                     document.querySelector("#put_in_basket-product-page").innerHTML = "Убрать из корзины"
                     document.querySelector("#put_in_basket-product-page").classList.add("in_basket-active")
                     console.log("добавлен")
@@ -38,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
             axios.post("/shop/put_in_basket", data)
             .then(result => {
                 if (result['data']['status'] == 'added') {
+                    ym(94231080,'reachGoal','inBasket')
                     c_buttons[i].innerHTML = "В корзине"
                     c_buttons[i].classList.add("product-card-buttons-in-basket-active")
                 } else {

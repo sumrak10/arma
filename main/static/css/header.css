@@ -25,9 +25,11 @@
     display: flex;
     align-items: center;
     fill: var(--white);
-    width: 102px;
-    height: 84px;
+    width: 160px;
     padding-left: 48px;
+}
+.logo-svg img {
+    width: 100%;
 }
 .search {
     position: relative;
@@ -169,7 +171,7 @@
     fill: var(--white);
 }
 .social-link svg:hover {
-    fill: var(--light-red);
+    fill: #85AB3A;
 }
 
 @media (max-width: 1150px) {
@@ -186,9 +188,9 @@
         height: 60px;
         justify-content: flex-end;
     }
-    .logo-svg svg {
+    .logo-svg img {
         height: 100%;
-        width: 200px;
+        width: 180px;
     }
     .ham-bur-ger {
         position: absolute;

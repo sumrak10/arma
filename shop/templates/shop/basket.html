@@ -98,7 +98,7 @@
                 {% if errors %}
                 <div>Заполните нужные поля и продолжите</div>
                 {% else %}
-                <div>Оформить заказ</div>
+                <div>Менеджер быстро перезвонит, проконсультирует и оформит заказ</div>
                 {% endif %}
                 <div>
                     <span>Общая стоимость: </span>
@@ -107,23 +107,23 @@
                 </div>
             </div>
             <input type="hidden" name="successful_basket_summ" id="successful_basket_summ" value=0"">
-            {% if error_fio %}
+            <!-- {% if error_fio %}
                 <label for="fio">Введите ваше ФИО в поле ниже, чтобы мы знали, как к вам обращаться</label>
-            {% endif %}
-            {% if error_fio %}
+            {% endif %} -->
+            <!-- {% if error_fio %}
                 <input id="fio" type="text" name="name" placeholder="Ваше ФИО или название организации">
             {% else %}
                 <input id="fio" type="text" name="name" placeholder="Ваше ФИО или название организации" value="{{ name }}">
+            {% endif %} -->
+            {% if error_contacts %}
+                <label for="contacts">Введите ваш номер телефона</label>
             {% endif %}
             {% if error_contacts %}
-                <label for="contacts">Введите удобные для вас контакты в поле ниже</label>
-            {% endif %}
-            {% if error_contacts %}
-                <input id="contacts" type="text" name="contacts" placeholder="Email">
+                <input id="contacts" type="text" name="contacts" placeholder="Введите ваш номер телефона">
             {% else %}
-                <input id="contacts" type="email" name="contacts" placeholder="Email" value="{{ contacts }}">
+                <input id="contacts" type="text" name="contacts" placeholder="Введите ваш номер телефона" value="{{ contacts }}">
             {% endif %}
-            <button type="submit" name="" id="">ЗАКАЗАТЬ</button>
+            <button type="submit" name="" id="" onclick="ym(94231080,'reachGoal','createOrder'); return true;">ЗАКАЗАТЬ</button>
         </form>
         {% endif %}
     </div>
