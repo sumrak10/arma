@@ -95,34 +95,17 @@
         <form class="contact-basket-form" action="{% url 'basket_is_ready' %}" method="post">
             {% csrf_token %}
             <div class="titles">
-                {% if errors %}
-                <div>Заполните нужные поля и продолжите</div>
-                {% else %}
                 <div>Менеджер быстро перезвонит, проконсультирует и оформит заказ</div>
-                {% endif %}
                 <div>
                     <span>Общая стоимость: </span>
-                    <span id="all-summ-price">0</span>
-                    <span> ₽</span>
+                    <span style="font-size: 18px; white-space: nowrap;">
+                        <span id="all-summ-price">0</span>
+                        ₽
+                    </span>
                 </div>
             </div>
             <input type="hidden" name="successful_basket_summ" id="successful_basket_summ" value=0"">
-            <!-- {% if error_fio %}
-                <label for="fio">Введите ваше ФИО в поле ниже, чтобы мы знали, как к вам обращаться</label>
-            {% endif %} -->
-            <!-- {% if error_fio %}
-                <input id="fio" type="text" name="name" placeholder="Ваше ФИО или название организации">
-            {% else %}
-                <input id="fio" type="text" name="name" placeholder="Ваше ФИО или название организации" value="{{ name }}">
-            {% endif %} -->
-            {% if error_contacts %}
-                <label for="contacts">Введите ваш номер телефона</label>
-            {% endif %}
-            {% if error_contacts %}
-                <input id="contacts" type="text" name="contacts" placeholder="Введите ваш номер телефона">
-            {% else %}
-                <input id="contacts" type="text" name="contacts" placeholder="Введите ваш номер телефона" value="{{ contacts }}">
-            {% endif %}
+            <input id="contacts" type="text" name="contacts" placeholder="Введите ваш номер телефона" required>
             <button type="submit" name="" id="" onclick="ym(94231080,'reachGoal','createOrder'); return true;">ЗАКАЗАТЬ</button>
         </form>
         {% endif %}

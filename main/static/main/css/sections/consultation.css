@@ -24,12 +24,12 @@
     justify-content: space-between;
     flex-direction: column;
     height: 100%;
+    gap: 26px;
 }
 .hello-text__wrapper {
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 18px;
 }
 .hello-text__wrapper h1,h2 {
     color: white;
@@ -108,6 +108,28 @@
 .consultation-form .help-text {
     font-size: 16px;
     text-align: center;
+}
+
+
+
+.hello-address {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+.hello-address__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+.hello-address__text p {
+    color: white;
+    font-size: 16px;
+    margin: 0;
+}
+.hello-address__text p:first-child {
+    font-weight: 600;
 }
 
 

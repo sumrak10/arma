@@ -8,7 +8,7 @@ from shop.models import Product, ProductOption
 
 class Order(models.Model):
 
-    client_name = models.CharField(max_length=50, verbose_name='ФИО клиента')
+    client_name = models.CharField(max_length=50, verbose_name='ФИО клиента', null=True)
     contacts = models.CharField(max_length=50, verbose_name='Контакты клиента')
     summ = models.IntegerField(verbose_name='Сумма заявки')
     user = models.ForeignKey(User, verbose_name='Ответственный', on_delete=models.CASCADE, null=True, blank=True)
@@ -57,9 +57,10 @@ class ProductInOrder(models.Model):
 
 class Question(models.Model):
 
-    name = models.CharField(max_length=50, verbose_name='ФИО клиента')
-    contacts = models.CharField(max_length=124, verbose_name='Контакты клиента')
-    text = models.CharField(max_length=2024, verbose_name='Текст обращения')
+    name = models.CharField(max_length=50, verbose_name='ФИО клиента', null=True)
+    contacts = models.CharField(max_length=124, verbose_name='Номер телефона')
+    text = models.CharField(max_length=2024, verbose_name='Текст обращения', null=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
 
     def __str__(self):
         return self.name
@@ -67,4 +68,17 @@ class Question(models.Model):
     class Meta():
         verbose_name = "обращение или вопрос"
         verbose_name_plural = "Обращения и вопросы"
-        ordering = ['name']
+        ordering = ['-created_at']
+
+class Consultation(models.Model):
+
+    phone = models.CharField(max_length=124, verbose_name='Контакты клиента')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+
+    def __str__(self):
+        return f"Заказ на консультацию No{self.id}"
+    
+    class Meta():
+        verbose_name = "заказ на консультацию"
+        verbose_name_plural = "Заказ на консультацию"
+        ordering = ['-created_at']

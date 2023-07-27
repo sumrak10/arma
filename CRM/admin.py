@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Question, Order, ProductInOrder
+from .models import Question, Order, ProductInOrder, Consultation
 
 
 
@@ -17,8 +17,11 @@ class OrderAdmin(admin.ModelAdmin):
 # Register your models here.
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    search_fields = ("name__startswith", )
-    list_display = ["name", "contacts", "text"]
+    search_fields = ("contacts__startswith", )
+    list_display = ["contacts", "created_at", "name", "text"]
 
 
-
+@admin.register(Consultation)
+class ConsultationAdmin(admin.ModelAdmin):
+    search_fields = ("phone__startswith", )
+    list_display = ["phone", "created_at"]

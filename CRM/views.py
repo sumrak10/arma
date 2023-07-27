@@ -1,11 +1,11 @@
-import requests
-
 from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import Question
+from arma.middlewares import base_render
+
+from .models import Question, Consultation
 from main.models import Partners
 
 @csrf_exempt
@@ -17,7 +17,7 @@ def question(request):
         q.contacts = request.POST.get('contacts')
         q.text = request.POST.get('text')
         q.save()
-    return render(request, 'CRM/question.html', {"partners": partners})
+        return base_render(request, 'CRM/message.html', {"text":"Обращение записано"})
     # else:
     #     return redirect('/')
 
@@ -25,7 +25,9 @@ def question(request):
 @csrf_exempt
 def consultation(request):
     if request.POST:
-        url = 'https://www.w3schools.com/python/demopage.php'
-        myobj = {'somekey': 'somevalue'}
-        requests.post(url, json = myobj)
-        return JsonResponse({"message":"sended"})
+        c = Consultation()
+        c.phone = request.POST.get('phone')
+        c.save()
+
+        
+        return base_render(request, 'CRM/message.html', {"text":"Скоро c Вами свяжется менеджер."})

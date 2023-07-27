@@ -116,19 +116,8 @@ def basket(request):
     return base_render(request, 'shop/basket.html', {})
 
 def create_order(request):
-
-    error_fio = 0
-    error_contacts = 0
-    if not(request.POST.get('name')):
-        error_fio = 1
-    if not(request.POST.get('contacts')):
-        error_contacts = 1
-    if error_fio or error_contacts:
-        return base_render(request, 'shop/basket.html',{"errors":True,"error_fio": error_fio,"error_contacts": error_contacts, "name":request.POST.get('name'),"contacts":request.POST.get('contacts')})
-    
     basket = Basket.objects.get(unique_id=request.COOKIES.get('basket_uid'))
     order = Order()
-    order.client_name = request.POST.get('name')
     order.contacts = request.POST.get('contacts')
     order.summ = request.POST.get('successful_basket_summ')
     
