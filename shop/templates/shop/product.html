@@ -24,13 +24,13 @@
             Заполните поле ФИО
         </label>
         {% endif %} 
-        <input id="fio" type="text" name="name" placeholder="Ваше ФИО или название организации" {% if review %} value="{{ review.name }}" {% endif %}>
+        <input id="fio" type="text" name="name" placeholder="Ваше ФИО или название организации" {% if review %} value="{{ review.name }}" {% endif %} required>
         {% if review %}
         <label for="review-text">
             Заполните поле ниже
         </label>
         {% endif %}
-        <textarea id="review-text" type="text" name="text" placeholder="Поделитесь своими впечатлениями" rows="12">{% if review %}{{ review.text }}{% endif %}</textarea>
+        <textarea id="review-text" type="text" name="text" placeholder="Поделитесь своими впечатлениями" rows="12" required>{% if review %}{{ review.text }}{% endif %}</textarea>
         <input type="hidden" name="product_id" value="{{ product.id }}">
         <div class="photos-and-stars">
             <input type="file" id="photos" name="photos" accept="image/*,image/jpeg,image/png" multiple>
@@ -294,7 +294,7 @@
         document.querySelector("#photos").addEventListener("change", (e) => {
             var formData = new FormData();
             const input = document.querySelector('#photos');
-            formData.append('id', document.querySelector("#put-in-basket").getAttribute("product-id"))
+            formData.append('id', document.querySelector("#put_in_basket-product-page").getAttribute("product-id"))
             formData.append('review_id', document.querySelector("#review_id").value)
             for (let i = 0;i < input.files.length; i++) {
                 formData.append('photos', input.files[i]);

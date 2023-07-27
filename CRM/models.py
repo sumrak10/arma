@@ -8,7 +8,7 @@ from shop.models import Product, ProductOption
 
 class Order(models.Model):
 
-    client_name = models.CharField(max_length=50, verbose_name='ФИО клиента', null=True)
+    client_name = models.CharField(max_length=50, verbose_name='ФИО клиента', null=True, blank=True)
     contacts = models.CharField(max_length=50, verbose_name='Контакты клиента')
     summ = models.IntegerField(verbose_name='Сумма заявки')
     user = models.ForeignKey(User, verbose_name='Ответственный', on_delete=models.CASCADE, null=True, blank=True)
@@ -18,12 +18,12 @@ class Order(models.Model):
 
 
     def __str__(self):
-        return self.client_name
+        return f"Заказ от {self.created_at}"
 
     class Meta():
         verbose_name = "заявку"
         verbose_name_plural = "Заявки"
-        ordering = ['client_name']
+        ordering = ['-created_at']
 
 
 
@@ -57,9 +57,9 @@ class ProductInOrder(models.Model):
 
 class Question(models.Model):
 
-    name = models.CharField(max_length=50, verbose_name='ФИО клиента', null=True)
+    name = models.CharField(max_length=50, verbose_name='ФИО клиента', null=True, blank=True)
     contacts = models.CharField(max_length=124, verbose_name='Номер телефона')
-    text = models.CharField(max_length=2024, verbose_name='Текст обращения', null=True)
+    text = models.CharField(max_length=2024, verbose_name='Текст обращения', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
 
     def __str__(self):
