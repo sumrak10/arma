@@ -150,7 +150,9 @@
     align-items: baseline;
     justify-content: space-between;
     color: #465F30;
-    font-size: 32px;
+}
+.category-text-title {
+    font-size: 28px;
 }
 
 

@@ -1,5 +1,3 @@
-import json
-
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseBadRequest, JsonResponse
@@ -8,7 +6,7 @@ from django.template import defaultfilters
 from django.core.files import File
 
 from arma.middlewares import base_render
-
+from BotInterface import BotInterface
 from .models import Category, Product, ProductImage, Review, ProductCharacteristic, ReviewImages, ProductOption, Basket, ProductInBasket
 from CRM.models import Order, ProductInOrder
 
@@ -125,6 +123,7 @@ def create_order(request):
     if len(products) == 0:
         return base_render(request, 'shop/status.html', {"status":"Не удалось сформировать заказ. Корзина пуста или заказ уже находится в обработке"})
     order.save()
+    products_in_order = []
     for product in products:
         p = ProductInOrder()
         p.count = product.count
@@ -133,6 +132,9 @@ def create_order(request):
         p.options = product.options
         p.save()
         product.delete()
+        products_in_order.append(p)
+
+    BotInterface.create_order(order, products_in_order)
 
     return base_render(request, 'shop/status.html', {"status": "Ваш заказ уже принят в обработку. Скоро с вами свяжется менеджер"})
 

@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from arma.middlewares import base_render
 
+from BotInterface import BotInterface
 from .models import Question, Consultation
 from main.models import Partners
 
@@ -17,6 +18,9 @@ def question(request):
         q.contacts = request.POST.get('contacts')
         q.text = request.POST.get('text')
         q.save()
+
+        BotInterface.create_consultation(q.phone, q.name, q.text)
+
         return base_render(request, 'CRM/message.html', {"text":"Обращение записано"})
     # else:
     #     return redirect('/')
@@ -28,6 +32,6 @@ def consultation(request):
         c = Consultation()
         c.phone = request.POST.get('phone')
         c.save()
-
+        BotInterface.create_consultation(c.phone)
         
         return base_render(request, 'CRM/message.html', {"text":"Скоро c Вами свяжется менеджер."})
