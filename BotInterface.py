@@ -4,10 +4,13 @@ from typing import List
 from CRM.models import Order, ProductInOrder
 
 
-HOST = "194.67.65.190"
-PORT = "8000"
-ORDER_URL = f"http://{HOST}:{PORT}/bot/crm/order"
-CONSULTATION_URL = f"http://{HOST}:{PORT}/bot/crm/consultation"
+
+HOST = "https://194.67.65.190"
+PORT = "443"
+ORDER_URL = f"{HOST}:{PORT}/bot/crm/order"
+CONSULTATION_URL = f"{HOST}:{PORT}/bot/crm/consultation"
+PATH_TO_PUBLIC_PEM = "arma/rootCA.pem"
+
 
 class BotInterface:
     @staticmethod
@@ -34,7 +37,7 @@ class BotInterface:
             "products": products_in_order
         }
         print(json)
-        requests.post(ORDER_URL, json = json)
+        requests.post(ORDER_URL, json = json, verify=False)
         
     @staticmethod
     def create_consultation(phone:str, name:str="Отсутствует", text:str="Отсутствует") -> None:
@@ -43,4 +46,4 @@ class BotInterface:
             "contacts": phone,
             "text": text
         }
-        requests.post(CONSULTATION_URL, json = json)
+        requests.post(CONSULTATION_URL, json = json, verify=False)

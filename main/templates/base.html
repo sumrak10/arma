@@ -2,14 +2,14 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
     {% block title %}
-    <title>Арма72 | Производственная компания</title>
+    <title>Арма72 | Производитель тактического снаряжения в России</title>
     {% endblock %}
-    {% block description%}
-    <meta name="description" content="Военное снаряжение и экипировка оптом и в розницу. Поможем Вам закрыть любой тендер или закупку по пошиву одежды, спальных мешков и других товаров в данной тематике.">
+    {% block description %}
+    <meta name="description" content='Российский производитель тактического снаряжения. Пошив военной одежды, спальных мешков, маскировочных сетей. Фабрика "Арма72" с производством в Москве. Продажа военных товаров оптом и в розницу.''>
     {% endblock %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,6 +52,20 @@
             </svg>
         </button>
     </div>
+    <div class="header-consultation__wrapper">
+        <form class="header-consultation-form" action="{% url 'consultation' %}" method="post">
+            {% csrf_token %}
+            <svg class="header-consultation-form_close" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+                <path d="M33.25 11.2175L30.7825 8.75L21 18.5325L11.2175 8.75L8.75 11.2175L18.5325 21L8.75 30.7825L11.2175 33.25L21 23.4675L30.7825 33.25L33.25 30.7825L23.4675 21L33.25 11.2175Z" />
+            </svg> 
+            <h3>Получите консультацию по телефону</h3>
+            <input type="tel" id="index-form-phone" name="phone"  placeholder="Укажите свой номер телефона" required>
+            <!-- pattern="((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}" -->
+            <button type="submit"  onclick="ym(94231080,'reachGoal','consul'); return true;">ПОЛУЧИТЬ КОНСУЛЬТАЦИЮ</button>
+            <p class="help-text">Специалист быстро перезвонит, подробно проконсультирует и ответит на все вопросы</p>
+        </form>
+    </div>
+
     {% include 'blocks/header.html' %}
     {% block content %}
     {% endblock %}
@@ -79,6 +93,7 @@
             excluded          : ''    
         })
     </script>
+    <script src="{% static 'js/header_consultation.js' %}"></script>
     <script src="{% static 'js/productDropdown.js' %}"></script>
     <script src="{% static 'js/slider.js' %}"></script>
     <script src="{% static 'shop/js/basketManager.js' %}"></script>
