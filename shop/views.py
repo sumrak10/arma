@@ -121,7 +121,7 @@ def create_order(request):
     
     products = ProductInBasket.objects.filter(basket=basket)
     if len(products) == 0:
-        return base_render(request, 'shop/status.html', {"status":"Не удалось сформировать заказ. Корзина пуста или заказ уже находится в обработке"})
+        return base_render(request, 'CRM/message.html', {"text":"Не удалось сформировать заказ. Корзина пуста или заказ уже находится в обработке"})
     order.save()
     products_in_order = []
     for product in products:
@@ -134,9 +134,9 @@ def create_order(request):
         product.delete()
         products_in_order.append(p)
 
-    BotInterface.create_order(order, products_in_order)
+    # BotInterface.create_order(order, products_in_order)
 
-    return base_render(request, 'shop/status.html', {"status": "Ваш заказ уже принят в обработку. Скоро с вами свяжется менеджер"})
+    return base_render(request, 'CRM/message.html', {"text": "Ваш заказ уже принят в обработку. Скоро с вами свяжется менеджер"})
 
 
 
