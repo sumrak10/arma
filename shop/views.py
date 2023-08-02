@@ -134,7 +134,7 @@ def create_order(request):
         product.delete()
         products_in_order.append(p)
 
-    # BotInterface.create_order(order, products_in_order)
+    BotInterface.create_order(order, products_in_order)
 
     return base_render(request, 'CRM/message.html', {"text": "Ваш заказ уже принят в обработку. Скоро с вами свяжется менеджер"})
 

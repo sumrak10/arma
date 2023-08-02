@@ -32,6 +32,6 @@ def consultation(request):
         c = Consultation()
         c.phone = request.POST.get('phone')
         c.save()
-        # BotInterface.create_consultation(c.phone)
+        BotInterface.create_consultation(c.phone)
         
         return base_render(request, 'CRM/message.html', {"text":"Скоро c Вами свяжется менеджер."})
