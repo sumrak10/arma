@@ -403,6 +403,25 @@ body {
     margin: 0;
 }
 
+.OPD {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+    gap: 12px;
+}
+.OPD .OPD__input {
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+.OPD label {
+    width: 90%;
+}
+.OPD label a {
+    text-decoration: underline;
+}
+
 
 @media (max-width: 1100px) {
     .section {

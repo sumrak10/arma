@@ -52,7 +52,7 @@
     justify-content: center;
     gap: 24px;
     color: white;
-    width: 40%;
+    /* width: 40%; */
 }
 .consultation-form h3 {
     width: 100%;
@@ -64,7 +64,7 @@
     font-family: 'Montserrat', sans-serif;
     padding: 12px 0;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.8);;
+    background-color: rgba(255, 255, 255, 0.8);
     width: 100%;
     border: 0;
     font-size: 24px;

@@ -1,4 +1,5 @@
 from django.views.decorators.csrf import csrf_exempt
+from django.http import FileResponse
 
 from .models import Member, Partners, Slide, AboutUsSlide, Manufactory, SiteConfiguration
 from shop.models import Category, Product
@@ -31,3 +32,9 @@ def about(request):
         first_slide = 0
 
     return base_render(request, 'main/about.html', {"members":members, "slides": slides, "first_slide": first_slide, "manufactories":manufactories})
+
+def obrabotka_personalnih_dannih(request):
+    return FileResponse(open("arma/obrabotka_personalnih_dannih.docx", "rb"))
+
+def polzovatelskoe_soglashenie(request):
+    return FileResponse(open("arma/polzovatelskoe_soglashenie.docx", "rb"))

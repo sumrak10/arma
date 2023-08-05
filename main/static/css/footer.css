@@ -141,6 +141,9 @@ a {
 .footer-text div span p {
     margin: 0;
 }
+.footer-text div span a {
+margin: 12px 0;
+}
 .footer-text a {
     color: #c2c2c2;
 }

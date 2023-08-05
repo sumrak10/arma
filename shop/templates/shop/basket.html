@@ -92,7 +92,7 @@
                 </div>
             {% endfor %}
         </div>
-        <form class="contact-basket-form" action="{% url 'basket_is_ready' %}" method="post">
+        <form class="contact-basket-form" action="{% url 'basket_is_ready' %}" method="post" onsubmit="ym(94231080,'reachGoal','createOrder'); return true;">
             {% csrf_token %}
             <div class="titles">
                 <div>Менеджер быстро перезвонит, проконсультирует и оформит заказ</div>
@@ -106,7 +106,8 @@
             </div>
             <input type="hidden" name="successful_basket_summ" id="successful_basket_summ" value=0"">
             <input id="contacts" type="text" name="contacts" placeholder="Введите ваш номер телефона" required>
-            <button type="submit" name="" id="" onclick="ym(94231080,'reachGoal','createOrder'); return true;">ЗАКАЗАТЬ</button>
+            <p class="OPD"><input type="checkbox" class="OPD__input" id="OPD_hello" required><label for="OPD_hello">Я согласен c <a href="/polzovatelskoe_soglashenie">пользовательским соглашением</a></label></p>
+            <button type="submit" name="" id="">ЗАКАЗАТЬ</button>
         </form>
         {% endif %}
     </div>
