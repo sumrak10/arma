@@ -36,8 +36,10 @@ class BotInterface:
             "created_at": order.created_at.strftime("%m/%d/%Y, %H:%M:%S"),
             "products": products_in_order
         }
-        print(json)
-        requests.post(ORDER_URL, json = json, verify=False)
+        try:
+            requests.post(ORDER_URL, json = json, verify=False)
+        except:
+            pass
         
     @staticmethod
     def create_consultation(phone:str, name:str="Отсутствует", text:str="Отсутствует") -> None:
@@ -46,4 +48,7 @@ class BotInterface:
             "contacts": phone,
             "text": text
         }
-        requests.post(CONSULTATION_URL, json = json, verify=False)
+        try:
+            requests.post(CONSULTATION_URL, json = json, verify=False)
+        except:
+            pass
