@@ -55,7 +55,7 @@ function send_message(first_message) {
 }
 
 function websocket(first_message_text) {
-    var ws = new WebSocket("wss://194.67.65.190:443/bot/crm/chat_widget/ws");
+    var ws = new WebSocket("wss://arma72vps.ru:443/bot/crm/chat_widget/ws");
     ws.onopen = function(e) {
         console.log("Соединение открыто")
         add_message(state='status', text='Специалист уточняет информацию по вашему запросу')
