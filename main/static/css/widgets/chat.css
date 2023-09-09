@@ -1,0 +1,202 @@
+.chat-widget___inactive {
+    display: none !important;
+}
+.chat-widget-button {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 16px;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    background-color: #dcffd8;
+    padding: 12px 16px 12px 16px;
+    border-radius: 8px;
+    border: 1px #465f30 solid;
+    z-index: 997;
+    cursor: pointer;
+}
+.chat-widget-button svg {
+    width: 52px;
+    height: 52px;
+}
+
+.chat-widget-button__circle {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: red;
+    width: 16px;
+    height: 16px;
+    border-radius: 10px;
+}
+.chat-widget-button__text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.chat-widget-button__text p {
+    margin: 0;
+    font-weight: 500;
+}
+.chat-widget-button__text p:first-child {
+    font-size: 20px;
+    font-weight: 600;
+}
+.chat-widget-button__text p:last-child {
+    font-size: 16px;
+    color: #465f30;
+}
+
+
+
+.chat-widget {
+    box-sizing: border-box;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px #465f30 solid;
+    z-index: 997;
+    overflow: hidden;
+}
+.chat-widget__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    background-color: #dcffd8;
+    border-bottom: 1px gray solid;
+}
+.chat-widget__header__close-button {
+    display: flex;
+    border-radius: 8px;
+    align-items: center;
+    border: none;
+    background-color: #00000000;
+    cursor: pointer;
+}
+.chat-widget__header__close-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+
+.chat-widget__messages-list {
+    height: 300px;
+    display: grid;
+    grid-template-columns: 100%;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: end; */
+    align-items: end;
+    align-content: end;
+    row-gap: 6px;
+    padding: 4px 4px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.chat-widget__message-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.chat-widget__message {
+    display: inline-flex;
+    gap: 4px;
+    flex-direction: column;
+    padding: 6px 6px;
+}
+.chat-widget__message___status {
+    box-sizing: border-box;
+    padding: 4px 24px;
+    text-align: center;
+}
+
+.chat-widget__message___client {
+    align-items: flex-end;
+}
+.chat-widget__message___client .chat-widget__message {
+    align-items: flex-end;
+    background-color: #465f30;
+    border-radius: 8px 0 8px 8px;
+}
+.chat-widget__message__datetime {
+    font-size: 14px;
+}
+.chat-widget__message___client .chat-widget__message .chat-widget__message__text {
+    display: inline;
+    text-align: end;
+    color: white;
+}
+.chat-widget__message___client .chat-widget__message .chat-widget__message__datetime {
+    color: #a5a5a5;
+}
+
+.chat-widget__message___manager {
+    align-items: flex-start;
+}
+.chat-widget__message___manager .chat-widget__message {
+    align-items: flex-start;
+    background-color: #cecece;
+    border-radius: 0 8px 8px 8px;
+}
+.chat-widget__message___manager .chat-widget__message .chat-widget__message__datetime {
+    color: gray;
+}
+
+.chat-widget__form {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    padding: 6px;
+    border-top: 1px gray solid;
+}
+.chat-widget__form input {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    font-size: 16px;
+}
+.chat-widget__form input:focus {
+    outline: none;
+}
+.chat-widget__form button {
+    border: none;
+    background-color: #00000000;
+    cursor: pointer;
+}
+.chat-widget__form button svg {
+    width: 32px;
+    height: 32px;
+}
+
+
+@media (max-width: 1100px) {
+    .chat-widget-button__text {
+        display: none;
+    }
+    .chat-widget-button {
+        right: 15px;
+        bottom: 15px;
+        padding: 6px 10px 6px 10px;
+    }
+    .chat-widget-button__circle {
+        width: 10px;
+        height: 10px;
+    }
+    .chat-widget-button svg {
+        width: 48px;
+        height: 48px;
+    }
+
+    .chat-widget {
+        width: 100%;
+        right: 0;
+        bottom: 0;
+    }
+}

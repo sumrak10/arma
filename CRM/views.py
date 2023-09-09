@@ -19,7 +19,7 @@ def question(request):
         q.text = request.POST.get('text')
         q.save()
 
-        BotInterface.create_consultation(q.phone, q.name, q.text)
+        BotInterface.create_consultation(q.contacts, q.name, q.text)
 
         return base_render(request, 'CRM/message.html', {"text":"Обращение записано"})
     # else:

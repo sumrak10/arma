@@ -69,6 +69,7 @@ body {
 
 .section {
     width: 80%;
+    box-sizing: border-box;
 }
 
 
@@ -431,14 +432,6 @@ body {
 @media (max-width: 970px) {
     .section {
         width: 90%;
-    }
-}
-@media (max-width: 900px) {
-    html {
-        overflow-x: hidden;
-    }
-    .section {
-        width: 95%;
     }
 }
 @media (max-width: 600px) {

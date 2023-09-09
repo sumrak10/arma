@@ -129,7 +129,6 @@
 .wrapper-category {
     background-color: #F1F1F1;
 }
-.section-category {
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -800,6 +799,11 @@ body {
 .contact-basket-form button:hover {
     background-color: #85AB3A;
     color: white;
+}
+
+.OPD label a {
+    color: #465F30;
+    font-weight: 500;
 }
 
 @media (max-width: 900px) {

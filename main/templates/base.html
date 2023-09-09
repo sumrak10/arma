@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/widgets/chat.css' %}">
     {% block css_link %} {% endblock %}
     
     <!-- Yandex.Metrika counter -->
@@ -67,6 +68,8 @@
         </form>
     </div>
 
+    {% include 'widgets/chat.html' %}
+
     {% include 'blocks/header.html' %}
     {% block content %}
     {% endblock %}
@@ -98,5 +101,6 @@
     <script src="{% static 'js/productDropdown.js' %}"></script>
     <script src="{% static 'js/slider.js' %}"></script>
     <script src="{% static 'shop/js/basketManager.js' %}"></script>
+    <script src="{% static 'js/widgets/chat.js' %}"></script>
 </body>
 </html>

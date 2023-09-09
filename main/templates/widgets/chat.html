@@ -1,0 +1,53 @@
+{% load static %}
+<!-- chat-widget___inactive -->
+<div class="chat-widget-button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M8 9h8" />
+        <path d="M8 13h6" />
+        <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z" />
+    </svg>
+    <div class="chat-widget-button__text">
+        <p>Написать онлайн консультанту</p>
+        <p>Наши специалисты всегда онлайн <br>и готовы ответить на все ваши вопросы</p>
+    </div>
+    <div class="chat-widget-button__circle"></div>
+</div>
+
+<div class="chat-widget chat-widget___inactive">
+    <div class="chat-widget__header">
+        <p>Специалист клиентской службы <span class="circle"></span></p>
+        <button type="button" class="chat-widget__header__close-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M18 6l-12 12" />
+                <path d="M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+    <div class="chat-widget__messages-list">
+        <div class="chat-widget__message-wrapper chat-widget__message___manager">
+            <div class="chat-widget__message">
+                <div class="chat-widget__message__text">
+                    Здравствуйте, чтобы вы хотели уточнить?
+                </div>
+                <div class="chat-widget__message__datetime">
+                    12:04
+                </div>
+            </div>
+        </div>
+        <!-- <div class="chat-widget__message-wrapper chat-widget__message___status">
+            Специалист уточняет информацию по вашему запросу. Ожидайте пожалуйста...
+        </div> -->
+    </div>
+    <div class="chat-widget__form">
+        <input type="text" placeholder="Напишите сообщение" id="widget-form-send-message-text">
+        <button type="button" id="widget-form-send-message-button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send" width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M10 14l11 -11" />
+                <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" />
+            </svg>
+        </button>
+    </div>
+</div>
