@@ -119,7 +119,9 @@ function time_now() {
 }
 
 function add_message(state, text) {
-    document.querySelector(".chat-widget__messages-list").appendChild(build_message_element(state,text,time_now()))
+    message = build_message_element(state,text,time_now())
+    document.querySelector(".chat-widget__messages-list").appendChild(message)
+    document.querySelector(".chat-widget__messages-list").scrollBy(0,message.offsetHeight+4)
 }
 
 function build_message_element(state, text, time='') {
