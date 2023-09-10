@@ -2,12 +2,12 @@ import datetime
 import random
 import string
 
-import zoneinfo
+import pytz
 
 from .settings import TIME_ZONE, START_TIME_AT_THE_COMPANY, END_TIME_AT_THE_COMPANY
 
 def company_working_now() -> bool:
-    tz = zoneinfo.ZoneInfo(TIME_ZONE)
+    tz = pytz.timezone(TIME_ZONE)
     now = datetime.datetime.now(tz=tz).time()
     if START_TIME_AT_THE_COMPANY < now < END_TIME_AT_THE_COMPANY:
         work_time = True
