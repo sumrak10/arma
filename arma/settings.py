@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import datetime
 
 from pathlib import Path
 
@@ -33,8 +34,8 @@ else:
     ALLOWED_HOSTS = ['arma72.com','www.arma72.com','arma72.ru','www.arma72.ru', 'www.mc.yandex.ru','mc.yandex.ru']
 
 
-COOKIE_EXPIRES = 365 # days
-BASKET_COOKIES_RANDOM_STRING_LENGTH = 64
+COOKIE_EXPIRES_TIMEDELTA = datetime.timedelta(days=365)
+BASKET_COOKIES_RANDOM_STRING_LENGTH = 32
 
 # Application definition
 
@@ -49,7 +50,7 @@ INSTALLED_APPS = [
     'shop',
     'CRM',
 ]
- 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'arma.middlewares.shop.BasketCookiesMiddleware',
 ]
 
 ROOT_URLCONF = 'arma.urls'
@@ -73,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'arma.context_processors.base_dependencies'
             ],
             'libraries': {
                 'filters': 'arma.templatetags.filters',
@@ -131,6 +134,9 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'Europe/Moscow'
+
+START_TIME_AT_THE_COMPANY = datetime.time(hour=8, minute=0)
+END_TIME_AT_THE_COMPANY = datetime.time(hour=22, minute=0)
 
 USE_I18N = True
 

@@ -4,8 +4,8 @@ from django.http import HttpResponseBadRequest, JsonResponse
 from django.utils import timezone
 from django.template import defaultfilters
 from django.core.files import File
+from django.shortcuts import render
 
-from arma.middlewares import base_render
 from BotInterface import BotInterface
 from .models import Category, Product, ProductImage, Review, ProductCharacteristic, ReviewImages, ProductOption, Basket, ProductInBasket
 from CRM.models import Order, ProductInOrder
@@ -15,16 +15,16 @@ from CRM.models import Order, ProductInOrder
 def index(request):
     hits = Product.objects.all().order_by('-buy_count')[:10]
     categories = Category.objects.all() 
-    return base_render(request, 'shop/shop.html', {"hits" : hits, "categories":categories})
+    return render(request, 'shop/shop.html', {"hits" : hits, "categories":categories})
 
 def category(request, category_id):
     try:
         category = Category.objects.get(id=category_id)
         products = Product.objects.filter(categories__id=category_id)
-        response = base_render(request, 'shop/category.html', {"products":products,"category":category})
+        response = render(request, 'shop/category.html', {"products":products,"category":category})
         return response
     except:
-        return base_render(request, 'shop/notfound.html')
+        return render(request, 'shop/notfound.html')
     
 def product(request, product_id):
     try:
@@ -34,7 +34,7 @@ def product(request, product_id):
     try:
         product = Product.objects.get(id=product_id)
     except:
-        return base_render(request, 'shop/notfound.html')
+        return render(request, 'shop/notfound.html')
     product_images = ProductImage.objects.filter(product=product_id)
     if len(product_images):
         product_images_founded = True
@@ -60,7 +60,7 @@ def product(request, product_id):
         options_founded = True
     else:
         options_founded = False
-    return base_render(request, 'shop/product.html', {"product":product,"product_images":product_images, "characteristics":characteristics,"reviews":reviews, "product_images_founded":product_images_founded, "characteristics_founded":characteristics_founded, "reviews_founded":reviews_founded, "reviews_more_than_2":reviews_more_than_2, "review":review, "options_founded":options_founded, "options":options})
+    return render(request, 'shop/product.html', {"product":product,"product_images":product_images, "characteristics":characteristics,"reviews":reviews, "product_images_founded":product_images_founded, "characteristics_founded":characteristics_founded, "reviews_founded":reviews_founded, "reviews_more_than_2":reviews_more_than_2, "review":review, "options_founded":options_founded, "options":options})
 
 def search(request):
     query = request.GET.get('query')
@@ -82,7 +82,7 @@ def search(request):
     if not products.count():
         founded = False
         
-    return base_render(request, 'shop/search.html', {"products":products,"founded":founded,"query":query})
+    return render(request, 'shop/search.html', {"products":products,"founded":founded,"query":query})
 
 @csrf_exempt
 def search_recomendations(request):
@@ -111,7 +111,7 @@ def get_reviews(request):
 
 
 def basket(request):
-    return base_render(request, 'shop/basket.html', {})
+    return render(request, 'shop/basket.html', {})
 
 def create_order(request):
     basket = Basket.objects.get(unique_id=request.COOKIES.get('basket_uid'))
@@ -121,7 +121,7 @@ def create_order(request):
     
     products = ProductInBasket.objects.filter(basket=basket)
     if len(products) == 0:
-        return base_render(request, 'CRM/message.html', {"text":"Не удалось сформировать заказ. Корзина пуста или заказ уже находится в обработке"})
+        return render(request, 'CRM/message.html', {"text":"Не удалось сформировать заказ. Корзина пуста или заказ уже находится в обработке"})
     order.save()
     products_in_order = []
     for product in products:
@@ -136,7 +136,7 @@ def create_order(request):
 
     BotInterface.create_order(order, products_in_order)
 
-    return base_render(request, 'CRM/message.html', {"text": "Ваш заказ уже принят в обработку. Скоро с вами свяжется менеджер"})
+    return render(request, 'CRM/message.html', {"text": "Ваш заказ уже принят в обработку. Скоро с вами свяжется менеджер"})
 
 
 

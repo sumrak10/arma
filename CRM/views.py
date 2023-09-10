@@ -2,8 +2,7 @@ from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
-
-from arma.middlewares import base_render
+from django.shortcuts import render
 
 from BotInterface import BotInterface
 from .models import Question, Consultation
@@ -21,7 +20,7 @@ def question(request):
 
         BotInterface.create_consultation(q.contacts, q.name, q.text)
 
-        return base_render(request, 'CRM/message.html', {"text":"Обращение записано"})
+        return render(request, 'CRM/message.html', {"text":"Обращение записано"})
     # else:
     #     return redirect('/')
 
@@ -34,4 +33,4 @@ def consultation(request):
         c.save()
         BotInterface.create_consultation(c.phone)
         
-        return base_render(request, 'CRM/message.html', {"text":"Скоро c Вами свяжется менеджер."})
+        return render(request, 'CRM/message.html', {"text":"Скоро c Вами свяжется менеджер."})

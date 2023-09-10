@@ -57,8 +57,8 @@
     {% endif %}
     <div class="product-card-buttons-row">
         <a href="/shop/products/{{ product.id }}" class="product-card-buttons-about">Подробнее</a>
-        <button class="product-card-buttons-in-basket put_in_basket-category-page {% if product|queryset_have_this_product:products_in_basket %}product-card-buttons-in-basket-active{% endif %}" product-id="{{ product.id }}" min-unit="{{ product.min_unit }}">
-            {% if product|queryset_have_this_product:products_in_basket %}
+        <button class="product-card-buttons-in-basket put_in_basket-category-page {% if product|queryset_have_this_product:request.products_in_basket %}product-card-buttons-in-basket-active{% endif %}" product-id="{{ product.id }}" min-unit="{{ product.min_unit }}">
+            {% if product|queryset_have_this_product:request.products_in_basket %}
             В корзине
             {% else %}
             В корзину

@@ -41,7 +41,7 @@
 
 </head>
 <body>
-    <div class="cookies-accept-notify" style="display: {% if cookies_setted %}flex{% else %}none{% endif %}">
+    <div class="cookies-accept-notify" style="display: {% if request.cookies_middleware.setted %}flex{% else %}none{% endif %}">
         <p>Данный сайт использует куки для вашего комфорта и удобства.</p>
         <button id="cookies-accept-button">
             <p>Хорошо</p>

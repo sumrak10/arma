@@ -11,15 +11,15 @@
 
 <div class="wrapper wrapper-basket">
     <div class="section section-basket">
-        {% if products_in_basket %}
+        {% if request.products_in_basket %}
         <div class="title">КОРЗИНА</div>
         {% else %}
         <div class="title" style="padding: 120px 0;">КОРЗИНА ПУСТА</div>
         {% endif %}
-        {% if products_in_basket %}
+        {% if request.products_in_basket %}
         <hr class="arma-hr">
         <div class="basket-list">
-            {% for item in products_in_basket %}
+            {% for item in request.products_in_basket %}
                 <div class="item-in-basket {% if item.product.retail_price == 0 %}null-price{%endif%}" product-id="{{ item.product.id }}" product-discount="{{ item.product.discount }}" product-wholesale-count="{{ item.product.wholesale_count }}">
                     <div class="item-image">
                         {% if item.product.discount != 0 %}
@@ -52,7 +52,7 @@
                         <div class="item-label">{{ item.product|get_product_first_option_name }}</div>
                         <div class="option-vars">
                             {% for option in item.product|get_product_options %}
-                            <button class="option-var {% if item.product|get_product_option_id:products_in_basket == option.id %}option-var-active{% endif %}" wholesale-price="{{ option.wholesale_price }}" retail-price="{{ option.retail_price }}" option-id="{{ option.id }}">
+                            <button class="option-var {% if item.product|get_product_option_id:request.products_in_basket == option.id %}option-var-active{% endif %}" wholesale-price="{{ option.wholesale_price }}" retail-price="{{ option.retail_price }}" option-id="{{ option.id }}">
                                 {{ option.value }}
                             </button>
                             {% endfor %}

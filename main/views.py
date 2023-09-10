@@ -4,7 +4,7 @@ from django.http import FileResponse
 from .models import Member, Partners, Slide, AboutUsSlide, Manufactory, SiteConfiguration
 from shop.models import Category, Product
 
-from arma.middlewares import base_render
+from django.shortcuts import render
 
 # Create your views here.
 def index(request):
@@ -12,7 +12,7 @@ def index(request):
     slides = Slide.objects.all()
     categories = Category.objects.all()[:9]
     
-    return base_render(request, 'main/index.html', {"slides":slides,  "categories":categories, "hits":hits})
+    return render(request, 'main/index.html', {"slides":slides,  "categories":categories, "hits":hits})
 
 @csrf_exempt
 def contacts(request):
@@ -20,7 +20,7 @@ def contacts(request):
     manufactory = Manufactory.objects.first()
     manufactories = Manufactory.objects.all()
 
-    return base_render(request, 'main/contacts.html', { "manufactory":manufactory, "manufactories":manufactories})
+    return render(request, 'main/contacts.html', { "manufactory":manufactory, "manufactories":manufactories})
 
 def about(request):
     manufactories = Manufactory.objects.all()
@@ -31,7 +31,7 @@ def about(request):
     except:
         first_slide = 0
 
-    return base_render(request, 'main/about.html', {"members":members, "slides": slides, "first_slide": first_slide, "manufactories":manufactories})
+    return render(request, 'main/about.html', {"members":members, "slides": slides, "first_slide": first_slide, "manufactories":manufactories})
 
 def obrabotka_personalnih_dannih(request):
     return FileResponse(open("arma/obrabotka_personalnih_dannih.docx", "rb"))

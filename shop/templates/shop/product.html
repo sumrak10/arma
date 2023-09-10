@@ -140,13 +140,13 @@
                                 <path d="M11 17H25V21H11V17Z"/>
                                 </svg>
                             </button>
-                            <input class="number" type="number" name="value" id="product-count" value="{{ product|get_count_this_product:products_in_basket }}" min="0" min-unit="{{ product.min_unit }}">
+                            <input class="number" type="number" name="value" id="product-count" value="{{ product|get_count_this_product:request.products_in_basket }}" min="0" min-unit="{{ product.min_unit }}">
                             <button class="inc"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M28 20.8265H19.875V29H16.125V20.8265H8V17.2192H16.125V9H19.875V17.2192H28V20.8265Z"/>
                                 </svg></button>
                         </div>
-                        <button class="in_basket {% if product|queryset_have_this_product:products_in_basket %}in_basket-active{% endif %}" id="put_in_basket-product-page" product-id="{{ product.id }}" min-unit="{{ product.min_unit }}">
-                            {% if product|queryset_have_this_product:products_in_basket %}
+                        <button class="in_basket {% if product|queryset_have_this_product:request.products_in_basket %}in_basket-active{% endif %}" id="put_in_basket-product-page" product-id="{{ product.id }}" min-unit="{{ product.min_unit }}">
+                            {% if product|queryset_have_this_product:request.products_in_basket %}
                             Убрать из корзины
                             {% else %}
                             Добавить в корзину
@@ -160,7 +160,7 @@
                         <span class="option-name">{{ options.first.name }}</span>
                         <div class="option-vars">
                             {% for option in options %}
-                            <button class="option-var {% if product|get_product_option_id:products_in_basket == option.id %}option-var-active{% endif %}" wholesale-price="{{ option.wholesale_price }}" retail-price="{{ option.retail_price }}" option-id="{{ option.id }}">
+                            <button class="option-var {% if product|get_product_option_id:request.products_in_basket == option.id %}option-var-active{% endif %}" wholesale-price="{{ option.wholesale_price }}" retail-price="{{ option.retail_price }}" option-id="{{ option.id }}">
                                 {{ option.value }}
                             </button>
                             {% endfor %}

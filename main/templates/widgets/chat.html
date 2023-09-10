@@ -1,6 +1,6 @@
 {% load static %}
 <!-- chat-widget___inactive -->
-<div class="chat-widget-button">
+<div class="chat-widget-button{% if not company_working_now %} chat-widget___inactive{% endif %}">
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
         <path d="M8 9h8" />
@@ -9,7 +9,7 @@
     </svg>
     <div class="chat-widget-button__text">
         <p>Написать онлайн консультанту</p>
-        <p>Наши специалисты всегда онлайн <br>и готовы ответить на все ваши вопросы</p>
+        <p>Наши специалисты сейчас онлайн <br>и готовы ответить на все ваши вопросы</p>
     </div>
     <div class="chat-widget-button__circle"></div>
 </div>
