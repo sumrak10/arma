@@ -67,8 +67,10 @@
             <!-- <p class="help-text">Специалист быстро перезвонит, подробно проконсультирует и ответит на все вопросы</p> -->
         </form>
     </div>
-
+    {% comment %}
     {% include 'widgets/chat.html' %}
+    {% endcomment %}
+    <div class="elfsight-app-de5fa641-e954-45c0-a0d7-094e75d59571"></div>
 
     {% include 'blocks/header.html' %}
     {% block content %}
@@ -101,6 +103,7 @@
     <script src="{% static 'js/productDropdown.js' %}"></script>
     <script src="{% static 'js/slider.js' %}"></script>
     <script src="{% static 'shop/js/basketManager.js' %}"></script>
+    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
     <script src="{% static 'js/widgets/chat.js' %}"></script>
 </body>
 </html>
