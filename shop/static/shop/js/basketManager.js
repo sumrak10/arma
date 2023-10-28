@@ -18,10 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     ym(94231080,'reachGoal','inBasket')
                     document.querySelector("#put_in_basket-product-page").innerHTML = "Убрать из корзины"
                     document.querySelector("#put_in_basket-product-page").classList.add("in_basket-active")
+                    incBasketButtonCounter()
                     console.log("добавлен")
                 } else {
                     document.querySelector("#put_in_basket-product-page").innerHTML = "В корзину"
                     document.querySelector("#put_in_basket-product-page").classList.remove("in_basket-active")
+                    decBasketButtonCounter()
                     console.log("удален")
                 }
             })
@@ -42,9 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     ym(94231080,'reachGoal','inBasket')
                     c_buttons[i].innerHTML = "В корзине"
                     c_buttons[i].classList.add("product-card-buttons-in-basket-active")
+                    incBasketButtonCounter()
                 } else {
                     c_buttons[i].innerHTML = "В корзину"
                     c_buttons[i].classList.remove("product-card-buttons-in-basket-active")
+                    decBasketButtonCounter()
                 }
             })
             .catch(error => {

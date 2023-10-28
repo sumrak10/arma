@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let min_unit = number.getAttribute('min-unit')
         inc_btn.addEventListener("click", (e) => {
             number.value = ((number.value / min_unit) + 1) * min_unit
-
         })
         dec_btn.addEventListener("click", (e) => {
             if (number.value > 0) {

@@ -738,8 +738,17 @@ body {
 }
 
 
+.full-price-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 
-
+.contact-basket-form-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .contact-basket-form {
     box-sizing: border-box;
     display: flex;
@@ -749,7 +758,7 @@ body {
     justify-content: center;
     gap: 24px;
     background-color: #fff;
-    width: 100%;
+    width: 80%;
 }
 .contact-basket-form .titles {
     padding: 24px 0;
@@ -882,6 +891,9 @@ body {
     }
     .categories-card .name hr {
         display: none;
+    }
+    .contact-basket-form {
+        width: 100%;
     }
 
 }

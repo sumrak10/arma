@@ -10,7 +10,7 @@ from django.shortcuts import render
 def index(request):
     hits = Product.objects.all().order_by('-buy_count')[:10]
     slides = Slide.objects.all()
-    categories = Category.objects.all()[:9]
+    categories = Category.objects.all()
     
     return render(request, 'main/index.html', {"slides":slides,  "categories":categories, "hits":hits})
 

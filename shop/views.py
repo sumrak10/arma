@@ -247,3 +247,9 @@ def delete_in_basket(request):
             return JsonResponse({"status":"deleted"})
         except:
             return JsonResponse({"status":"not deleted"})
+        
+@csrf_exempt
+def get_products_in_basket_count(request):
+    basket = Basket.objects.get(unique_id=request.COOKIES.get('basket_uid'))
+    count = len(ProductInBasket.objects.filter(basket=basket))
+    return JsonResponse({"count": count})

@@ -27,7 +27,7 @@
             {% csrf_token %}
             <h3>Получите консультацию по телефону</h3>
             <input type="tel" id="index-form-phone" name="phone"  placeholder="Укажите свой номер телефона" required>
-            <p class="OPD"><input type="checkbox" class="OPD__input" id="OPD_hello" required><label for="OPD_hello">Я прочитал(-а) и принимаю <a href="/polzovatelskoe_soglashenie">пользовательское соглашение</a> с конечным пользователем</label></p>
+            <p class="OPD"><input type="checkbox" class="OPD__input" id="OPD_hello" checked required><label for="OPD_hello">Я прочитал(-а) и принимаю <a href="/polzovatelskoe_soglashenie">пользовательское соглашение</a> с конечным пользователем</label></p>
             <!-- pattern="((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}" -->
             <button type="submit" >ПОЛУЧИТЬ КОНСУЛЬТАЦИЮ</button>
             <p class="help-text">Специалист быстро перезвонит, подробно проконсультирует и ответит на все вопросы</p>
