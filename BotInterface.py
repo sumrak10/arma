@@ -5,7 +5,7 @@ from CRM.models import Order, ProductInOrder
 
 
 
-HOST = "https://194.67.65.190"
+HOST = "https://arma72vps.ru"
 PORT = "443"
 ORDER_URL = f"{HOST}:{PORT}/bot/crm/order"
 CONSULTATION_URL = f"{HOST}:{PORT}/bot/crm/consultation"
