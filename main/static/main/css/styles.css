@@ -156,6 +156,7 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
+    width: 290px;
 }
 .index-cat-card .img {
     display: flex;
@@ -183,6 +184,10 @@
     padding-top: 8px;
     border-bottom: solid #465F30 1px;
     border-top: solid #465F30 1px;
+    height: 60px;
+}
+.index-cat-card .name p {
+    text-align: center;
 }
 
 

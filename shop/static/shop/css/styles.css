@@ -742,6 +742,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    background-color: #fff;
+}
+.full-price-section div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    padding: 24px 48px;
 }
 
 .contact-basket-form-section {
@@ -758,7 +767,7 @@ body {
     justify-content: center;
     gap: 24px;
     background-color: #fff;
-    width: 80%;
+    width: 60%;
 }
 .contact-basket-form .titles {
     padding: 24px 0;
