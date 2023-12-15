@@ -30,9 +30,10 @@ class Order(models.Model):
 
 class ProductInOrder(models.Model):
     count = models.IntegerField(verbose_name='Количество')
-    product =  models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE)
     summ = models.CharField(max_length=512,verbose_name='Общая сумма', default='0')
-    options = models.ForeignKey(ProductOption, default=0, verbose_name="Опции", null=True, blank=True, on_delete=models.CASCADE)
+    options = models.ForeignKey(ProductOption, default=0, verbose_name="Опции", null=True, blank=True,
+                                on_delete=models.CASCADE)
     
     order = models.ForeignKey(Order, verbose_name='Владелец заявки', on_delete=models.CASCADE) 
 

@@ -13,14 +13,14 @@ from CRM.models import Order, ProductInOrder
 
 # Create your views here.
 def index(request):
-    hits = Product.objects.all().order_by('-buy_count')[:10]
+    hits = Product.objects.filter(inactive=False).order_by('-buy_count')[:10]
     categories = Category.objects.all() 
     return render(request, 'shop/shop.html', {"hits" : hits, "categories":categories})
 
 def category(request, category_id):
     try:
         category = Category.objects.get(id=category_id)
-        products = Product.objects.filter(categories__id=category_id)
+        products = Product.objects.filter(categories__id=category_id).filter(inactive=False)
         response = render(request, 'shop/category.html', {"products":products,"category":category})
         return response
     except:
@@ -34,6 +34,8 @@ def product(request, product_id):
     try:
         product = Product.objects.get(id=product_id)
     except:
+        return render(request, 'shop/notfound.html')
+    if product.inactive == True:
         return render(request, 'shop/notfound.html')
     product_images = ProductImage.objects.filter(product=product_id)
     if len(product_images):
@@ -81,6 +83,8 @@ def search(request):
     founded = True
     if not products.count():
         founded = False
+
+    products = products.filter(inactive=False)
         
     return render(request, 'shop/search.html', {"products":products,"founded":founded,"query":query})
 
@@ -97,6 +101,9 @@ def search_recomendations(request):
             products = products | Product.objects.filter(des__contains=query.lower())  | Product.objects.filter(des__contains=query.upper()) | Product.objects.filter(des__contains=query.capitalize())
         if len(products) >= 10:
             products = products[0:10]
+
+        products = products.filter(inactive=False)
+
         return JsonResponse({"products": list(products.values())})
 
 
@@ -111,6 +118,11 @@ def get_reviews(request):
 
 
 def basket(request):
+    basket = Basket.objects.get(unique_id=request.COOKIES.get('basket_uid'))
+    products = ProductInBasket.objects.filter(basket=basket)
+    for product in products:
+        if product.product.inactive == True:
+            product.delete()
     return render(request, 'shop/basket.html', {})
 
 def create_order(request):

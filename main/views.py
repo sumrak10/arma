@@ -8,7 +8,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    hits = Product.objects.all().order_by('-buy_count')[:10]
+    hits = Product.objects.filter(inactive=False).order_by('-buy_count')[:10]
     slides = Slide.objects.all()
     categories = Category.objects.all()
     

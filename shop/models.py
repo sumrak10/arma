@@ -42,6 +42,7 @@ class Product(models.Model, IncDecPrioMixin):
     unit = models.CharField(max_length=16, verbose_name="Единица измерения. Например 'шт.' или  'пара'", default="шт.")
     min_unit = models.IntegerField(verbose_name="Минимальное кол-во доступное для покупки", default=1)
     articul = models.CharField(max_length=512, verbose_name="Артикул", default='', null=True, blank=True)
+    inactive = models.BooleanField(default=False, verbose_name="Неактивный")
 
     @property
     @admin.display(
@@ -189,7 +190,7 @@ class Basket(models.Model):
 class ProductInBasket(models.Model):
     count = models.IntegerField(verbose_name='Количество')
     product =  models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE)
-    options = models.ForeignKey(ProductOption, default=0, verbose_name="Опции", null=True, blank=True, on_delete=models.PROTECT)
+    options = models.ForeignKey(ProductOption, default=0, verbose_name="Опции", null=True, blank=True, on_delete=models.CASCADE)
 
     basket = models.ForeignKey(Basket, verbose_name='Владелец заявки', on_delete=models.CASCADE) 
 
