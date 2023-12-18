@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
-    <link rel="stylesheet" href="{% static 'css/widgets/chat.css' %}">
+{#    <link rel="stylesheet" href="{% static 'css/widgets/chat.css' %}">#}
+    <link rel="stylesheet" href="{% static 'css/widgets/whatsapp.css' %}">
     {% block css_link %} {% endblock %}
     
     <!-- Yandex.Metrika counter -->
@@ -70,7 +71,7 @@
     {% comment %}
     {% include 'widgets/chat.html' %}
     {% endcomment %}
-    <div class="elfsight-app-de5fa641-e954-45c0-a0d7-094e75d59571"></div>
+    {% include 'widgets/whatsapp.html' %}
 
     {% include 'blocks/header.html' %}
     {% block content %}
@@ -104,7 +105,7 @@
     <script src="{% static 'js/productDropdown.js' %}"></script>
     <script src="{% static 'js/slider.js' %}"></script>
     <script src="{% static 'shop/js/basketManager.js' %}"></script>
-    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+{#    <script src="{% static 'js/widgets/whatsapp.js' %}"></script>#}
     <!-- <script src="{% static 'js/widgets/chat.js' %}"></script> -->
 </body>
 </html>

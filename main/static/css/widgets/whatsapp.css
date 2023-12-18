@@ -1,0 +1,31 @@
+.whatsapp-widget {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    align-items: end;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    z-index: 997;
+    cursor: pointer;
+}
+
+.whatsapp-widget__button {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    background-color: white;
+    box-shadow: #0C0C0CA0 0 4px 8px;
+}
+.whatsapp-widget__button .whatsapp-widget__icon {
+    width: 50px;
+    height: 50px;
+    padding-bottom: 4px;
+}
+.whatsapp-widget__window {
+    display: flex;
+    flex-direction: column;
+}
