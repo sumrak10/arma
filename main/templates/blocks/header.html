@@ -18,7 +18,7 @@
             <img src="{% static 'logo_with_text.svg' %}" alt="">
         </a>
         <div class="search">
-            <form action="{% url 'search' %}" method="get" class="search-form">
+            <form action="{% url 'search' %}" method="get" class="search-form DontRequiredReCaptchaCheck">
                 <input name="query" class="search-form-input" type="text" placeholder="ПОИСК ПО ТОВАРУ" autocomplete="off">
                 <button class="search-form-btn" type="submit">
                     <svg viewBox="0 0 31 30" xmlns="http://www.w3.org/2000/svg">
@@ -44,7 +44,7 @@
                 <a href="/about">О нас</a>
             </div>
         </div>
-        <form  action="{% url 'basket' %}" method="POST">
+        <form  action="{% url 'basket' %}" method="POST" class="DontRequiredReCaptchaCheck">
             {% csrf_token %}
             <button type="submit" class="basket">
                 <div class="basket-text">
