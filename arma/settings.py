@@ -61,7 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'arma.middlewares.blockipmiddleware.BlockIPMiddleware',
+    'arma.middlewares.blockipmiddleware.BlockIPMiddleware',
     'arma.middlewares.shop.BasketCookiesMiddleware',
 ]
 
