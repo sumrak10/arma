@@ -18,7 +18,6 @@ from config import DEBUG, SECRET_KEY, DB_NAME, DB_USER, DB_PASS, DB_HOST
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -31,8 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = ['arma72.com','www.arma72.com','arma72.ru','www.arma72.ru', 'www.mc.yandex.ru','mc.yandex.ru']
-
+    ALLOWED_HOSTS = ['arma72.com', 'www.arma72.com', 'arma72.ru', 'www.arma72.ru', 'www.mc.yandex.ru', 'mc.yandex.ru']
 
 COOKIE_EXPIRES_TIMEDELTA = datetime.timedelta(days=365)
 BASKET_COOKIES_RANDOM_STRING_LENGTH = 32
@@ -86,7 +84,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'arma.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -108,7 +105,6 @@ else:
         }
     }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -127,7 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -142,13 +137,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
-
 
 MEDIA_ROOT = 'media/'
 MEDIA_URL = 'media/'
