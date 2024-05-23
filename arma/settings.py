@@ -31,7 +31,6 @@ RECAPTCHA_PUBLIC_KEY = config.RECAPTCHA_PUBLIC_KEY
 RECAPTCHA_PRIVATE_KEY = config.RECAPTCHA_PRIVATE_KEY
 
 ALLOWED_HOSTS = [
-    'localhost', '127.0.0.1',
     'arma72.com', 'www.arma72.com', 'arma72.ru', 'www.arma72.ru',
     'www.mc.yandex.ru', 'mc.yandex.ru'
 ]
