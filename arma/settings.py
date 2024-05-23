@@ -13,7 +13,7 @@ import datetime
 
 from pathlib import Path
 
-from config import DEBUG, SECRET_KEY, DB_NAME, DB_USER, DB_PASS, DB_HOST
+import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,18 +22,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = SECRET_KEY
+SECRET_KEY = config.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = DEBUG
+DEBUG = config.DEBUG
 
-if DEBUG:
-    ALLOWED_HOSTS = ["*"]
-else:
-    ALLOWED_HOSTS = ['arma72.com', 'www.arma72.com', 'arma72.ru', 'www.arma72.ru', 'www.mc.yandex.ru', 'mc.yandex.ru']
+ALLOWED_HOSTS = [
+    'localhost', '127.0.0.1',
+    'arma72.com', 'www.arma72.com', 'arma72.ru', 'www.arma72.ru',
+    'www.mc.yandex.ru', 'mc.yandex.ru'
+]
 
 COOKIE_EXPIRES_TIMEDELTA = datetime.timedelta(days=365)
 BASKET_COOKIES_RANDOM_STRING_LENGTH = 32
+NOT_ALLOWED_COUNTRIES = ['UA', 'UZ']
 
 # Application definition
 
@@ -57,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'arma.middlewares.blockipmiddleware.BlockIPMiddleware',
     'arma.middlewares.shop.BasketCookiesMiddleware',
 ]
 
@@ -92,16 +95,6 @@ if 1:
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': DB_NAME,
-            'USER': DB_USER,
-            'PASSWORD': DB_PASS,
-            'HOST': DB_HOST
         }
     }
 
