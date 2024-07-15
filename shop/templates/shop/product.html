@@ -119,7 +119,7 @@
                     {% if product.retail_price > 0 %}
                         <div class="price">
                             <div>Оптовая цена</div>
-                            <div><span id="WP-for-option">{{ product.wholesale_price }}</span><span>₽</span><span>за 1 {{ product.unit }}</span></div>
+                            <div><span id="WP-for-option">{{ product.wholesale_price }}</span><span>₽</span><span>от {{ product.wholesale_count }} {{ product.unit }}</span></div>
                         </div>
                         <div class="price">
                             <div>Розничная цена</div>
