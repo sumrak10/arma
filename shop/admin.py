@@ -62,14 +62,14 @@ class CategoryAdmin(admin.ModelAdmin):
     def check_for_name_duplicates(self, request, queryset):
         names_list = [obj.name for obj in queryset]
         dups_list = [item for item, count in Counter(names_list).items() if count > 1]
-        for dup_slug in dups_list:
-            dup_products = Product.objects.filter(slug=dup_slug)
-            for i, product in enumerate(dup_products):
+        for dup_name in dups_list:
+            dup_products = Category.objects.filter(name=dup_name)
+            for i, category in enumerate(dup_products):
                 if i == 0:
                     continue
-                product.name = f"{product.name}-{i}"
-                product.slug = slugify(product.name)
-                product.save()
+                category.name = f"{category.name}-{i}"
+                category.slug = slugify(category.name)
+                category.save()
         self.message_user(
             request,
             ngettext(
