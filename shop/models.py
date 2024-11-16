@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib import admin
+from django.urls import reverse
 from django.utils.html import format_html
+from slugify import slugify
 
 from .mixins import IncDecPrioMixin
 
@@ -8,15 +10,29 @@ from arma.settings import BASKET_COOKIES_RANDOM_STRING_LENGTH
 
 
 class Category(models.Model, IncDecPrioMixin):
-    name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
+    name = models.CharField(max_length=512, verbose_name='Наименование 512зн.', unique=True)
+    slug = models.SlugField(max_length=1024, verbose_name='Слаг (Заполняется автоматически, если поле пустое)',
+                            null=True, blank=True, db_index=True)
     des = models.CharField(max_length=512, verbose_name='Описание 512зн.')
     prio = models.IntegerField(verbose_name="Приоритет", default=1)
 
     img = models.ImageField(upload_to='categories/', default='placeholders/categories.jpg', blank=True, null=True,
                             verbose_name="Изображение 1:1")
 
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего обновления")
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        # Предполагаем, что категория доступна по URL, например: /category/<slug>/
+        return reverse('categories', kwargs={'category_slug': self.slug})
 
     class Meta:
         verbose_name = "категорию"
@@ -25,7 +41,9 @@ class Category(models.Model, IncDecPrioMixin):
 
 
 class Product(models.Model, IncDecPrioMixin):
-    name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
+    name = models.CharField(max_length=512, verbose_name='Наименование 512зн.', unique=True)
+    slug = models.SlugField(max_length=1024, verbose_name='Слаг (Заполняется автоматически, если поле пустое)',
+                            null=True, blank=True, db_index=True)
     new = models.BooleanField(default=1, verbose_name="Новинка")
     wholesale_count = models.IntegerField(verbose_name="С какого кол-ва товаров будет считаться оптовая цена")
     prio = models.IntegerField(verbose_name="Приоритет", default=1)
@@ -46,6 +64,9 @@ class Product(models.Model, IncDecPrioMixin):
     min_unit = models.IntegerField(verbose_name="Минимальное кол-во доступное для покупки", default=1)
     articul = models.CharField(max_length=512, verbose_name="Артикул", default='', null=True, blank=True)
     inactive = models.BooleanField(default=False, verbose_name="Неактивный")
+
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего обновления")
 
     @property
     @admin.display(
@@ -69,7 +90,13 @@ class Product(models.Model, IncDecPrioMixin):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        # Предполагаем, что категория доступна по URL, например: /category/<slug>/
+        return reverse('products', kwargs={'product_slug': self.slug})
+
     def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
         self.old_price = self.retail_price + round(self.retail_price * (self.discount / 100))
         super().save(*args, **kwargs)
 
@@ -127,7 +154,7 @@ class ProductImage(models.Model):
 
 class ProductCharacteristic(models.Model):
     product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE)
-    name = name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
+    name = models.CharField(max_length=512, verbose_name='Наименование 512зн.')
     value = models.CharField(max_length=512, verbose_name='Значение 512зн.')
     its_articul = models.BooleanField(verbose_name="Это артикул", default=0)
 

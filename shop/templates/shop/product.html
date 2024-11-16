@@ -89,7 +89,7 @@
             </div>
         </a>
         {% for cat in product.categories.all %}
-        <a href="/shop/categories/{{ cat.id }}" class="backto">
+        <a href="/shop/categories/{{ cat.slug }}" class="backto">
             <p>{{ cat.name }}</p>
             <div>
                 <img src="{% static 'right_arrow.svg' %}" alt="">

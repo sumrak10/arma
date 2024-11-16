@@ -43,3 +43,7 @@ def obrabotka_personalnih_dannih(request):
 
 def polzovatelskoe_soglashenie(request):
     return FileResponse(open("arma/polzovatelskoe_soglashenie.docx", "rb"))
+
+
+def robots(request):
+    return FileResponse(open("arma/robots.txt", "rb"))

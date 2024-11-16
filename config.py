@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DEBUG = int(os.environ.get("DEBUG"))
+DEBUG = bool(os.environ.get("DEBUG"))
 KEY = os.environ.get("KEY")
 
 SECRET_KEY = os.environ.get("SECRET_KEY")

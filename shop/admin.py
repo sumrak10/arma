@@ -1,10 +1,18 @@
+from collections import Counter
+
 from django.contrib import admin
 from django.contrib import messages
+from django.contrib.admin.utils import lookup_spawns_duplicates
+from django.core.exceptions import FieldDoesNotExist
+from django.db.models import Q
+from django.db.models.constants import LOOKUP_SEP
+from django.utils.text import smart_split, unescape_string_literal
 from django.utils.translation import ngettext
 from django.db.models.query import QuerySet
+from slugify import slugify
 
-
-from .models import Category, Product, ProductImage, Review, ProductCharacteristic, ReviewImages, ProductOption, Basket, ProductInBasket
+from .models import Category, Product, ProductImage, Review, ProductCharacteristic, ReviewImages, ProductOption, Basket, \
+    ProductInBasket
 
 from .mixins import IncDecPrioMixin
 
@@ -16,6 +24,8 @@ def divider_action1(modeladmin, request, queryset):
         "Действие не выбрано.",
         messages.WARNING,
     )
+
+
 @admin.action(description='---------')
 def divider_action2(modeladmin, request, queryset):
     modeladmin.message_user(
@@ -23,8 +33,19 @@ def divider_action2(modeladmin, request, queryset):
         "Действие не выбрано.",
         messages.WARNING,
     )
+
+
 @admin.action(description='---------')
 def divider_action3(modeladmin, request, queryset):
+    modeladmin.message_user(
+        request,
+        "Действие не выбрано.",
+        messages.WARNING,
+    )
+
+
+@admin.action(description='---------')
+def divider_action4(modeladmin, request, queryset):
     modeladmin.message_user(
         request,
         "Действие не выбрано.",
@@ -35,7 +56,41 @@ def divider_action3(modeladmin, request, queryset):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ["name", "prio"]
-    actions = [IncDecPrioMixin.decrease_product_prio, IncDecPrioMixin.increase_product_prio]
+    prepopulated_fields = {'slug': ('name',)}
+
+    @admin.action(description='Проверить и исправить дублирующиеся slug')
+    def check_for_slug_duplicates(self, request, queryset):
+        slugs_list = [obj.slug for obj in queryset]
+        dups_list = [item for item, count in Counter(slugs_list).items() if count > 1]
+        for dup_slug in dups_list:
+            dup_products = Product.objects.filter(slug=dup_slug)
+            for i, product in enumerate(dup_products):
+                if i == 0:
+                    continue
+                product.name = f"{product.name}-{i}"
+                product.slug = slugify(product.name)
+                product.inactive = True
+                product.save()
+        self.message_user(
+            request,
+            ngettext(
+                "Исправлен %d товар с дублирующимся slug",
+                "Исправлено %d товаров с дублирующимся slug",
+                len(dups_list),
+            )
+            % len(dups_list),
+            messages.SUCCESS,
+        )
+
+    actions = [IncDecPrioMixin.decrease_product_prio,
+               IncDecPrioMixin.increase_product_prio,
+               divider_action1,
+               check_for_slug_duplicates]
+
+    def save_model(self, request, obj, form, change):
+        if not obj.slug:
+            obj.slug = slugify(obj.name)
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(ProductOption)
@@ -46,9 +101,13 @@ class ProductOptionAdmin(admin.ModelAdmin):
 class ProductOptionInstanseInline(admin.TabularInline):
     extra = 1
     model = ProductOption
+
+
 class ProductImagesInstanseInline(admin.TabularInline):
     extra = 1
     model = ProductImage
+
+
 class ProductCharacteristicsInstanseInline(admin.TabularInline):
     extra = 1
     model = ProductCharacteristic
@@ -97,20 +156,19 @@ class ProductAdmin(admin.ModelAdmin):
             for bit in smart_split(search_term):
                 if bit.startswith(('"', "'")) and bit[0] == bit[-1]:
                     bit = unescape_string_literal(bit)
-                or_queries = models.Q.create(
+                or_queries = Q.create(
                     [(orm_lookup, bit) for orm_lookup in orm_lookups],
-                    connector=models.Q.OR,
+                    connector=Q.OR,
                 )
                 term_queries.append(or_queries)
-            queryset = queryset.filter(models.Q.create(term_queries))
+            queryset = queryset.filter(Q.create(term_queries))
             may_have_duplicates |= any(
                 lookup_spawns_duplicates(self.opts, search_spec)
                 for search_spec in orm_lookups
             )
         return queryset, may_have_duplicates
 
-
-    @admin.action(description='Создать копию')
+    @admin.action(description='Создать копии выбранных товаров')
     def create_copy(self, request, queryset: QuerySet[Product]):
 
         # Проход по queryset и создание копий
@@ -121,11 +179,14 @@ class ProductAdmin(admin.ModelAdmin):
             categories = obj.categories.all()
 
             obj.id = None
+            obj.name = obj.name + ' (копия)'
+            obj.slug = slugify(obj.name)
+            obj.inactive = True
             obj.save()
-            
+
             obj.categories.set(categories)
             obj.save()
-            
+
             for image in images:
                 image.id = None
                 image.product = obj
@@ -140,7 +201,6 @@ class ProductAdmin(admin.ModelAdmin):
                 characteristic.id = None
                 characteristic.product = obj
                 characteristic.save()
-            
 
         count = queryset.count()
         self.message_user(
@@ -154,7 +214,7 @@ class ProductAdmin(admin.ModelAdmin):
             messages.SUCCESS,
         )
 
-    @admin.action(description='Убрать скидку')
+    @admin.action(description='Убрать скидку у выбранных товаров')
     def change_discount_to_0(self, request, queryset):
         updated = queryset.update(discount='0')
         self.message_user(
@@ -168,7 +228,7 @@ class ProductAdmin(admin.ModelAdmin):
             messages.SUCCESS,
         )
 
-    @admin.action(description='Изменение скидки на 10')
+    @admin.action(description='Изменение скидки на 10 у выбранных товаров')
     def change_discount_to_10(self, request, queryset):
         updated = queryset.update(discount='10')
         self.message_user(
@@ -182,7 +242,7 @@ class ProductAdmin(admin.ModelAdmin):
             messages.SUCCESS,
         )
 
-    @admin.action(description='Изменение скидки на 30')
+    @admin.action(description='Изменение скидки на 30 у выбранных товаров')
     def change_discount_to_30(self, request, queryset):
         updated = queryset.update(discount='30')
         self.message_user(
@@ -196,7 +256,7 @@ class ProductAdmin(admin.ModelAdmin):
             messages.SUCCESS,
         )
 
-    @admin.action(description='Изменение скидки на 50')
+    @admin.action(description='Изменение скидки на 50 у выбранных товаров')
     def change_discount_to_50(self, request, queryset):
         updated = queryset.update(discount='50')
         self.message_user(
@@ -210,8 +270,7 @@ class ProductAdmin(admin.ModelAdmin):
             messages.SUCCESS,
         )
 
-
-    @admin.action(description='Убрать товар из новинок')
+    @admin.action(description='Убрать товары из новинок')
     def remove_from_new(self, request, queryset):
         updated = queryset.update(new=False)
         self.message_user(
@@ -225,7 +284,7 @@ class ProductAdmin(admin.ModelAdmin):
             messages.SUCCESS,
         )
 
-    @admin.action(description='Сделать товар новинкой')
+    @admin.action(description='Сделать товары новинкой')
     def make_new(self, request, queryset):
         updated = queryset.update(new=True)
         self.message_user(
@@ -239,12 +298,34 @@ class ProductAdmin(admin.ModelAdmin):
             messages.SUCCESS,
         )
 
+    @admin.action(description='Проверить и исправить дублирующиеся slug')
+    def check_for_slug_duplicates(self, request, queryset):
+        slugs_list = [obj.slug for obj in queryset]
+        dups_list = [item for item, count in Counter(slugs_list).items() if count > 1]
+        for dup_slug in dups_list:
+            dup_products = Product.objects.filter(slug=dup_slug)
+            for i, product in enumerate(dup_products):
+                if i == 0:
+                    continue
+                product.slug = f"{product.slug}-{i}"
+                product.save()
+        self.message_user(
+            request,
+            ngettext(
+                "Исправлен %d товар с дублирующимся slug",
+                "Исправлено %d товаров с дублирующимся slug",
+                len(dups_list),
+            )
+            % len(dups_list),
+            messages.SUCCESS,
+        )
+
     def _create_copy_recursive(self, obj, id_mapping):
         # Проход по всем полям модели
         for related_object in obj._meta.related_objects:
             related_manager = getattr(obj, related_object.get_accessor_name())
             related_objects = related_manager.all()
-            
+
             for related_obj in related_objects:
                 # Если связанный объект уже скопирован, используем новый идентификатор
                 if related_obj.pk in id_mapping:
@@ -258,26 +339,44 @@ class ProductAdmin(admin.ModelAdmin):
                     related_manager.add(related_obj)
 
         obj.save()
-    
-            
-    list_display = ["name","average_reviews","wholesale_price","retail_price","discount","prio"]
-    list_filter = ["categories","discount", "new"]
-    search_fields = ["name"]
-    readonly_fields = ["old_price"]
-    actions = [create_copy, divider_action1, IncDecPrioMixin.decrease_product_prio, IncDecPrioMixin.increase_product_prio, divider_action2, remove_from_new, make_new, divider_action3, change_discount_to_0, change_discount_to_10, change_discount_to_30, change_discount_to_50]
-    inlines = [ProductImagesInstanseInline, ProductCharacteristicsInstanseInline, ProductOptionInstanseInline]
 
-    
+    def save_model(self, request, obj, form, change):
+        if not obj.slug:
+            obj.slug = slugify(obj.name)
+        super().save_model(request, obj, form, change)
+
+    prepopulated_fields = {'slug': ('name',)}
+    list_display = ["name", "average_reviews", "wholesale_price", "retail_price", "discount", "prio"]
+    list_filter = ["categories", "discount", "new"]
+    search_fields = ["name", "slug"]
+    readonly_fields = ["old_price"]
+    actions = [create_copy,
+               divider_action1,
+               IncDecPrioMixin.decrease_product_prio,
+               IncDecPrioMixin.increase_product_prio,
+               divider_action2,
+               remove_from_new,
+               make_new,
+               divider_action3,
+               change_discount_to_0,
+               change_discount_to_10,
+               change_discount_to_30,
+               change_discount_to_50,
+               divider_action4,
+               check_for_slug_duplicates]
+    inlines = [ProductImagesInstanseInline, ProductCharacteristicsInstanseInline, ProductOptionInstanseInline]
 
 
 class ReviewImagesInstanseInline(admin.TabularInline):
     extra = 1
     model = ReviewImages
+
+
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ["name","rate","product","created_at"]
+    list_display = ["name", "rate", "product", "created_at"]
     exclude = ['completed', 'img']
-    list_filter = ['product','created_at']
+    list_filter = ['product', 'created_at']
     inlines = [ReviewImagesInstanseInline]
 
 
@@ -285,9 +384,8 @@ class ProductInBasketInstanseInline(admin.TabularInline):
     extra = 0
     model = ProductInBasket
 
+
 @admin.register(Basket)
 class BasketAdmin(admin.ModelAdmin):
     list_display = ["unique_id", "created_at"]
     inlines = [ProductInBasketInstanseInline]
-
-

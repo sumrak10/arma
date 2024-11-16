@@ -29,7 +29,7 @@
                     </div>
                     <div class="item-column">
                         <div class="item-label">Наименование</div>
-                        <a class="item-value product-name" href="/shop/products/{{ item.product.id }}">{{ item.product.name }}</a>
+                        <a class="item-value product-name" href="/shop/products/{{ item.product.slug }}">{{ item.product.name }}</a>
                     </div>
                     <div class="item-column prices-mobile">
                         {% if item.product.retail_price > 0 %}

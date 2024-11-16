@@ -23,7 +23,7 @@
         <hr class="arma-hr">
         <div class="categories">
             {% for category in categories %}
-            <a href="categories/{{ category.id }}" class="categories-card">
+            <a href="categories/{{ category.slug }}" class="categories-card">
                 <div class="img">
                     <img src="{{ category.img.url }}" alt="">
                 </div>

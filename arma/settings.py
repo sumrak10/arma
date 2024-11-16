@@ -30,10 +30,13 @@ DEBUG = config.DEBUG
 RECAPTCHA_PUBLIC_KEY = config.RECAPTCHA_PUBLIC_KEY
 RECAPTCHA_PRIVATE_KEY = config.RECAPTCHA_PRIVATE_KEY
 
-ALLOWED_HOSTS = [
-    'arma72.com', 'www.arma72.com', 'arma72.ru', 'www.arma72.ru',
-    'www.mc.yandex.ru', 'mc.yandex.ru'
-]
+if DEBUG:
+    ALLOWED_HOSTS = ['127.0.0.1']
+else:
+    ALLOWED_HOSTS = [
+        'arma72.com', 'www.arma72.com', 'arma72.ru', 'www.arma72.ru',
+        'www.mc.yandex.ru', 'mc.yandex.ru',
+    ]
 
 COOKIE_EXPIRES_TIMEDELTA = datetime.timedelta(days=365)
 BASKET_COOKIES_RANDOM_STRING_LENGTH = 32
@@ -48,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'main',
     'shop',
     'CRM',

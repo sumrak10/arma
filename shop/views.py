@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.utils import timezone
@@ -20,38 +20,38 @@ def index(request):
     return render(request, 'shop/shop.html', {"hits": hits, "categories": categories})
 
 
-def category(request, category_id):
+def category(request, category_slug):
     try:
-        category = Category.objects.get(id=category_id)
-        products = Product.objects.filter(categories__id=category_id).filter(inactive=False)
+        category = Category.objects.get(slug=category_slug)
+        products = Product.objects.filter(categories__id=category.id).filter(inactive=False)
         response = render(request, 'shop/category.html', {"products": products, "category": category})
         return response
     except:
         return render(request, 'shop/notfound.html')
 
 
-def product(request, product_id):
+def product(request, product_slug):
     try:
         review = Review.objects.get(id=request.GET["review_id"])
     except:
         review = 0
     try:
-        product = Product.objects.get(id=product_id)
+        product = Product.objects.get(slug=product_slug)
     except:
         return render(request, 'shop/notfound.html')
     if product.inactive == True:
         return render(request, 'shop/notfound.html')
-    product_images = ProductImage.objects.filter(product=product_id)
+    product_images = ProductImage.objects.filter(product=product.id)
     if len(product_images):
         product_images_founded = True
     else:
         product_images_founded = False
-    characteristics = ProductCharacteristic.objects.filter(product=product_id)
+    characteristics = ProductCharacteristic.objects.filter(product=product.id)
     if len(characteristics):
         characteristics_founded = True
     else:
         characteristics_founded = False
-    reviews = Review.objects.filter(product=product_id).filter(completed=True)
+    reviews = Review.objects.filter(product=product.id).filter(completed=True)
     if len(reviews) > 2:
         reviews_more_than_2 = True
     else:
@@ -61,7 +61,7 @@ def product(request, product_id):
         reviews_founded = True
     else:
         reviews_founded = False
-    options = ProductOption.objects.filter(product=product_id)
+    options = ProductOption.objects.filter(product=product.id)
     if len(options):
         options_founded = True
     else:

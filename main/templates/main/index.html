@@ -127,7 +127,7 @@
         <hr class="arma-hr">
         <div class="index-cat">
             {% for category in categories %}
-            <a href="shop/categories/{{ category.id }}" class="index-cat-card">
+            <a href="shop/categories/{{ category.slug }}" class="index-cat-card">
                 <div class="img">
                     <img src="{{ category.img.url }}" alt="">
                 </div>
