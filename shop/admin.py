@@ -58,10 +58,10 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ["name", "prio"]
     prepopulated_fields = {'slug': ('name',)}
 
-    @admin.action(description='Проверить и исправить дублирующиеся slug')
-    def check_for_slug_duplicates(self, request, queryset):
-        slugs_list = [obj.slug for obj in queryset]
-        dups_list = [item for item, count in Counter(slugs_list).items() if count > 1]
+    @admin.action(description='Проверить и исправить дублирующиеся имена')
+    def check_for_name_duplicates(self, request, queryset):
+        names_list = [obj.name for obj in queryset]
+        dups_list = [item for item, count in Counter(names_list).items() if count > 1]
         for dup_slug in dups_list:
             dup_products = Product.objects.filter(slug=dup_slug)
             for i, product in enumerate(dup_products):
@@ -69,13 +69,12 @@ class CategoryAdmin(admin.ModelAdmin):
                     continue
                 product.name = f"{product.name}-{i}"
                 product.slug = slugify(product.name)
-                product.inactive = True
                 product.save()
         self.message_user(
             request,
             ngettext(
-                "Исправлен %d товар с дублирующимся slug",
-                "Исправлено %d товаров с дублирующимся slug",
+                "Исправлен %d товар с дублирующимся именем",
+                "Исправлено %d товаров с дублирующимся именами",
                 len(dups_list),
             )
             % len(dups_list),
@@ -85,7 +84,7 @@ class CategoryAdmin(admin.ModelAdmin):
     actions = [IncDecPrioMixin.decrease_product_prio,
                IncDecPrioMixin.increase_product_prio,
                divider_action1,
-               check_for_slug_duplicates]
+               check_for_name_duplicates]
 
     def save_model(self, request, obj, form, change):
         if not obj.slug:
@@ -298,22 +297,23 @@ class ProductAdmin(admin.ModelAdmin):
             messages.SUCCESS,
         )
 
-    @admin.action(description='Проверить и исправить дублирующиеся slug')
-    def check_for_slug_duplicates(self, request, queryset):
-        slugs_list = [obj.slug for obj in queryset]
-        dups_list = [item for item, count in Counter(slugs_list).items() if count > 1]
-        for dup_slug in dups_list:
-            dup_products = Product.objects.filter(slug=dup_slug)
+    @admin.action(description='Проверить и исправить дублирующиеся имена')
+    def check_for_name_duplicates(self, request, queryset):
+        names_list = [obj.name for obj in queryset]
+        dups_list = [item for item, count in Counter(names_list).items() if count > 1]
+        for dup_name in dups_list:
+            dup_products = Product.objects.filter(name=dup_name)
             for i, product in enumerate(dup_products):
                 if i == 0:
                     continue
-                product.slug = f"{product.slug}-{i}"
+                product.name = f"{product.name}-{i}"
+                product.slug = slugify(product.name)
                 product.save()
         self.message_user(
             request,
             ngettext(
-                "Исправлен %d товар с дублирующимся slug",
-                "Исправлено %d товаров с дублирующимся slug",
+                "Исправлен %d товар с дублирующимся именем",
+                "Исправлено %d товаров с дублирующимся именами",
                 len(dups_list),
             )
             % len(dups_list),
@@ -363,7 +363,7 @@ class ProductAdmin(admin.ModelAdmin):
                change_discount_to_30,
                change_discount_to_50,
                divider_action4,
-               check_for_slug_duplicates]
+               check_for_name_duplicates]
     inlines = [ProductImagesInstanseInline, ProductCharacteristicsInstanseInline, ProductOptionInstanseInline]
 
 

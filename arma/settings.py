@@ -135,9 +135,9 @@ USE_TZ = True
 
 # CRSF
 CSRF_TRUSTED_ORIGINS = [
-    'arma72.com', 'www.arma72.com', 'arma72.ru', 'www.arma72.ru',
-    'www.mc.yandex.ru', 'mc.yandex.ru',
-    '66.249.66.162',  # Googlebot
+    'https://arma72.com', 'https://www.arma72.com', 'https://arma72.ru', 'https://www.arma72.ru',
+    'https://www.mc.yandex.ru', 'https://mc.yandex.ru',
+    'http://66.249.66.162', 'https://66.249.66.162' # Googlebot
 ]
 
 # Static files (CSS, JavaScript, Images)
