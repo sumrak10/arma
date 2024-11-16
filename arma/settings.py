@@ -33,11 +33,12 @@ RECAPTCHA_PRIVATE_KEY = config.RECAPTCHA_PRIVATE_KEY
 ALLOWED_HOSTS = [
     'arma72.com', 'www.arma72.com', 'arma72.ru', 'www.arma72.ru',
     'www.mc.yandex.ru', 'mc.yandex.ru',
+    '66.249.66.162',  # Googlebot
 ]
 
 COOKIE_EXPIRES_TIMEDELTA = datetime.timedelta(days=365)
 BASKET_COOKIES_RANDOM_STRING_LENGTH = 32
-NOT_ALLOWED_COUNTRIES = ['US']
+NOT_ALLOWED_COUNTRIES = []
 
 # Application definition
 
@@ -62,7 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'arma.middlewares.blockipmiddleware.BlockIPMiddleware',
+    # 'arma.middlewares.blockipmiddleware.BlockIPMiddleware',
     'arma.middlewares.shop.BasketCookiesMiddleware',
 ]
 
@@ -93,13 +94,12 @@ WSGI_APPLICATION = 'arma.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if 1:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'db.sqlite3',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
     }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -132,6 +132,13 @@ END_TIME_AT_THE_COMPANY = datetime.time(hour=22, minute=0)
 USE_I18N = True
 
 USE_TZ = True
+
+# CRSF
+CSRF_TRUSTED_ORIGINS = [
+    'arma72.com', 'www.arma72.com', 'arma72.ru', 'www.arma72.ru',
+    'www.mc.yandex.ru', 'mc.yandex.ru',
+    '66.249.66.162',  # Googlebot
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
