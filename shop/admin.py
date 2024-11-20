@@ -147,6 +147,16 @@ class ProductAdmin(admin.ModelAdmin):
 
         may_have_duplicates = False
         search_fields = self.get_search_fields(request)
+
+        # Обработка специального случая: id=<value>
+        if search_term.startswith("id="):
+            try:
+                search_value = int(search_term.split("=")[1])
+                queryset = queryset.filter(id=search_value)
+                return queryset, may_have_duplicates
+            except (ValueError, IndexError):
+                pass  # Игнорируем ошибочные запросы формата id=
+
         if search_fields and search_term:
             orm_lookups = [
                 construct_search(str(search_field)) for search_field in search_fields
@@ -346,7 +356,7 @@ class ProductAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
     prepopulated_fields = {'slug': ('name',)}
-    list_display = ["name", "average_reviews", "wholesale_price", "retail_price", "discount", "prio"]
+    list_display = ["name", "id", "average_reviews", "wholesale_price", "retail_price", "discount", "prio"]
     list_filter = ["categories", "discount", "new"]
     search_fields = ["name", "slug"]
     readonly_fields = ["old_price"]
