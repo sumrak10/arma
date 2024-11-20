@@ -97,10 +97,12 @@ def search_recomendations(request):
         query = request.POST["query"]
         products = _search(query)
 
-        if len(products) >= 10:
-            products = products[0:10]
+        products_list = list(products.values())
 
-        return JsonResponse({"products": list(products.values())})
+        if len(products_list) >= 10:
+            products_list = products_list[0:10]
+
+        return JsonResponse({"products": products_list})
 
 
 def _search(query: str):
