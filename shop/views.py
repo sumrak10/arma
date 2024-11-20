@@ -96,6 +96,10 @@ def search_recomendations(request):
     if request.method == 'POST':
         query = request.POST["query"]
         products = _search(query)
+
+        if len(products) >= 10:
+            products = products[0:10]
+
         return JsonResponse({"products": list(products.values())})
 
 
@@ -112,9 +116,6 @@ def _search(query: str):
             des__contains=query.upper()) | Product.objects.filter(des__contains=query.capitalize())
 
     products = products.filter(inactive=False)
-
-    if len(products) >= 10:
-        products = products[0:10]
 
     return products
 
