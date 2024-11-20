@@ -111,10 +111,10 @@ def _search(query: str):
         products = products | Product.objects.filter(des__contains=query.lower()) | Product.objects.filter(
             des__contains=query.upper()) | Product.objects.filter(des__contains=query.capitalize())
 
+    products = products.filter(inactive=False)
+
     if len(products) >= 10:
         products = products[0:10]
-
-    products = products.filter(inactive=False)
 
     return products
 
