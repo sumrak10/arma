@@ -81,7 +81,7 @@
                     for (let p = 0; p < result["data"]["products"].length; p++) {
                         product = result["data"]["products"][p]
                         r = document.createElement("a")
-                        r.setAttribute("href", "/shop/products/"+product.id)
+                        r.setAttribute("href", "/shop/products/"+product.slug)
                         r.classList.add("recomendation")
                         r.innerHTML = "<p>" + product.name + "</a>"
                         recs.appendChild(r)
