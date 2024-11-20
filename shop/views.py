@@ -80,18 +80,7 @@ def search(request):
     if not query:
         return redirect(request.META.get('HTTP_REFERER'))
 
-    products = Product.objects.filter(articul=query)
-    if len(products) == 0:
-        products = products | Product.objects.filter(name__startswith=query.lower()) | Product.objects.filter(
-            name__startswith=query.upper()) | Product.objects.filter(name__startswith=query.capitalize())
-    if len(products) == 0:
-        products = products | Product.objects.filter(name__contains=query.lower()) | Product.objects.filter(
-            name__contains=query.upper()) | Product.objects.filter(name__contains=query.capitalize())
-    if len(products) == 0:
-        products = products | Product.objects.filter(des__contains=query.lower()) | Product.objects.filter(
-            des__contains=query.upper()) | Product.objects.filter(des__contains=query.capitalize())
-    if len(products) >= 20:
-        products = products[0:20]
+    products = _search(query)
 
     founded = True
     if not products.count():
@@ -106,22 +95,28 @@ def search(request):
 def search_recomendations(request):
     if request.method == 'POST':
         query = request.POST["query"]
-        products = Product.objects.filter(articul=query)
-        if len(products) == 0:
-            products = products | Product.objects.filter(name__startswith=query.lower()) | Product.objects.filter(
-                name__startswith=query.upper()) | Product.objects.filter(name__startswith=query.capitalize())
-        if len(products) == 0:
-            products = products | Product.objects.filter(name__contains=query.lower()) | Product.objects.filter(
-                name__contains=query.upper()) | Product.objects.filter(name__contains=query.capitalize())
-        if len(products) == 0:
-            products = products | Product.objects.filter(des__contains=query.lower()) | Product.objects.filter(
-                des__contains=query.upper()) | Product.objects.filter(des__contains=query.capitalize())
-        if len(products) >= 10:
-            products = products[0:10]
-
-        products = products.filter(inactive=False)
-
+        products = _search(query)
         return JsonResponse({"products": list(products.values())})
+
+
+def _search(query: str):
+    products = Product.objects.filter(articul=query)
+    if len(products) == 0:
+        products = products | Product.objects.filter(name__startswith=query.lower()) | Product.objects.filter(
+            name__startswith=query.upper()) | Product.objects.filter(name__startswith=query.capitalize())
+        products = products | Product.objects.filter(name__contains=query.lower()) | Product.objects.filter(
+            name__contains=query.upper()) | Product.objects.filter(name__contains=query.capitalize())
+
+    if len(products) == 0:
+        products = products | Product.objects.filter(des__contains=query.lower()) | Product.objects.filter(
+            des__contains=query.upper()) | Product.objects.filter(des__contains=query.capitalize())
+
+    if len(products) >= 10:
+        products = products[0:10]
+
+    products = products.filter(inactive=False)
+
+    return products
 
 
 def get_reviews(request):
