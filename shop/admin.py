@@ -6,6 +6,7 @@ from django.contrib.admin.utils import lookup_spawns_duplicates
 from django.core.exceptions import FieldDoesNotExist
 from django.db.models import Q
 from django.db.models.constants import LOOKUP_SEP
+from django.db.models.functions import Lower
 from django.utils.text import smart_split, unescape_string_literal
 from django.utils.translation import ngettext
 from django.db.models.query import QuerySet
@@ -116,35 +117,8 @@ class ProductCharacteristicsInstanseInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     def get_search_results(self, request, queryset, search_term):
-        def construct_search(field_name):
-            if field_name.startswith("^"):
-                return "%s__istartswith" % field_name[1:]
-            elif field_name.startswith("="):
-                return "%s__iexact" % field_name[1:]
-            elif field_name.startswith("@"):
-                return "%s__search" % field_name[1:]
-            # Use field_name if it includes a lookup.
-            opts = queryset.model._meta
-            lookup_fields = field_name.split(LOOKUP_SEP)
-            # Go through the fields, following all relations.
-            prev_field = None
-            for path_part in lookup_fields:
-                if path_part == "pk":
-                    path_part = opts.pk.name
-                try:
-                    field = opts.get_field(path_part)
-                except FieldDoesNotExist:
-                    # Use valid query lookups.
-                    if prev_field and prev_field.get_lookup(path_part):
-                        return field_name
-                else:
-                    prev_field = field
-                    if hasattr(field, "path_infos"):
-                        # Update opts to follow the relation.
-                        opts = field.path_infos[-1].to_opts
-            # Otherwise, use the field with icontains.
-            return "%s__icontains" % field_name
-
+        if not search_term:
+            return queryset, False
         may_have_duplicates = False
         search_fields = self.get_search_fields(request)
 
@@ -157,25 +131,24 @@ class ProductAdmin(admin.ModelAdmin):
             except (ValueError, IndexError):
                 pass  # Игнорируем ошибочные запросы формата id=
 
-        if search_fields and search_term:
-            orm_lookups = [
-                construct_search(str(search_field)) for search_field in search_fields
-            ]
-            term_queries = []
-            for bit in smart_split(search_term):
-                if bit.startswith(('"', "'")) and bit[0] == bit[-1]:
-                    bit = unescape_string_literal(bit)
-                or_queries = Q.create(
-                    [(orm_lookup, bit) for orm_lookup in orm_lookups],
-                    connector=Q.OR,
-                )
-                term_queries.append(or_queries)
-            queryset = queryset.filter(Q.create(term_queries))
-            may_have_duplicates |= any(
-                lookup_spawns_duplicates(self.opts, search_spec)
-                for search_spec in orm_lookups
-            )
-        return queryset, may_have_duplicates
+        # Обработка специального случая: slug=<value>
+        elif search_term.startswith("id="):
+            try:
+                search_value = int(search_term.split("=")[1])
+                queryset = queryset.filter(slug=search_value)
+                return queryset, may_have_duplicates
+            except (ValueError, IndexError):
+                pass  # Игнорируем ошибочные запросы формата id=
+
+        queryset = (
+            queryset.filter(name__startswith=search_term.lower())
+            | queryset.filter(name__startswith=search_term.upper())
+            | queryset.filter(name__startswith=search_term.capitalize())
+            | queryset.filter(name__icontains=search_term.lower())
+            | queryset.filter(name__icontains=search_term.upper())
+            | queryset.filter(name__icontains=search_term.capitalize())
+        )
+        return queryset, False
 
     @admin.action(description='Создать копии выбранных товаров')
     def create_copy(self, request, queryset: QuerySet[Product]):
@@ -358,7 +331,7 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     list_display = ["name", "id", "average_reviews", "wholesale_price", "retail_price", "discount", "prio"]
     list_filter = ["categories", "discount", "new"]
-    search_fields = ["name", "slug"]
+    search_fields = ["name", "slug"]  # ignored by get_search_results
     readonly_fields = ["old_price"]
     actions = [create_copy,
                divider_action1,
