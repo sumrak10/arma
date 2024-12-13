@@ -62,6 +62,7 @@ class Question(models.Model):
     contacts = models.CharField(max_length=124, verbose_name='Номер телефона')
     text = models.CharField(max_length=2024, verbose_name='Текст обращения', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    its_spam = models.BooleanField(default=False, verbose_name="Спам")
 
     def __str__(self):
         return self.name
@@ -70,6 +71,7 @@ class Question(models.Model):
         verbose_name = "обращение или вопрос"
         verbose_name_plural = "Обращения и вопросы"
         ordering = ['-created_at']
+
 
 class Consultation(models.Model):
 

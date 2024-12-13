@@ -17,7 +17,8 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     search_fields = ("contacts__startswith", )
-    list_display = ["contacts", "created_at", "name", "text"]
+    list_display = ["contacts", "created_at", "name", "text", "its_spam"]
+    list_filter = ["its_spam"]
 
 
 @admin.register(Consultation)
