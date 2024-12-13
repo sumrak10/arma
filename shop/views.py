@@ -86,8 +86,6 @@ def search(request):
     if not products.count():
         founded = False
 
-    products = products.filter(inactive=False)
-
     return render(request, 'shop/search.html', {"products": products, "founded": founded, "query": query})
 
 
