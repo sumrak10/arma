@@ -78,58 +78,58 @@ WSGI_APPLICATION = 'arma.wsgi.application'
 
 
 # Logging
-LOG_DIR = os.path.join(BASE_DIR, "logs")
-if not os.path.exists(LOG_DIR):
-    os.makedirs(LOG_DIR)
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "verbose": {
-            "format": "[%(asctime)s] [%(levelname)s] [%(module)s] %(message)s\n%(exc_info)s"
-        },
-        "simple": {
-            "format": "[%(asctime)s] [%(levelname)s] [%(module)s] %(message)s\n%(exc_info)s"
-            # "format": "[%(levelname)s] %(message)s"
-        },
-    },
-    "handlers": {
-        "file": {
-            "level": "DEBUG",
-            "class": "logging.handlers.RotatingFileHandler",
-            "filename": os.path.join(LOG_DIR, "django.log"),
-            "maxBytes": 5 * 1024 * 1024,  # 5MB
-            "backupCount": 10,  # Храним до 10 архивных логов
-            "formatter": "verbose",
-        },
-        "error_file": {
-            "level": "ERROR",
-            "class": "logging.handlers.RotatingFileHandler",
-            "filename": os.path.join(LOG_DIR, "django_errors.log"),
-            "maxBytes": 5 * 1024 * 1024,  # 5MB
-            "backupCount": 10,
-            "formatter": "verbose",
-        },
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "simple",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["file", "console"],
-            "level": "DEBUG",
-            "propagate": True,
-        },
-        "django.request": {
-            "handlers": ["error_file"],
-            "level": "ERROR",
-            "propagate": False,
-        },
-    },
-}
+# LOG_DIR = os.path.join(BASE_DIR, "logs")
+# if not os.path.exists(LOG_DIR):
+#     os.makedirs(LOG_DIR)
+#
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "formatters": {
+#         "verbose": {
+#             "format": "[%(asctime)s] [%(levelname)s] [%(module)s] %(message)s\n%(exc_info)s"
+#         },
+#         "simple": {
+#             "format": "[%(asctime)s] [%(levelname)s] [%(module)s] %(message)s\n%(exc_info)s"
+#             # "format": "[%(levelname)s] %(message)s"
+#         },
+#     },
+#     "handlers": {
+#         "file": {
+#             "level": "DEBUG",
+#             "class": "logging.handlers.RotatingFileHandler",
+#             "filename": os.path.join(LOG_DIR, "django.log"),
+#             "maxBytes": 5 * 1024 * 1024,  # 5MB
+#             "backupCount": 10,  # Храним до 10 архивных логов
+#             "formatter": "verbose",
+#         },
+#         "error_file": {
+#             "level": "ERROR",
+#             "class": "logging.handlers.RotatingFileHandler",
+#             "filename": os.path.join(LOG_DIR, "django_errors.log"),
+#             "maxBytes": 5 * 1024 * 1024,  # 5MB
+#             "backupCount": 10,
+#             "formatter": "verbose",
+#         },
+#         "console": {
+#             "level": "DEBUG",
+#             "class": "logging.StreamHandler",
+#             "formatter": "simple",
+#         },
+#     },
+#     "loggers": {
+#         "django": {
+#             "handlers": ["file", "console"],
+#             "level": "DEBUG",
+#             "propagate": True,
+#         },
+#         "django.request": {
+#             "handlers": ["error_file"],
+#             "level": "ERROR",
+#             "propagate": False,
+#         },
+#     },
+# }
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
