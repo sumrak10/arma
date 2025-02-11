@@ -330,7 +330,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     prepopulated_fields = {'slug': ('name',)}
     list_display = ["name", "id", "average_reviews", "wholesale_price", "retail_price", "discount", "prio"]
-    list_filter = ["categories", "discount", "new"]
+    list_filter = ["categories", "discount", "new", "inactive"]
     search_fields = ["name", "slug"]  # ignored by get_search_results
     readonly_fields = ["old_price"]
     actions = [create_copy,
