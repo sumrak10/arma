@@ -221,7 +221,7 @@
                             imageDiv.classList.add("image");
 
                             const img = document.createElement("img");
-                            img.src = result["data"]["products"][p]["img"]; // Укажите новую картинку
+                            img.src = "/media/"+result["data"]["products"][p]["img"]; // Укажите новую картинку
                             img.alt = "img";
                             imageDiv.appendChild(img);
 
