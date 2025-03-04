@@ -183,6 +183,12 @@
             fixedBackground   : true, 
             excluded          : ''    
         })
+        document.querySelector("#search-button").addEventListener("click", (e) => {
+            let input = document.querySelector("#search-input")
+            if (input.value.length >= 2) {
+                window.location.href = "/shop/search?query="+input.value
+            }
+        })
         document.querySelector("#search-header-button").addEventListener("click", (e) => {
             let recs = document.querySelector("#search-wrapper")
             recs.classList.add("search-wrapper-active")
@@ -200,6 +206,7 @@
             let input = document.querySelector("#search-input")
             let empty_container = document.querySelector("#variants-container-empty")
             let variants_container = document.querySelector("#variants-container-list")
+            let search_button = document.querySelector("#search-button")
             variants.innerHTML = ''
             if (input.value.length >= 2) {
                 let data = new FormData()
@@ -207,6 +214,7 @@
                 axios.post("{% url 'search_variants' %}", data)
                 .then(result => {
                     if (result["data"]["products"].length !== 0) {
+                        search_button.classList.add("search-button-active")
                         variants_container.classList.add("variants-container-active")
                         empty_container.classList.remove("variants-container-active")
                         for (let p = 0; p < result["data"]["products"].length; p++) {
@@ -254,6 +262,7 @@
                     console.log(error)
                 })
             } else {
+                search_button.classList.remove("search-button-active")
                 if (variants_container.classList.contains("variants-container-active") === true) {
                     variants_container.classList.remove("variants-container-active")
                     empty_container.classList.add("variants-container-active")

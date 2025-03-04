@@ -71,6 +71,7 @@
     align-items: center;
     flex-direction: row;
     gap: 28px;
+    margin-left: 12px;
 }
 .nav .link a {
     font-size: 14px;
