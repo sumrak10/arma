@@ -218,22 +218,18 @@
                         variants_container.classList.add("variants-container-active")
                         empty_container.classList.remove("variants-container-active")
                         for (let p = 0; p < result["data"]["products"].length; p++) {
-                            console.log(result["data"]["products"][p])
-                            // Создаем новый элемент
                             const newVariant = document.createElement("a");
                             newVariant.classList.add("search-variant-item");
                             newVariant.href = "/shop/products/"+result["data"]["products"][p]["slug"];
 
-                            // Создаем изображение
                             const imageDiv = document.createElement("div");
                             imageDiv.classList.add("image");
 
                             const img = document.createElement("img");
-                            img.src = "/media/"+result["data"]["products"][p]["img"]; // Укажите новую картинку
+                            img.src = "/media/"+result["data"]["products"][p]["img"];
                             img.alt = "img";
                             imageDiv.appendChild(img);
 
-                            // Создаем текстовый блок
                             const textDiv = document.createElement("div");
                             textDiv.classList.add("text");
 
@@ -245,15 +241,12 @@
                             infoDiv.classList.add("info");
                             infoDiv.textContent = result["data"]["products"][p]["des"];
 
-                            // Добавляем текст в контейнер
                             textDiv.appendChild(nameDiv);
                             textDiv.appendChild(infoDiv);
 
-                            // Собираем финальный элемент
                             newVariant.appendChild(imageDiv);
                             newVariant.appendChild(textDiv);
 
-                            // Добавляем в контейнер
                             variants_container.appendChild(newVariant);
                         }
                     }
