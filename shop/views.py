@@ -90,7 +90,7 @@ def search(request):
 
 
 @csrf_exempt
-def search_recomendations(request):
+def search_variants(request):
     if request.method == 'POST':
         query = request.POST["query"]
         products = _search(query)

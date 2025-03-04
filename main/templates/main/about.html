@@ -11,7 +11,7 @@
 <div class="wrapper wrapper-about">
     <div class="section section-about">
         <div class="image-side">
-            <img src="{% static 'main/media/about/logo.svg' %}" alt="">
+            <img src="{% static 'logo_black.svg' %}" alt="ARMA72">
             {% if slides %}
             <div class="photo-slider">
                 <div class="photo-slider-buttons">
@@ -63,6 +63,7 @@
 
 {% include 'sections/numbers.html' %}
 
+    {% if members %}
 <div class="wrapper wrapper-team">
     <div class="section section-team">
         <div class="team slider">
@@ -95,66 +96,22 @@
         </div>
     </div>
 </div>
+    {% endif %}
 
 <div class="wrapper wrapper-yt-video">
     <div class="section section-yt-video">
         <div class="text-side">
-            <p>Посмотрите<br>на один<br>из наших цехов</p>
-            <img src="{% static 'main/media/about/arrow2.png' %}" alt="">
+            <p>Посмотрите на один из наших цехов</p>
         </div>
-        <iframe width="633" height="443" src="https://www.youtube.com/embed/TidltK4KgvI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <iframe class="yt-video-iframe"
+            src="https://rutube.ru/play/embed/5feea6a285e07b7c78938ea5631d4fc7"
+            frameBorder="0"
+            allow="clipboard-write; autoplay"
+            webkitAllowFullScreen
+            mozallowfullscreen
+            allowFullScreen
+        ></iframe>
     </div>
 </div>
 
 {% endblock %}
-
-        <!-- <div class="content-section">
-            <div class="company-des">
-                <div class="company-des-text">
-                    <div class="company-des-title">Производственная компания «Арма-72»</div>
-                    <div>
-                        Современное модернизированное предприятие, производственные линии которого оснащены новейшим высокотехнологичным оборудованием, с грамотно подобранным коллективом профессиональных и амбициозных специалистов высокого класса: дизайнеров, маркетологов, конструкторов, закройщиков и швей.
-<br><br>
-А удобное расположение производства в Москве, на пересечении множества магистралей и транспортных путей, позволяет найти логистические решения для быстрой доставки изделий практически в любую точку России и стран СНГ.
-<br><br>
-Поможем Вам закрыть любой тендер или закупку по пошиву одежды, спальных мешков и других товаров в данной тематикеРасположены на территории бывшего, знаменитого завода "Красный Богатырь", выпускавшего резиновую и резино-такстильную обувь (сапоги, боты), формовые и неформовые изделия
-                    </div>
-                </div>
-                <div class="company-des-images">
-                    <img src="{% static 'main/media/image 7.png' %}" alt="">
-                    <img src="{% static 'main/media/image 9.png' %}" alt="">
-                    <img src="{% static 'main/media/image 8.png' %}" alt="">
-                </div>
-            </div>
-            <div class="video">
-                <div class="video-title">Посмотрите на один из наших цехов</div>
-                <iframe src="https://www.youtube-nocookie.com/embed/MAYOw2T8ADQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-            <div class="members">
-                <div class="members-title">
-                    Наша команда
-                </div>
-                <div class="members-list">
-                    {% for member in members %}
-                    <div class="member-item">
-                        <div class="member-text">
-                            <div class="job">
-                                {{ member.job }}
-                            </div>
-                            <div class="name">
-                                {{ member.name }}
-                            </div>
-                            <div class="des">
-                                {{ member.des }}
-                            </div>
-                        </div>
-                        <div class="member-photo">
-                            <img src="{{ member.img.url }}" alt="">
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->

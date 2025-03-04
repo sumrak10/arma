@@ -178,10 +178,12 @@
 
 
 .wrapper-yt-video {
-    background: linear-gradient(180deg, #51693D -22.47%, #000000 100%, #000000 100%);
+    /*background: linear-gradient(180deg, #51693D -22.47%, #000000 100%, #000000 100%);*/
+    background-color: #51693D;
 }
 .section-yt-video {
     display: flex;
+    flex-direction: column;
     padding: 80px 0;
     align-items: center;
     justify-content: space-between;
@@ -190,12 +192,17 @@
     display: flex;
     flex-direction: column;
     gap: 38px;
+    text-align: center;
 }
 .section-yt-video .text-side p {
     color: white;
     font-weight: 500;
     font-size: 26px;
-} 
+}
+.section-yt-video .yt-video-iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
 
 .side-img-mobile {
     display: none;

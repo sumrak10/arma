@@ -19,6 +19,7 @@ ALLOWED_HOSTS = [
     'arma72.com', 'www.arma72.com', 'arma72.ru', 'www.arma72.ru',
     'www.mc.yandex.ru', 'mc.yandex.ru',
     '66.249.66.162',  # Googlebot
+    '127.0.0.1', 'localhost',  # localhost
 ]
 
 COOKIE_EXPIRES_TIMEDELTA = datetime.timedelta(days=365)

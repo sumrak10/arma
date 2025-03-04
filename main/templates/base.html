@@ -15,7 +15,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     {% load static %}
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <!-- Светлая тема -->
+    <link rel="icon" type="image/png" href="{% static '/favicon_black/favicon-16x16.png' %}" sizes="16x16" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" href="{% static '/favicon_black/favicon-32x32.png' %}" sizes="32x32" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" href="{% static '/favicon_black/android-chrome-192x192.png' %}" sizes="192x192" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" href="{% static '/favicon_black/android-chrome-512x512.png' %}" sizes="512x512" media="(prefers-color-scheme: light)">
+    <link rel="apple-touch-icon" href="{% static '/favicon_black/apple-touch-icon.png' %}" media="(prefers-color-scheme: light)">
+    <link rel="manifest" href="{% static '/favicon_black/site.webmanifest" media="(prefers-color-scheme: light)' %}">
+
+    <!-- Тёмная тема -->
+    <link rel="icon" type="image/png" href="{% static '/favicon_white/favicon-16x16.png' %}" sizes="16x16" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" href="{% static '/favicon_white/favicon-32x32.png' %}" sizes="32x32" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" href="{% static '/favicon_white/android-chrome-192x192.png' %}" sizes="192x192" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" href="{% static '/favicon_white/android-chrome-512x512.png' %}" sizes="512x512" media="(prefers-color-scheme: dark)">
+    <link rel="apple-touch-icon" href="{% static '/favicon_white/apple-touch-icon.png' %}" media="(prefers-color-scheme: dark)">
+    <link rel="manifest" href="{% static '/favicon_white/site.webmanifest" media="(prefers-color-scheme: dark)' %}">
+
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
@@ -55,6 +70,50 @@
                 <path d="M19.95 10.0027C18.16 9.97273 16.25 8.05273 17.27 5.78273C14.3 6.78273 11.49 4.19273 12.08 1.22273C5.11 -0.247268 0 5.42273 0 11.0127C0 16.5327 4.48 21.0127 10 21.0127C15.89 21.0127 20.54 15.9327 19.95 10.0027ZM10 19.0127C5.59 19.0127 2 15.4227 2 11.0127C2 7.70273 4.73 2.83273 10.08 2.99273C10.5 5.53273 12.52 7.55273 15.07 7.93273C15.14 8.29273 15.59 10.4827 17.99 11.5627C17.7 15.8727 14.06 19.0127 10 19.0127Z" />
             </svg>
         </button>
+    </div>
+    <div id="search-wrapper">
+        <div class="search-inner">
+            <div class="search-input-container">
+                <input id="search-input" type="text" placeholder="Начните вводить название товара..." id="search-input">
+                <button id="search-button">
+                    <svg viewBox="0 0 31 30" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.9438 17.8188H18.9563L18.6063 17.4813C19.8313 16.0563 20.5688 14.2063 20.5688 12.1938C20.5688 7.70626 16.9313 4.06876 12.4438 4.06876C7.95626 4.06876 4.31876 7.70626 4.31876 12.1938C4.31876 16.6813 7.95626 20.3188 12.4438 20.3188C14.4563 20.3188 16.3063 19.5813 17.7313 18.3563L18.0688 18.7063V19.6938L24.3188 25.9313L26.1813 24.0688L19.9438 17.8188ZM12.4438 17.8188C9.33126 17.8188 6.81876 15.3063 6.81876 12.1938C6.81876 9.08126 9.33126 6.56876 12.4438 6.56876C15.5563 6.56876 18.0688 9.08126 18.0688 12.1938C18.0688 15.3063 15.5563 17.8188 12.4438 17.8188Z" />
+                    </svg>
+                </button>
+            </div>
+            <hr class="search-inner-hr">
+            <div class="search-variants-container">
+                <div id="variants-container-empty" class="variants-container-active">
+                    <span>Здесь будут предложенные товары</span>
+                </div>
+                <div id="variants-container-list">
+                    <a class="search-variant-item" href="#">
+                        <div class="image"><img src="https://arma72.com/media/products/SxNkMKEEldY.jpg" alt=""></div>
+                        <div class="text">
+                            <div class="name">
+                                Влагостойкий рюкзак для активного отдыха 10л. Some text
+                            </div>
+                            <div class="info">
+                                Шикарного качества, скрытые молнии, качественная фурнитура.
+Шеврон в комплект поставки не входит.
+                            </div>
+                        </div>
+                    </a>
+                    <a class="search-variant-item" href="#">
+                        <div class="image"><img src="https://arma72.com/media/products/photo_2023-10-04_12-50-24.jpg" alt=""></div>
+                        <div class="text">
+                            <div class="name">
+                                Влагостойкий рюкзак для активного отдыха 10л
+                            </div>
+                            <div class="info">
+                                Шикарного качества, скрытые молнии, качественная фурнитура.
+Шеврон в комплект поставки не входит.
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="header-consultation__wrapper">
         <form class="header-consultation-form" action="{% url 'consultation' %}" method="post">
@@ -123,6 +182,83 @@
             touchpadSupport   : true, // ignore touchpad by default
             fixedBackground   : true, 
             excluded          : ''    
+        })
+        document.querySelector("#search-header-button").addEventListener("click", (e) => {
+            let recs = document.querySelector("#search-wrapper")
+            recs.classList.add("search-wrapper-active")
+            document.querySelector("body").classList.add("body-not-scroll")
+        })
+        document.querySelector("#search-wrapper").addEventListener("click", (e) => {
+            if (e.target === document.querySelector("#search-wrapper")) {
+                let recs = document.querySelector("#search-wrapper")
+                recs.classList.remove("search-wrapper-active")
+                document.querySelector("body").classList.remove("body-not-scroll")
+            }
+        })
+        document.querySelector("#search-input").addEventListener("input", (e) => {
+            let variants = document.querySelector("#variants-container-list")
+            let input = document.querySelector("#search-input")
+            let empty_container = document.querySelector("#variants-container-empty")
+            let variants_container = document.querySelector("#variants-container-list")
+            variants.innerHTML = ''
+            if (input.value.length >= 2) {
+                let data = new FormData()
+                data.append("query", input.value)
+                axios.post("{% url 'search_variants' %}", data)
+                .then(result => {
+                    if (result["data"]["products"].length !== 0) {
+                        variants_container.classList.add("variants-container-active")
+                        empty_container.classList.remove("variants-container-active")
+                        for (let p = 0; p < result["data"]["products"].length; p++) {
+                            console.log(result["data"]["products"][p])
+                            // Создаем новый элемент
+                            const newVariant = document.createElement("a");
+                            newVariant.classList.add("search-variant-item");
+                            newVariant.href = "/shop/products/"+result["data"]["products"][p]["slug"];
+
+                            // Создаем изображение
+                            const imageDiv = document.createElement("div");
+                            imageDiv.classList.add("image");
+
+                            const img = document.createElement("img");
+                            img.src = result["data"]["products"][p]["img"]; // Укажите новую картинку
+                            img.alt = "img";
+                            imageDiv.appendChild(img);
+
+                            // Создаем текстовый блок
+                            const textDiv = document.createElement("div");
+                            textDiv.classList.add("text");
+
+                            const nameDiv = document.createElement("div");
+                            nameDiv.classList.add("name");
+                            nameDiv.textContent = result["data"]["products"][p]["name"];
+
+                            const infoDiv = document.createElement("div");
+                            infoDiv.classList.add("info");
+                            infoDiv.textContent = result["data"]["products"][p]["des"];
+
+                            // Добавляем текст в контейнер
+                            textDiv.appendChild(nameDiv);
+                            textDiv.appendChild(infoDiv);
+
+                            // Собираем финальный элемент
+                            newVariant.appendChild(imageDiv);
+                            newVariant.appendChild(textDiv);
+
+                            // Добавляем в контейнер
+                            variants_container.appendChild(newVariant);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            } else {
+                if (variants_container.classList.contains("variants-container-active") === true) {
+                    variants_container.classList.remove("variants-container-active")
+                    empty_container.classList.add("variants-container-active")
+                }
+            }
         })
     </script>
     <script src="{% static 'js/basket_counter.js' %}"></script>
