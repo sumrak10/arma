@@ -18,10 +18,9 @@ def index(request):
 
 @csrf_exempt
 def contacts(request):
-    manufactory = Manufactory.objects.first()
     manufactories = Manufactory.objects.all()
 
-    return render(request, 'main/contacts.html', {"manufactory": manufactory, "manufactories": manufactories})
+    return render(request, 'main/contacts.html', {"manufactories": manufactories})
 
 
 def about(request):

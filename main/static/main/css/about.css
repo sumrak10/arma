@@ -200,7 +200,7 @@
     font-size: 26px;
 }
 .section-yt-video .yt-video-iframe {
-    width: 100%;
+    width: 80%;
     aspect-ratio: 16 / 9;
 }
 

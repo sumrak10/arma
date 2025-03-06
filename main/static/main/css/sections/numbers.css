@@ -16,6 +16,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    gap: 24px;
     width: 100%;
     height: 100%;
 }
@@ -27,11 +28,9 @@
     height: 400px;
 }
 .numbers-and-image-side .image-side img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* width: 100%; */
+    width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 .numbers-and-image-side .numbers-side {
     display: flex;

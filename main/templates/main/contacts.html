@@ -10,7 +10,7 @@
 <div class="wrapper wrapper-contacts-map">
     <div class="section section-contacts-map">
         <div class="bg-map">
-            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A07be676f86947d7a35c7e1197a3ee18014d8890275acda858f0131876d0ec51c&amp;source=constructor" width="1028" height="593" frameborder="0"></iframe>
+            <iframe src="https://yandex.com/map-widget/v1/?um=constructor%3A07be676f86947d7a35c7e1197a3ee18014d8890275acda858f0131876d0ec51c&amp;source=constructor" width="1028" height="593" frameborder="0"></iframe>
             <div class="bg-map-inner-wrapper">
                 <div class="bg-map-inner-box">
                     <div class="main-title">КОНТАКТЫ</div>
@@ -19,13 +19,13 @@
                         <div class="time"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18ZM11 10H15V12H9V5H11V10Z" fill="#85AB3A"/>
                             </svg>
-                        с {{ manufactory.start_time }} до {{ manufactory.finish_time }}</div>
-                        <div class="label">{{ manufactory.utc_text }}</div>
+                        с {{ main_manufactory.start_time }} до {{ main_manufactory.finish_time }}</div>
+                        <div class="label">{{ main_manufactory.utc_text }}</div>
                     </div>
                     <div class="location">
-                        <span>{{ manufactory.city }}</span><br>{{ manufactory.address }}
+                        <span>{{ main_manufactory.city }}</span><br>{{ main_manufactory.address }}
                     </div>
-                    <div class="phone">{{ manufactory.contacts }}</div>
+                    <div class="phone">{{ main_manufactory.contacts }}</div>
                 </div>
             </div>
         </div>
