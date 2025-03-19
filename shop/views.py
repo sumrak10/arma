@@ -6,6 +6,7 @@ from django.template import defaultfilters
 from django.core.files import File
 from django.shortcuts import render
 
+from BitrixInterface import BitrixInterface
 from BotInterface import BotInterface
 from utils.recaptcha import checkReCAPTHA
 from .models import Category, Product, ProductImage, Review, ProductCharacteristic, ReviewImages, ProductOption, Basket, \
@@ -166,6 +167,7 @@ def create_order(request):
             products_in_order.append(p)
 
         BotInterface.create_order(order, products_in_order)
+        BitrixInterface.create_order(order, products_in_order)
 
         return render(request, 'CRM/message.html',
                       {"text": "Ваш заказ уже принят в обработку. Скоро с вами свяжется менеджер"})
