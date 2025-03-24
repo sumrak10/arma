@@ -12,7 +12,7 @@ class BitrixInterface:
             "fields": {
                 "PHONE": [{"VALUE": order.contacts, "VALUE_TYPE": "OTHER"}],
                 "NAME": "Отсутствует",
-                "TITLE": f"Заказ №{order.id} [arma72.com]",
+                "TITLE": f"Заявка с сайта \"arma72.com\"",
                 "OPPORTUNITY": order.summ,
                 "SOURCE_ID": "7",
                 "SOURCE_DESCRIPTION": f"https://arma72.com/admin/CRM/order/{order.id}/change/"
@@ -29,7 +29,7 @@ class BitrixInterface:
             "fields": {
                 "PHONE": [{"VALUE": phone, "VALUE_TYPE": "OTHER"}],
                 "NAME": name,
-                "TITLE": "Консультация [arma72.com]",
+                "TITLE": f"Заявка с сайта \"arma72.com\"",
                 "COMMENTS": text,
                 "SOURCE_ID": "7",
                 "SOURCE_DESCRIPTION": "arma72.com"
