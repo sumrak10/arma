@@ -7,15 +7,20 @@ from CRM.models import Order, ProductInOrder
 
 class BitrixInterface:
     @staticmethod
-    def create_order(order: Order, products: List[ProductInOrder]) -> None:
+    def create_order(order: Order, products: List[ProductInOrder], *, roistat_visit: str) -> None:
+        text = " \n".join(
+            [f"{product.product.name} - {product.count} шт. - {product.summ}" for product in products]
+        )
         json = {
             "fields": {
                 "PHONE": [{"VALUE": order.contacts, "VALUE_TYPE": "OTHER"}],
                 "NAME": "Отсутствует",
                 "TITLE": f"Заявка с сайта \"arma72.com\"",
+                "COMMENTS": text,
                 "OPPORTUNITY": order.summ,
                 "SOURCE_ID": "7",
-                "SOURCE_DESCRIPTION": f"https://arma72.com/admin/CRM/order/{order.id}/change/"
+                "SOURCE_DESCRIPTION": f"https://arma72.com/admin/CRM/order/{order.id}/change/",
+                "ROISTAT": roistat_visit,
             }
         }
         try:
@@ -24,7 +29,13 @@ class BitrixInterface:
             pass
 
     @staticmethod
-    def create_consultation(phone: str, name: str = "Отсутствует", text: str = "Отсутствует") -> None:
+    def create_consultation(
+            phone: str,
+            name: str = "Отсутствует",
+            text: str = "Отсутствует",
+            *,
+            roistat_visit: str = "nocookie"
+    ) -> None:
         json = {
             "fields": {
                 "PHONE": [{"VALUE": phone, "VALUE_TYPE": "OTHER"}],
@@ -32,7 +43,8 @@ class BitrixInterface:
                 "TITLE": f"Заявка с сайта \"arma72.com\"",
                 "COMMENTS": text,
                 "SOURCE_ID": "7",
-                "SOURCE_DESCRIPTION": "arma72.com"
+                "SOURCE_DESCRIPTION": "arma72.com",
+                "ROISTAT": roistat_visit,
             }
         }
         try:

@@ -167,7 +167,7 @@ def create_order(request):
             products_in_order.append(p)
 
         BotInterface.create_order(order, products_in_order)
-        BitrixInterface.create_order(order, products_in_order)
+        BitrixInterface.create_order(order, products_in_order, roistat_visit=request.COOKIES.get("roistat_visit", "nocookie"))
 
         return render(request, 'CRM/message.html',
                       {"text": "Ваш заказ уже принят в обработку. Скоро с вами свяжется менеджер"})

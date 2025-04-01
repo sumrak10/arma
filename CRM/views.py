@@ -40,7 +40,8 @@ def question(request):
 
         if not q.its_spam:
             BotInterface.create_consultation(q.contacts, q.name, q.text)
-            BitrixInterface.create_consultation(q.contacts, q.name, q.text)
+            BitrixInterface.create_consultation(
+                q.contacts, q.name, q.text, roistat_visit=request.COOKIES.get("roistat_visit", "nocookie"))
         else:
             render(request, 'CRM/message.html',
                    {"text": "Обращение записано, но наши фильтры сочли его за спам. "
@@ -61,6 +62,6 @@ def consultation(request):
         c.phone = request.POST.get('phone')
         c.save()
         BotInterface.create_consultation(c.phone)
-        BitrixInterface.create_consultation(c.phone)
+        BitrixInterface.create_consultation(c.phone, roistat_visit=request.COOKIES.get("roistat_visit", "nocookie"))
         
         return render(request, 'CRM/message.html', {"text": "Скоро c Вами свяжется менеджер."})
