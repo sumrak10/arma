@@ -7,7 +7,12 @@ from CRM.models import Order, ProductInOrder
 
 class BitrixInterface:
     @staticmethod
-    def create_order(order: Order, products: List[ProductInOrder], *, roistat_visit: str) -> None:
+    def create_order(
+            order: Order,
+            products: List[ProductInOrder],
+            *,
+            roistat_visit: str
+    ) -> None:
         text = " \n".join(
             [f"{product.product.name} - {product.count} шт. - {product.summ}" for product in products]
         )
@@ -20,7 +25,7 @@ class BitrixInterface:
                 "OPPORTUNITY": order.summ,
                 "SOURCE_ID": "7",
                 "SOURCE_DESCRIPTION": f"https://arma72.com/admin/CRM/order/{order.id}/change/",
-                "ROISTAT": roistat_visit,
+                "roistat": roistat_visit,
             }
         }
         try:
@@ -44,7 +49,7 @@ class BitrixInterface:
                 "COMMENTS": text,
                 "SOURCE_ID": "7",
                 "SOURCE_DESCRIPTION": "arma72.com",
-                "ROISTAT": roistat_visit,
+                "roistat": roistat_visit,
             }
         }
         try:
