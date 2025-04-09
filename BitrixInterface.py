@@ -49,7 +49,7 @@ class BitrixInterface:
                 "COMMENTS": text,
                 "SOURCE_ID": "7",
                 "SOURCE_DESCRIPTION": "arma72.com",
-                "roistat": roistat_visit,
+                "UF_CRM_ROISTAT": roistat_visit,
             }
         }
         try:

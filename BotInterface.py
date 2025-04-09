@@ -17,7 +17,7 @@ class BotInterface:
     def create_order(order: Order, products: List[ProductInOrder]) -> None:
         products_in_order = []
         for product in products:
-            product:ProductInOrder
+            product: ProductInOrder
             products_in_order.append({
                 "id": product.product.id,
                 "name": product.product.name,
