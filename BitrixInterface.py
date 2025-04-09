@@ -25,7 +25,7 @@ class BitrixInterface:
                 "OPPORTUNITY": order.summ,
                 "SOURCE_ID": "7",
                 "SOURCE_DESCRIPTION": f"https://arma72.com/admin/CRM/order/{order.id}/change/",
-                "roistat": roistat_visit,
+                "UF_CRM_1742458323": roistat_visit,
             }
         }
         try:
@@ -49,7 +49,7 @@ class BitrixInterface:
                 "COMMENTS": text,
                 "SOURCE_ID": "7",
                 "SOURCE_DESCRIPTION": "arma72.com",
-                "UF_CRM_ROISTAT": roistat_visit,
+                "UF_CRM_1742458323": roistat_visit,
             }
         }
         try:
