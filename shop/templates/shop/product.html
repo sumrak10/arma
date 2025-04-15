@@ -89,12 +89,12 @@
             </div>
         </a>
         {% for cat in product.categories.all %}
-        <a href="/shop/categories/{{ cat.slug }}" class="backto">
-            <p>{{ cat.name }}</p>
-            <div>
-                <img src="{% static 'right_arrow.svg' %}" alt="">
-            </div>
-        </a>
+            <a href="/shop/categories/{{ cat.slug }}" class="backto">
+                <p>{{ cat.name }}</p>
+                <div>
+                    <img src="{% static 'right_arrow.svg' %}" alt="">
+                </div>
+            </a>
         {% endfor %}
     </div>
 </div>
@@ -114,11 +114,11 @@
                 {% endif %}
             </div>
             <div class="product-side">
-                <h1 class="title">{{ product.name }}</h1>
+                <h1 class="title">{{ product.name }} {{ product.categories.first.product_name_suffix }}</h1>
                 <div class="prices">
                     {% if product.retail_price > 0 %}
                         <div class="price">
-                            <div>Оптовая цена</div>
+                            <div>Цена мелкий опт</div>
                             <div><span id="WP-for-option">{{ product.wholesale_price }}</span><span>₽</span><span>от {{ product.wholesale_count }} {{ product.unit }}</span></div>
                         </div>
                         <div class="price">
@@ -136,14 +136,14 @@
                     <div>Количество</div>
                     <div class="buttons">
                         <div class="counter-buttons">
-                            <button class="dec"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
+                            <div class="dec"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M11 17H25V21H11V17Z"/>
                                 </svg>
-                            </button>
+                            </div>
                             <input class="number" type="number" name="value" id="product-count" value="{{ product|get_count_this_product:request.products_in_basket }}" min="0" min-unit="{{ product.min_unit }}">
-                            <button class="inc"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
+                            <div class="inc"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M28 20.8265H19.875V29H16.125V20.8265H8V17.2192H16.125V9H19.875V17.2192H28V20.8265Z"/>
-                                </svg></button>
+                                </svg></div>
                         </div>
                         <button class="in_basket {% if product|queryset_have_this_product:request.products_in_basket %}in_basket-active{% endif %}" id="put_in_basket-product-page" product-id="{{ product.id }}" min-unit="{{ product.min_unit }}">
                             {% if product|queryset_have_this_product:request.products_in_basket %}
@@ -151,6 +151,9 @@
                             {% else %}
                             Добавить в корзину
                             {% endif %}
+                        </button>
+                        <button class="in_basket get-opt-popup-open-btn">
+                            Получить оптовую цену
                         </button>
                     </div>
                 </div>

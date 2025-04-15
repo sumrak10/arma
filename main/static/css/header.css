@@ -149,6 +149,12 @@
 .header__consultation-form__phone:hover {
     color: #85AB3A;
 }
+.header__consultation-form__email {
+    font-size: 22px;
+    text-decoration: underline;
+    font-family: 'Montserrat', sans-serif;
+    white-space: nowrap;
+}
 .header__consultation-form__button {
     color: white;
     font-size: 14px;

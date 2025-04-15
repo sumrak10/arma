@@ -13,7 +13,7 @@
             <span>НОВИНКА</span>
         </div>
     {% endif %}
-    <div class="product-card-title">{{ product.name }}</div>
+    <div class="product-card-title">{{ product.name }} {{ product.categories.first.product_name_suffix }}</div>
     <div class="product-card-price-row">
         {% if product.retail_price > 0 %}
             <div class="product-card-price">

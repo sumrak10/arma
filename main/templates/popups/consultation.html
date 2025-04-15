@@ -1,0 +1,17 @@
+
+<div class="consultation-popup-container" id="consultation_popup_container">
+    <div class="consultation-popup">
+        <form class="consultation-form" id="index-page-form" action="{% url 'consultation' %}" method="post" onsubmit="ym(94231080,'reachGoal','consul'); return true;">
+            {% csrf_token %}
+            <div class="close-popup" id="consultation_popup_close_btn">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="36"  height="36"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+            </div>
+            <h3>Получите консультацию по телефону</h3>
+            <input type="tel" class="form-phone" id="index-form-phone" name="phone"  placeholder="+7 (___) ___-__-__" required>
+            <p class="OPD"><input type="checkbox" class="OPD__input" id="OPD_hello" checked required><label for="OPD_hello">Я прочитал(-а) и принимаю <a href="/polzovatelskoe_soglashenie">пользовательское соглашение</a> с конечным пользователем</label></p>
+            <!-- pattern="((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}" -->
+            <button type="submit" >ПОЛУЧИТЬ КОНСУЛЬТАЦИЮ</button>
+            <p class="help-text">Специалист быстро перезвонит, подробно проконсультирует и ответит на все вопросы</p>
+        </form>
+    </div>
+</div>

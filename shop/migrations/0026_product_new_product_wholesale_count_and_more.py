@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='wholesale_count',
-            field=models.IntegerField(default=0, verbose_name='С какого кол-ва товаров будет считать оптовая цена'),
+            field=models.IntegerField(default=0, verbose_name='С какого кол-ва товаров будет считать Цена мелкий опт'),
             preserve_default=False,
         ),
         migrations.AlterField(

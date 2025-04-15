@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='productoption',
             name='wholesale_price',
-            field=models.IntegerField(default=0, verbose_name='Оптовая цена'),
+            field=models.IntegerField(default=0, verbose_name='Цена мелкий опт'),
             preserve_default=False,
         ),
         migrations.AlterField(
@@ -39,6 +39,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='product',
             name='wholesale_count',
-            field=models.IntegerField(verbose_name='С какого кол-ва товаров будет считаться оптовая цена'),
+            field=models.IntegerField(verbose_name='С какого кол-ва товаров будет считаться Цена мелкий опт'),
         ),
     ]

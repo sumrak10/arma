@@ -67,10 +67,9 @@
                 <span id="basket-not-empty">0</span>
             </button> 
         </form>
-
         <div class="header__consultation-form">
             <a href="tel:{{ site_config.phone_link }}" class="header__consultation-form__phone">{{ site_config.phone }}</a>
-            <button id="header__consultation_button" class="header__consultation-form__button">Закажите обратный звонок</button>
+            <a target="_blank" rel="noopener noreferrer" href="mailto:{{ site_config.email }}" class="header__consultation-form__email">{{ site_config.email }}</a>
         </div>
     </div>
 

@@ -33,7 +33,7 @@
                     </div>
                     <div class="item-column prices-mobile">
                         {% if item.product.retail_price > 0 %}
-                        <div class="item-label">Оптовая цена</div>
+                        <div class="item-label">Цена мелкий опт</div>
                         <div class="item-value"><span class="wholesale-price">{{ item.product.wholesale_price }}</span><span> ₽</span></div>
                         <!-- <div class="item-label">(При кол-ве товара от {{ item.product.wholesale_count }} шт.)</div> -->
                         <div class="item-label">Розничная цена</div>
@@ -84,7 +84,7 @@
                         </div>
                         {% if item.product.retail_price > 0 %}
                         <div class="item-label wholesale-price-not-dooo">Еще <span class="wholesale-price-not-dooo-count"></span> {{ item.product.unit }} и цена будет оптовой</div>
-                        <div class="item-label wholesale-price-dooo">Оптовая цена действует!</div>
+                        <div class="item-label wholesale-price-dooo">Цена мелкий опт действует!</div>
                         {% else %}
                         <div class="item-label wholesale-price-not-dooo">Данный товар не влияет на общую сумму корзины</div>
                         {% endif %}

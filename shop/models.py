@@ -18,7 +18,8 @@ class Category(models.Model, IncDecPrioMixin):
 
     img = models.ImageField(upload_to='categories/', default='placeholders/categories.jpg', blank=True, null=True,
                             verbose_name="Изображение 1:1")
-
+    product_name_suffix = models.CharField(
+        max_length=64, default='', verbose_name='Суффикс для товаров в этой категории')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего обновления")
 
@@ -45,9 +46,9 @@ class Product(models.Model, IncDecPrioMixin):
     slug = models.SlugField(max_length=1024, verbose_name='Слаг (Заполняется автоматически, если поле пустое)',
                             null=True, blank=True, db_index=True)
     new = models.BooleanField(default=1, verbose_name="Новинка")
-    wholesale_count = models.IntegerField(verbose_name="С какого кол-ва товаров будет считаться оптовая цена")
+    wholesale_count = models.IntegerField(verbose_name="С какого кол-ва товаров будет считаться Цена мелкий опт")
     prio = models.IntegerField(verbose_name="Приоритет", default=1)
-    wholesale_price = models.IntegerField(verbose_name='Оптовая цена')
+    wholesale_price = models.IntegerField(verbose_name='Цена мелкий опт')
     retail_price = models.IntegerField(
         verbose_name='Розничная цена (Если данное поле будет = 0, то цена будет договорной.')
     des = models.TextField(verbose_name='Описание')
@@ -120,7 +121,7 @@ class ProductOption(models.Model):
     name = models.CharField(max_length=512, verbose_name="Наименование")
     # uni_id = models.IntegerField(verbose_name='Идентификатор варианта')
     value = models.CharField(max_length=512, verbose_name='Текст на кнопке')
-    wholesale_price = models.IntegerField(verbose_name='Оптовая цена')
+    wholesale_price = models.IntegerField(verbose_name='Цена мелкий опт')
     retail_price = models.IntegerField(verbose_name='Розничная цена')
 
     def save(self, *args, **kwargs):

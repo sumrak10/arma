@@ -1,0 +1,32 @@
+
+<div class="consultation-popup-container" id="get_opt_popup_container">
+    <div class="consultation-popup">
+        <form class="consultation-form" id="index-page-form" action="{% url 'question' %}?get_opt_form=1" method="post" onsumbit="ym(94231080,'reachGoal','consul'); return true;">
+            {% csrf_token %}
+            <div class="close-popup" id="get_opt_popup_close_btn">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="36"  height="36"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+            </div>
+            <h3>Получите оптовую цену</h3>
+            <input type="text" name="name" placeholder="Ваше имя" required>
+            <input type="tel" class="form-phone" id="index-form-phone" name="contacts"  placeholder="+7 (___) ___-__-__" required>
+            <div class="consultation-popup-container-counter">
+                <span>Количество: </span>
+                <div class="counter-buttons">
+                    <div class="dec"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 17H25V21H11V17Z"/>
+                        </svg>
+                    </div>
+                    <input class="number" type="number" name="text" id="product-count" value="1" min="0">
+                    <div class="inc"><svg width="37" height="38" viewBox="0 0 37 38" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M28 20.8265H19.875V29H16.125V20.8265H8V17.2192H16.125V9H19.875V17.2192H28V20.8265Z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <p class="OPD"><input type="checkbox" class="OPD__input" id="OPD_hello" checked required><label for="OPD_hello">Я прочитал(-а) и принимаю <a href="/polzovatelskoe_soglashenie">пользовательское соглашение</a> с конечным пользователем</label></p>
+            <!-- pattern="((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}" -->
+            <button type="submit" >ПОЛУЧИТЬ ОПТОВУЮ ЦЕНУ</button>
+            <p class="help-text">Специалист быстро перезвонит, подробно проконсультирует и ответит на все вопросы</p>
+        </form>
+    </div>
+</div>

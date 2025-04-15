@@ -267,6 +267,7 @@
 }
 .product-side .counter .buttons {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 24px;
 }
@@ -275,7 +276,7 @@
     display: flex;
     flex-direction: row;
 }
-.counter-buttons button {
+.counter-buttons div {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -284,11 +285,12 @@
     border: 1px #c3c3c3 solid;
     cursor: pointer;
     font-size: 22px;
+    box-sizing: border-box;
 }
-.counter-buttons button svg {
+.counter-buttons div svg {
     fill: #4b4b4b;
 }
-.counter-buttons button:hover svg {
+.counter-buttons div:hover svg {
     fill: #76ba43;
 }
 .counter-buttons input {
@@ -299,11 +301,12 @@
     text-align: center;
     width: 50px;
     height: 40px;
-    background-color: #A8B89C;
-    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
     border: none;
     cursor: pointer;
-    color: white;
     padding: 0;
 }
 .counter-buttons input[type=number]::-webkit-inner-spin-button, 
@@ -314,13 +317,14 @@
 .product-side .counter .buttons .in_basket {
     background-color: #85AB3A;
     color: white;
-    border: none;
     padding: 0 12px;
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     height: 40px;
     font-weight: 500;
     border: 1px #fff solid;
+    cursor: pointer;
+    user-select: none;
 }
 .product-side .counter .buttons .in_basket-active {
     color: black;
@@ -529,11 +533,6 @@
 .download-reviews:hover {
     background-color: #fff;
 }
-/* utilities */
-.help-text {
-    color: #4b4b4b;
-}
-
 
 body {
     position: relative;
@@ -819,7 +818,6 @@ body {
 }
 
 .OPD label a {
-    color: #465F30;
     font-weight: 500;
 }
 

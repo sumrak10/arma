@@ -3,6 +3,7 @@ import re
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 
+import config
 from BitrixInterface import BitrixInterface
 from BotInterface import BotInterface
 from utils.recaptcha import checkReCAPTHA
@@ -28,13 +29,16 @@ def question(request):
         return False
 
     if request.method == 'POST':
-        if not checkReCAPTHA(request):
+        if not checkReCAPTHA(request) and not config.DEBUG:
             return render(request, 'CRM/message.html',
                           {"text": "Вы не прошли проверку на робота. Попробуйте еще раз."})
         q = Question()
         q.name = request.POST.get('name')
         q.contacts = request.POST.get('contacts')
-        q.text = request.POST.get('text')
+        if request.GET.get('get_opt_form', False):
+            q.text = f"Хочу узнать оптовую цену для товара {request.META.get('HTTP_REFERER', '<Не удалось вычислить>')} в кол-ве {request.POST.get('text')} шт."
+        else:
+            q.text = request.POST.get('text')
         q.its_spam = check_for_spam(request.POST.get('text'))
         q.save()
 
@@ -55,7 +59,7 @@ def question(request):
 @csrf_exempt
 def consultation(request):
     if request.method == 'POST':
-        if not checkReCAPTHA(request):
+        if not checkReCAPTHA(request) and not config.DEBUG:
             return render(request, 'CRM/message.html',
                           {"text": "Вы не прошли проверку на робота. Попробуйте еще раз."})
         c = Consultation()

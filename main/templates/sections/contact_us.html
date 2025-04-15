@@ -6,9 +6,9 @@
         </div>
         <form class="contact-us-form" action="{% url 'question' %}" method="post" onsumbit="ym(94231080,'reachGoal','consul'); return true;">
             {% csrf_token %}
-            <h3>Оставьте заявку<br>и мы с Вами свяжемся</h3>
+            <h3>Остались вопросы?<br>Задайте свой вопрос в форме ниже, и мы оперативно ответим</h3>
             <input type="text" name="name" placeholder="Ваше ФИО или название организации">
-            <input type="tel" name="contacts" placeholder="Укажите Ваш номер телефона" required>
+            <input class="form-phone" type="tel" name="contacts" placeholder="+7 (___) ___-__-__" required>
             <textarea name="text" rows="6" placeholder="Напишите что бы Вы хотели узнать или уточнить?"></textarea>
             <p class="OPD"><input type="checkbox" class="OPD__input" id="OPD_hello" checked required><label for="OPD_hello">Я прочитал(-а) и принимаю <a href="/polzovatelskoe_soglashenie" style="color: white; text-decoration: underline;">пользовательское соглашение</a> с конечным пользователем</label></p>
             <button type="submit">ОТПРАВИТЬ</button>

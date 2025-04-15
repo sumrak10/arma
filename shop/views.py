@@ -142,7 +142,7 @@ def basket(request):
 
 def create_order(request):
     if request.method == 'POST':
-        if not checkReCAPTHA(request):
+        if not checkReCAPTHA(request) and not config.DEBUG:
             return render(request, 'CRM/message.html',
                           {"text": "Вы не прошли проверку на робота. Попробуйте еще раз."})
         basket = Basket.objects.get(unique_id=request.COOKIES.get('basket_uid'))

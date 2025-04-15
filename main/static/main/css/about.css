@@ -29,6 +29,7 @@
 .section-about .text-side .text h2 {
     font-size: 18px;
     font-weight: 400;
+    color: black;
 }
 .section-about .text-side .text p:first-child {
     margin-top: 0;

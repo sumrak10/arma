@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/sections/consultation.css' %}">
 {#    <link rel="stylesheet" href="{% static 'css/widgets/chat.css' %}">#}
     <link rel="stylesheet" href="{% static 'css/widgets/whatsapp.css' %}">
     {% block css_link %} {% endblock %}
@@ -59,6 +60,8 @@
 
 </head>
 <body>
+    {% include 'popups/consultation.html' %}
+    {% include 'popups/get_opt_price.html' %}
     <div class="cookies-accept-notify" style="display: {% if request.cookies_middleware.setted %}flex{% else %}none{% endif %}">
         <p>Данный сайт использует куки для вашего комфорта и удобства.</p>
         <button id="cookies-accept-button">
@@ -240,6 +243,8 @@
             }
         })
     </script>
+    <script src="https://unpkg.com/inputmask@5.0.8/dist/inputmask.min.js"></script>
+    <script src="{% static 'js/consultation_popup.js' %}"></script>
     <script src="{% static 'js/basket_counter.js' %}"></script>
     <script src="{% static 'js/header_consultation.js' %}"></script>
     <script src="{% static 'js/productDropdown.js' %}"></script>
