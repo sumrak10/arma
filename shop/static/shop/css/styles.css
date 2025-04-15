@@ -819,6 +819,7 @@ body {
 
 .OPD label a {
     font-weight: 500;
+    color: black;
 }
 
 @media (max-width: 900px) {
