@@ -326,6 +326,9 @@
     cursor: pointer;
     user-select: none;
 }
+.product-side .counter .buttons .in_basket.get-opt-popup-open-btn {
+    background-color: #000;
+}
 .product-side .counter .buttons .in_basket-active {
     color: black;
     border: 1px black solid;
@@ -335,6 +338,11 @@
     background-color: #fff;
     color: #85AB3A;
     border: 1px #85AB3A solid;
+}
+.product-side .counter .buttons .in_basket.get-opt-popup-open-btn:hover {
+    background-color: #fff;
+    color: #000;
+    border: 1px #000 solid;
 }
 
 .options {

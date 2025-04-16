@@ -2,7 +2,7 @@
     position: relative;
     background-color: #283819;
     background-image: url("../../../bg.png");
-    padding: 90px 0 30px 0;
+    padding: 90px 0 0 0;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -12,8 +12,6 @@
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
-    padding: 34px 0;
-    margin-bottom: 24px;
     gap: 32px;
 }
 .consultation-text-side {
@@ -21,6 +19,7 @@
 }
 .consultation-img-side {
     width: 50%;
+    height: 70vh;
 }
 .consultation-img-side img {
     width: 100%;
@@ -51,21 +50,23 @@
     font-weight: normal;
 }
 .hello-text__side__btn {
+    width: fit-content;
     display: flex;
     align-items: center;
-    flex-direction: row;
-    gap: 8px;
+    gap: 12px;
     color: white;
     cursor: pointer;
     user-select: none;
-    padding: 12px 0;
+    padding: 12px 24px;
+    background-color: var(--green);
 }
 .hello-text__side__btn:hover {
-    color: lightgreen;
+    background-color: #000;
 }
 .hello-text__side__btn span {
-    font-weight: 600;
-    font-size: 20px;
+    font-weight: 500;
+    font-size: 16px;
+    padding-top: 2px;
 }
 /* .consultation-img img {
     width: 80%;
