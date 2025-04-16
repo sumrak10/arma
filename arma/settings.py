@@ -17,6 +17,7 @@ RECAPTCHA_PRIVATE_KEY = config.RECAPTCHA_PRIVATE_KEY
 
 ALLOWED_HOSTS = [
     'arma72.com', 'www.arma72.com', 'arma72.ru', 'www.arma72.ru',
+    'opt.arma72.com',
     'www.mc.yandex.ru', 'mc.yandex.ru',
     '66.249.66.162',  # Googlebot
     '127.0.0.1', 'localhost',  # localhost
