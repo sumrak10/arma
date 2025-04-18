@@ -104,6 +104,11 @@
         <div class="contact-basket-form-section">
             <form class="contact-basket-form" action="{% url 'basket_is_ready' %}" method="post" onsubmit="ym(94231080,'reachGoal','createOrder'); return true;">
                 {% csrf_token %}
+                <input type="hidden" name="utm_source" id="utm_source">
+                <input type="hidden" name="utm_medium" id="utm_medium">
+                <input type="hidden" name="utm_campaign" id="utm_campaign">
+                <input type="hidden" name="utm_content" id="utm_content">
+                <input type="hidden" name="utm_term" id="utm_term">
                 <div class="titles">
                     <div>Менеджер быстро перезвонит, оформит заказ и выставит счет</div>
                 </div>

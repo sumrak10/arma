@@ -19,7 +19,6 @@ class BlockIPMiddleware:
 
         if IP2Location.get_country_short(ip) in NOT_ALLOWED_COUNTRIES:
             return HttpResponseForbidden('Forbidden: Your country is not allowed.')
-        print(ip)
 
         response = self.get_response(request)
         return response

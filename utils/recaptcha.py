@@ -7,7 +7,6 @@ def checkReCAPTHA(request) -> bool:
     if request.method == 'POST':
         recaptcha_response = request.POST.get('g-recaptcha-response', None)
         if recaptcha_response is None:
-            print('No recaptcha response')
             return False
         ip = request.META.get('HTTP_X_FORWARDED_FOR', None) or request.META.get('REMOTE_ADDR', None)
         data = {
@@ -18,9 +17,6 @@ def checkReCAPTHA(request) -> bool:
         verify_url = 'https://www.google.com/recaptcha/api/siteverify'
         response = requests.post(verify_url, data=data)
         result = response.json()
-        print(data)
-        print(result)
         if result['success']:
             return True
-        print('Recaptcha response is not valid')
         return False

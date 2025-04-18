@@ -8,7 +8,8 @@ from BitrixInterface import BitrixInterface
 from BotInterface import BotInterface
 from utils.recaptcha import checkReCAPTHA
 from .models import Question, Consultation
-from main.models import Partners
+
+
 
 
 @csrf_exempt
@@ -19,7 +20,7 @@ def question(request):
             return True
 
         spam_keywords = [
-            "лид", "увеличу", "улучшу"
+            "лид", "увелич", "улучш", "базы данных", "база данных", "рассыл", "WhatsApp"
         ]
         for spam_keyword in spam_keywords:
             for word in text.split():
@@ -45,12 +46,17 @@ def question(request):
         if not q.its_spam:
             BotInterface.create_consultation(q.contacts, q.name, q.text)
             BitrixInterface.create_consultation(
-                q.contacts, q.name, q.text, roistat_visit=request.COOKIES.get("roistat_visit", "nocookie"))
+                request,
+                q.contacts,
+                q.name,
+                q.text,
+            )
         else:
             render(request, 'CRM/message.html',
                    {"text": "Обращение записано, но наши фильтры сочли его за спам. "
                             "Возможно вы указали ссылку или ключевые слова, которые мы считаем спамом. "
-                            "Попробуйте позвонить нам по номеру указанному внизу сайта"})
+                            "Свяжитесь с нами напрямую по контактам указанным в подвале сайта. "
+                            "Извините за неудобства!"})
         return render(request, 'CRM/message.html', {"text": "Обращение записано"})
     # else:
     #     return redirect('/')
@@ -66,6 +72,6 @@ def consultation(request):
         c.phone = request.POST.get('phone')
         c.save()
         BotInterface.create_consultation(c.phone)
-        BitrixInterface.create_consultation(c.phone, roistat_visit=request.COOKIES.get("roistat_visit", "nocookie"))
+        BitrixInterface.create_consultation(request, c.phone)
         
         return render(request, 'CRM/message.html', {"text": "Скоро c Вами свяжется менеджер."})

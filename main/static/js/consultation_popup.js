@@ -1,4 +1,33 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const utm = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+    function getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        utm.forEach(key => {
+          if (params.has(key)) {
+            localStorage.setItem(key, params.get(key));
+          }
+        });
+    }
+
+      function setFormUTMFields(form) {
+        utm.forEach(key => {
+          const value = localStorage.getItem(key);
+          if (value) {
+            let input = form.querySelector(`input[name="${key}"]`);
+            if (!input) {
+              input = document.createElement("input");
+              input.type = "hidden";
+              input.name = key;
+              form.appendChild(input);
+            }
+            input.value = value;
+          }
+        });
+    }
+
+    getUrlParams();
+    document.querySelectorAll("form").forEach(form => setFormUTMFields(form));
+
     const phoneInputs = document.querySelectorAll(".form-phone");
     Inputmask({
         mask: "+7 (999) 999-99-99",

@@ -424,7 +424,7 @@ body {
     width: 90%;
 }
 .OPD label a {
-    color: white;
+    font-weight: 500;
     text-decoration: underline;
 }
 

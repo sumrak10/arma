@@ -2,7 +2,7 @@
 <div class="wrapper wrapper-contact-us">
     <div class="section section-contact-us">
         <div class="contact-us-img">
-            <img src="{% static '/main/media/contact_us/contact_us_element.png' %}" alt="">
+            <img src="{% static 'main/media/contact_us/contact_us_element.png' %}" alt="">
         </div>
         <form class="contact-us-form" action="{% url 'question' %}" method="post" onsumbit="ym(94231080,'reachGoal','consul'); return true;">
             {% csrf_token %}

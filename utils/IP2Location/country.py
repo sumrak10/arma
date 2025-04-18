@@ -42,7 +42,6 @@ class Country(object):
                 return {}
         
         for key in self.records.keys():
-            # print (key)
             data = {}
             for i in range(0,len(self.fields)):
                 data[self.fields[i]] = self.records[key][i]

@@ -36,7 +36,6 @@ class Region(object):
         if (is_not_empty == False):
             raise ValueError("No record available.")
         if country_code in self.records:
-            print(self.records[country_code])
             for i in range(0,len(self.records[country_code])):
                 if (region_name.upper() == 
                     self.records[country_code][i]["name"].upper()):

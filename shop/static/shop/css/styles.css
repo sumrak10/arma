@@ -775,6 +775,10 @@ body {
     gap: 24px;
     background-color: #fff;
     width: 60%;
+    color: black;
+}
+.contact-basket-form .OPD label a {
+    color: black;
 }
 .contact-basket-form .titles {
     padding: 24px 0;
@@ -827,7 +831,7 @@ body {
 
 .OPD label a {
     font-weight: 500;
-    color: black;
+    color: white;
 }
 
 @media (max-width: 900px) {
