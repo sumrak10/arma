@@ -30,12 +30,12 @@ class BitrixInterface:
                 "OPPORTUNITY": order.summ,
                 "SOURCE_ID": "7",
                 "SOURCE_DESCRIPTION": f"https://arma72.com/admin/CRM/order/{order.id}/change/",
-                "UF_CRM_1742458323": request.COOKIES.get("roistat_visit", "na"),
-                "UTM_SOURCE": request.POST.get("utm_source", "na"),
-                "UTM_MEDIUM": request.POST.get("utm_medium", "na"),
-                "UTM_CAMPAIGN": request.POST.get("utm_campaign", "na"),
-                "UTM_CONTENT": request.POST.get("utm_content", "na"),
-                "UTM_TERM": request.POST.get("utm_term", "na"),
+                "UF_CRM_1742458323": request.COOKIES.get("roistat_visit", "na"),  # Ройстат визит
+                "UF_CRM_UTM_SOURCE": request.POST.get("utm_source", "na"),
+                "UF_CRM_UTM_MEDIUM": request.POST.get("utm_medium", "na"),
+                "UF_CRM_UTM_CAMPAIGN": request.POST.get("utm_campaign", "na"),
+                "UF_CRM_UTM_CONTENT": request.POST.get("utm_content", "na"),
+                "UF_CRM_UTM_TERM": request.POST.get("utm_term", "na"),
             }
         }
         if not config.DEBUG:
@@ -61,14 +61,18 @@ class BitrixInterface:
                 "COMMENTS": text,
                 "SOURCE_ID": "7",
                 "SOURCE_DESCRIPTION": "arma72.com",
-                "UF_CRM_1742458323": request.COOKIES.get("roistat_visit", "na"),
-                "UTM_SOURCE": request.POST.get("utm_source", "na"),
-                "UTM_MEDIUM": request.POST.get("utm_medium", "na"),
-                "UTM_CAMPAIGN": request.POST.get("utm_campaign", "na"),
-                "UTM_CONTENT": request.POST.get("utm_content", "na"),
-                "UTM_TERM": request.POST.get("utm_term", "na"),
+                "UF_CRM_1742458323": request.COOKIES.get("roistat_visit", "na"),  # Ройстат визит
+                "UF_CRM_UTM_SOURCE": request.POST.get("utm_source", "na"),
+                "UF_CRM_UTM_MEDIUM": request.POST.get("utm_medium", "na"),
+                "UF_CRM_UTM_CAMPAIGN": request.POST.get("utm_campaign", "na"),
+                "UF_CRM_UTM_CONTENT": request.POST.get("utm_content", "na"),
+                "UF_CRM_UTM_TERM": request.POST.get("utm_term", "na"),
             }
         }
+        if request.GET.get('get_opt_form', False):
+            json["fields"]["UF_CRM_1745242774"] = request.META.get('HTTP_REFERER', 'na'),  # Ссылка на товар
+            json["fields"]["UF_CRM_1745242789"] = request.POST.get('text', 'na'),  # Кол-во товара
+
         if not config.DEBUG:
             try:
                 requests.post(config.BITRIX_CONSULTATION_URL, json=json, verify=False)
