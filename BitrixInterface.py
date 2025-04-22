@@ -40,7 +40,7 @@ class BitrixInterface:
         }
         if not config.DEBUG:
             try:
-                requests.post(config.BITRIX_ORDER_URL, json=json, verify=False)
+                requests.post(config.BITRIX_WEBHOOK_URL, json=json, verify=False)
             except:
                 logger.error("BITRIX:CREATE_ORDER %s", json)
         else:
@@ -75,7 +75,7 @@ class BitrixInterface:
 
         if not config.DEBUG:
             try:
-                requests.post(config.BITRIX_CONSULTATION_URL, json=json, verify=False)
+                requests.post(config.BITRIX_WEBHOOK_URL, json=json, verify=False)
             except:
                 logger.error("BITRIX:CREATE_ORDER %s", json)
         else:
