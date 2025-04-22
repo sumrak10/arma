@@ -70,8 +70,8 @@ class BitrixInterface:
             }
         }
         if request.GET.get('get_opt_form', False):
-            json["fields"]["UF_CRM_1745242774"] = request.META.get('HTTP_REFERER', 'na'),  # Ссылка на товар
-            json["fields"]["UF_CRM_1745242789"] = request.POST.get('text', 'na'),  # Кол-во товара
+            json["fields"]["UF_CRM_1745242774"] = request.META.get('HTTP_REFERER', 'na')  # Ссылка на товар
+            json["fields"]["UF_CRM_1745242789"] = request.POST.get('text', 'na')  # Кол-во товара
 
         if not config.DEBUG:
             try:
