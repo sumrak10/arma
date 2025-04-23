@@ -1,9 +1,10 @@
+import logging
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-DEBUG = bool(os.environ.get("DEBUG"))
+DEBUG = bool(int(os.environ.get("DEBUG")))
 KEY = os.environ.get("KEY")
 
 SECRET_KEY = os.environ.get("SECRET_KEY")

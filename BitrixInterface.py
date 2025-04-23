@@ -44,7 +44,7 @@ class BitrixInterface:
             except:
                 logger.error("BITRIX:CREATE_ORDER %s", json)
         else:
-            logger.info("BITRIX:CREATE_ORDER %s", json)
+            logger.info(f"BITRIX:CREATE_ORDER {config.BITRIX_WEBHOOK_URL} %s", json)
 
     @staticmethod
     def create_consultation(
@@ -77,6 +77,6 @@ class BitrixInterface:
             try:
                 requests.post(config.BITRIX_WEBHOOK_URL, json=json, verify=False)
             except:
-                logger.error("BITRIX:CREATE_ORDER %s", json)
+                logger.error("BITRIX:CREATE_CONSULTATION %s", json)
         else:
-            logger.info("BITRIX:CREATE_CONSULTATION %s", json)
+            logger.info(f"BITRIX:CREATE_CONSULTATION {config.BITRIX_WEBHOOK_URL}  %s", json)
