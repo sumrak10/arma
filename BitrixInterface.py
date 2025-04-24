@@ -31,11 +31,11 @@ class BitrixInterface:
                 "SOURCE_ID": "7",
                 "SOURCE_DESCRIPTION": f"https://arma72.com/admin/CRM/order/{order.id}/change/",
                 "UF_CRM_1742458323": request.COOKIES.get("roistat_visit", "na"),  # Ройстат визит
-                "UF_CRM_UTM_SOURCE": request.POST.get("utm_source", "na"),
-                "UF_CRM_UTM_MEDIUM": request.POST.get("utm_medium", "na"),
-                "UF_CRM_UTM_CAMPAIGN": request.POST.get("utm_campaign", "na"),
-                "UF_CRM_UTM_CONTENT": request.POST.get("utm_content", "na"),
-                "UF_CRM_UTM_TERM": request.POST.get("utm_term", "na"),
+                "UTM_SOURCE": request.POST.get("utm_source", "na"),
+                "UTM_MEDIUM": request.POST.get("utm_medium", "na"),
+                "UTM_CAMPAIGN": request.POST.get("utm_campaign", "na"),
+                "UTM_CONTENT": request.POST.get("utm_content", "na"),
+                "UTM_TERM": request.POST.get("utm_term", "na"),
             }
         }
         if not config.DEBUG:
@@ -62,11 +62,11 @@ class BitrixInterface:
                 "SOURCE_ID": "7",
                 "SOURCE_DESCRIPTION": "arma72.com",
                 "UF_CRM_1742458323": request.COOKIES.get("roistat_visit", "na"),  # Ройстат визит
-                "UF_CRM_UTM_SOURCE": request.POST.get("utm_source", "na"),
-                "UF_CRM_UTM_MEDIUM": request.POST.get("utm_medium", "na"),
-                "UF_CRM_UTM_CAMPAIGN": request.POST.get("utm_campaign", "na"),
-                "UF_CRM_UTM_CONTENT": request.POST.get("utm_content", "na"),
-                "UF_CRM_UTM_TERM": request.POST.get("utm_term", "na"),
+                "UTM_SOURCE": request.POST.get("utm_source", "na"),
+                "UTM_MEDIUM": request.POST.get("utm_medium", "na"),
+                "UTM_CAMPAIGN": request.POST.get("utm_campaign", "na"),
+                "UTM_CONTENT": request.POST.get("utm_content", "na"),
+                "UTM_TERM": request.POST.get("utm_term", "na"),
             }
         }
         if request.GET.get('get_opt_form', False):
